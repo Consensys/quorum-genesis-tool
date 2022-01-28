@@ -5,6 +5,11 @@ import keccak from "keccak";
 import { randomBytes } from "crypto";
 import { Address, NodeKeys, PrivateKey, PublicKey, EthAccount } from "../types/nodeKeys";
 import Wallet from "ethereumjs-wallet";
+import rlp from "rlp";
+import { Consensus } from "../types/consensus";
+
+const VANITY_DATA = "0x0000000000000000000000000000000000000000000000000000000000000000";
+const CLIQUE_PROPOSER_SIGNATURE = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
 export function generatePrivateKey() : PrivateKey {
   let privKey : PrivateKey;
@@ -55,4 +60,37 @@ export async function generateNodeKeys(password: string) : Promise<NodeKeys> {
     ethAccount
   };
   return nodeKeys;
+}
+
+// extraData field calculation
+
+export function generateExtraDataString(validatorAddressList: Address[], consensus: Consensus) : string {
+
+  let extraData : rlp.Input ;
+  switch(consensus) {
+    case Consensus.clique: {
+      // clique just appends https://besu.hyperledger.org/en/latest/HowTo/Configure/Consensus-Protocols/Clique/
+      // 65 bytes for the proposer signature. In the genesis block there is no initial proposer, so the proposer signature is all zeros.
+      // [0x prefix, 32 bytes vanity, List<Validators> (20bytes each), proposer signature - 65 bytes of 0s (see comment above)]
+      const signers : string[] = validatorAddressList.map(_ => _.toString('hex'));
+      extraData = [VANITY_DATA, signers.join(''), CLIQUE_PROPOSER_SIGNATURE].join('');
+      break;
+    }
+    case Consensus.raft: {
+      // statements;
+      extraData = VANITY_DATA;
+      break;
+    }
+    // ibft, ibft2, qbft
+    default: {
+      const roundBuffer : Buffer = new Buffer(4);
+      roundBuffer.writeUInt32LE(0, 0);
+      // ibft, ibft2, qbft as normal ie RLP([32 bytes Vanity, List<Validators>, No Vote, Round=Int(0), 0 Seals]).
+      const extraDataObject : rlp.Input = [new Uint8Array(32), validatorAddressList, null, roundBuffer, []];
+      extraData = rlp.encode(extraDataObject).toString('hex');
+      break;
+    }
+ }
+ return extraData;
+
 }
