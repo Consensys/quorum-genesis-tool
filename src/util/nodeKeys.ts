@@ -31,16 +31,16 @@ export function deriveAddress(pubKey: Uint8Array) : Address  {
 }
 
 export async function generateEthAccount(password: string) : Promise<EthAccount> {
-  let wallet : Wallet = Wallet.generate();
-  let v3keystore = await wallet.toV3(password);
-  let ethAccount : EthAccount = {
+  const wallet : Wallet = Wallet.generate();
+  const v3keystore = await wallet.toV3(password);
+  const ethAccount : EthAccount = {
     privateKey: wallet.getPrivateKeyString(),
     publicKey: wallet.getPublicKeyString(),
     address: wallet.getAddressString(),
     keystore: JSON.stringify(v3keystore),
     password
   };
-  return ethAccount;  
+  return ethAccount;
 }
 
 export async function generateNodeKeys(password: string) : Promise<NodeKeys> {
