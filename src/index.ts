@@ -22,7 +22,7 @@ export async function main(): Promise<void> {
   const qr = new QuestionRenderer(rootQuestion);
   answers = await qr.render(); // begin rendering the questions
 
-  await buildNetwork(answers as NetworkContext); // build artifacts
+  buildNetwork(answers as NetworkContext); // build artifacts
   // TODO: add section here to output the answers in a json format and write to file
   setTimeout(() => {
     process.exit(0);
