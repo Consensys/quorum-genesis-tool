@@ -75,7 +75,7 @@ export async function buildNetwork(context: NetworkContext): Promise<void> {
       copyFilesDir(clientFilesPath, context);
     }
 
-    await console.log(`Installation complete.`);
+    console.log(`Installation complete.`);
 
     if (projectToolName !== "") {
       console.log();
@@ -87,7 +87,7 @@ export async function buildNetwork(context: NetworkContext): Promise<void> {
       console.log(`For more information on the test network, see 'README.md' in the directory, '${context.outputPath}'`);
     }
   } catch (err: any) {
-      await console.log(`Installation failed. Error: ${(err as Error).message}`);
+      console.log(`Installation failed. Error: ${(err as Error).message}`);
     }
   process.exit(1);
   }

@@ -12,11 +12,11 @@ export type EthAccount = {
   address: string;
   keystore: string;
   password: string;
-}
+};
 
 export type NodeKeys = {
   privateKey: PrivateKey;
   publicKey: PublicKey;
   address: Address;
-  ethAccount : EthAccount
+  ethAccount : EthAccount;
 };

@@ -17,7 +17,7 @@ export function copyFilesDir(filesBasePath: string, context: NetworkContext): vo
     const outputPath = resolvePath(context.outputPath, filePath);
     const outputDirname = dirname(outputPath);
 
-    const { mode, size } = fs.statSync(resolvePath(filesBasePath, filePath));
+    const { mode } = fs.statSync(resolvePath(filesBasePath, filePath));
 
     if (!validateDirectoryExists(outputDirname)) {
       fs.mkdirSync(outputDirname, { recursive: true });

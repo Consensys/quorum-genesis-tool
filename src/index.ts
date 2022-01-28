@@ -1,7 +1,7 @@
 import { rootQuestion } from "./questions";
 import { QuestionRenderer } from "./questionRenderer";
 import { buildNetwork, NetworkContext } from "./networkBuilder";
-import yargs = require('yargs/yargs');
+// import yargs = require('yargs/yargs');
 import chalk from "chalk";
 
 export async function main(): Promise<void> {
