@@ -12,7 +12,7 @@ export interface NetworkContext {
     quorumKeyManager: boolean;
 }
 
-export async function buildNetwork(context: NetworkContext): Promise<void> {
+export function buildNetwork(context: NetworkContext): void {
   const templatesDirPath = path.resolve(__dirname, "..", "templates");
   const filesDirPath = path.resolve(__dirname, "..", "files");
   let projectToolName = "";
