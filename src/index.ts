@@ -1,6 +1,7 @@
 import { rootQuestion } from "./questions";
 import { QuestionRenderer } from "./questionRenderer";
-import { buildConfig, ConfigContext } from "./configBuilder";
+import { buildConfig } from "./configBuilder";
+import { ConfigContext } from "./types/config";
 // import yargs = require('yargs/yargs');
 import chalk from "chalk";
 

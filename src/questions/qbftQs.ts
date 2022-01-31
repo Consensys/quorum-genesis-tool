@@ -1,5 +1,5 @@
 /* eslint-disable object-shorthand */
-import { QuestionTree } from "./types";
+import { QuestionTree } from "../types/questions";
 import { _getYesNoValidator, _integerValidator, _outputDirQuestion } from "./common";
 
 const _outputUserInputs: QuestionTree = {

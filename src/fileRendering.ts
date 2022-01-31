@@ -2,7 +2,7 @@ import { renderString } from "nunjucks";
 import { resolve as resolvePath, join as joinPath, dirname } from "path";
 import fs from "fs";
 import os from "os";
-import { ConfigContext } from "./configBuilder";
+import { ConfigContext } from "./types/config";
 
 export function renderTemplateDir(templateBasePath: string, context: ConfigContext): void {
   for (const filePath of _walkDir(templateBasePath)) {

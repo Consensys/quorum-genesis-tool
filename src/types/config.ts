@@ -1,12 +1,13 @@
+/* Interface for output from questions rendering */
 export interface ConfigContext {
   consensusAlgo: "ibft1" | "ibft2" | "qbft" | "clique" | "raft";
   chainID: number;
-  blockperiod: boolean;
+  blockperiod: number;
   requesttimeout: number;
   epochlength: number;
   difficulty: number;
   gaslimit: number;
-  coinbase: number; // maybe take string of hex?
+  coinbase: number;
   maxsize: number;
   txnsize: number;
   validators: number;

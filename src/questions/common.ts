@@ -1,7 +1,7 @@
 /* eslint-disable object-shorthand */
 import { resolve as resolvePath } from "path";
 import { readdirSync } from "fs";
-import { QuestionTree, AnswerMap } from "./types";
+import { QuestionTree, AnswerMap } from "../types/questions";
 import chalk from "chalk";
 
 export const _outputDirQuestion: QuestionTree = {

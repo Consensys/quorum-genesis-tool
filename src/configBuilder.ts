@@ -65,5 +65,3 @@ export function buildConfig(context: ConfigContext): void {
   //   }
   // process.exit(1);
   }
-
-

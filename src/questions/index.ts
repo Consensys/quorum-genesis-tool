@@ -1,4 +1,4 @@
-import { QuestionTree } from "./types";
+import { QuestionTree } from "../types/questions";
 import * as ibft1 from "./ibft1Qs";
 import * as ibft2 from "./ibft2Qs";
 import * as qbft from "./qbftQs";
