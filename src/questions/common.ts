@@ -70,7 +70,7 @@ export function _integerValidator(question: QuestionTree, nextQuestion?: Questio
     if (defaultResponse && isNaN(normalizedInput)) {
       answers[question.name] = defaultResponse;
       return nextQuestion;
-    } else if (isNaN(normalizedInput)) {
+    } else if (normalizedInput < 0 || isNaN(normalizedInput)) {
       console.log(chalk.red("Sorry, but I didn't understand your answer. Please enter a valid integer.\n"));
       return question;
     } else {
