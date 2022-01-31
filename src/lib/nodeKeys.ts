@@ -67,7 +67,7 @@ export async function generateNodeKeys(password: string) : Promise<NodeKeys> {
 
 export function generateExtraDataString(validatorAddressList: Address[], consensus: Consensus) : string {
 
-  let extraData : Input
+  let extraData : Input;
   switch(consensus) {
     case Consensus.clique: {
       // clique just appends https://besu.hyperledger.org/en/latest/HowTo/Configure/Consensus-Protocols/Clique/
@@ -87,8 +87,9 @@ export function generateExtraDataString(validatorAddressList: Address[], consens
       const roundBuffer : Buffer = Buffer.alloc(4);
       roundBuffer.writeUInt32LE(0, 0);
       // ibft, ibft2, qbft as normal ie RLP([32 bytes Vanity, List<Validators>, No Vote, Round=Int(0), 0 Seals]).
-      const extraDataObject : Input = [new Uint8Array(32), validatorAddressList, null, roundBuffer, []];
-      extraData = RLP.encode(extraDataObject).toString('hex');
+      const extraDataContent : Input = [new Uint8Array(32), validatorAddressList, null, roundBuffer, []];
+      const extraDataCoded : Uint8Array = RLP.encode(extraDataContent);
+      extraData = '0x' + Buffer.from(extraDataCoded).toString('hex');
       break;
     }
  }

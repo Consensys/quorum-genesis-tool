@@ -32,10 +32,9 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig) : Promis
     const validators = await generateNodeConfig(quorumConfig.validators, "validator", quorumConfig.privacy, outputDir);
     console.log(validators);
 
-    // console.log("Generating extra data string")
+    console.log("Generating extra data string")
     const validatorAddressBuffers : Address[] = validators.map(v => v.address);
     const extraDataString : string = nodekeys.generateExtraDataString(validatorAddressBuffers, quorumConfig.consensus);
-    console.log("EEEXXXTTTRA  : " + extraDataString);
 
     console.log("Creating bootnodes...");
     const bootnodes = await generateNodeConfig(quorumConfig.bootnodes, "bootnode", quorumConfig.privacy, outputDir);
