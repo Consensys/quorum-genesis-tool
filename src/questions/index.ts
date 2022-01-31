@@ -2,6 +2,11 @@ import { resolve as resolvePath } from "path";
 import { readdirSync } from "fs";
 import { QuestionTree, AnswerMap } from "./types";
 import chalk from "chalk";
+import * as ibft1 from "./ibft1Qs";
+import * as ibft2 from "./ibft2Qs";
+import * as qbft from "./qbftQs";
+import * as clique from "./cliqueQs";
+import * as raft from "./raftQs";
 
 const _outputDirQuestion: QuestionTree = {
   name: "outputPath",
@@ -187,20 +192,6 @@ function _integerValidator(question: QuestionTree, nextQuestion?: QuestionTree, 
   };
 }
 
-// function _hexValidator(question: QuestionTree, nextQuestion?: QuestionTree) {
-//   return (rawInput: string, answers: AnswerMap) => {
-//     const normalizedInput = Buffer.from(rawInput, 'hex')
-//     if (isNaN(normalizedInput)) { // parseInt will return NaN if string cannot be converted to int
-//       console.log(chalk.red("Sorry, but I didn't understand your answer. Please enter a valid integer.\n"));
-//       return question;
-//     } else if (Number.isInteger(normalizedInput)) {
-//       answers.chainID = normalizedInput;
-//       return nextQuestion;
-//     } else { // return the Q again if we somehow get here
-//       return question;
-//     }
-//   }
-// }
 
 const bannerText = String.raw`
    ___
@@ -232,10 +223,10 @@ export const rootQuestion: QuestionTree = {
   name: "consensusAlgo",
   prompt: `${bannerText}${leadInText}Which consensus algorithm will you use?`,
   options: [
-      { label: "IBFT1", value: "ibft1", nextQuestion: _chainIDQuestion },
-      { label: "IBFT2", value: "ibft2", nextQuestion: _chainIDQuestion },
-      { label: "QBFT", value: "qbft", nextQuestion: _chainIDQuestion },
-      { label: "Clique", value: "clique", nextQuestion: _chainIDQuestion },
-      { label: "RAFT", value: "raft", nextQuestion: _chainIDQuestion }
+      { label: "IBFT1", value: "ibft1", nextQuestion: ibft1._chainIDQuestion },
+      { label: "IBFT2", value: "ibft2", nextQuestion: ibft2._chainIDQuestion },
+      { label: "QBFT", value: "qbft", nextQuestion: qbft._chainIDQuestion },
+      { label: "Clique", value: "clique", nextQuestion: clique._chainIDQuestion },
+      { label: "RAFT", value: "raft", nextQuestion: raft._chainIDQuestion }
   ]
 };
