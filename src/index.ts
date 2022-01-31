@@ -1,6 +1,6 @@
 import { rootQuestion } from "./questions";
 import { QuestionRenderer } from "./questionRenderer";
-import { buildNetwork, NetworkContext } from "./networkBuilder";
+import { buildConfig, ConfigContext } from "./configBuilder";
 // import yargs = require('yargs/yargs');
 import chalk from "chalk";
 
@@ -21,8 +21,9 @@ export async function main(): Promise<void> {
   let answers = {};
   const qr = new QuestionRenderer(rootQuestion);
   answers = await qr.render(); // begin rendering the questions
+  console.log(answers); // log answer output for debugging
 
-  buildNetwork(answers as NetworkContext); // build artifacts
+  buildConfig(answers as ConfigContext); // build artifacts
   // TODO: add section here to output the answers in a json format and write to file
   setTimeout(() => {
     process.exit(0);

@@ -2,18 +2,16 @@ import { renderString } from "nunjucks";
 import { resolve as resolvePath, join as joinPath, dirname } from "path";
 import fs from "fs";
 import os from "os";
-import { NetworkContext } from "./networkBuilder";
+import { ConfigContext } from "./configBuilder";
 
-export function renderTemplateDir(templateBasePath: string, context: NetworkContext): void {
-  const skipDirName = context.clientType === "besu" ? "goquorum" : "besu";
-  for (const filePath of _walkDir(templateBasePath, skipDirName)) {
+export function renderTemplateDir(templateBasePath: string, context: ConfigContext): void {
+  for (const filePath of _walkDir(templateBasePath)) {
     renderFileToDir(templateBasePath, filePath, context);
   }
 }
 
-export function copyFilesDir(filesBasePath: string, context: NetworkContext): void {
-  const skipDirName = context.clientType === "besu" ? "goquorum" : "besu";
-  for (const filePath of _walkDir(filesBasePath, skipDirName)) {
+export function copyFilesDir(filesBasePath: string, context: ConfigContext): void {
+  for (const filePath of _walkDir(filesBasePath)) {
     const outputPath = resolvePath(context.outputPath, filePath);
     const outputDirname = dirname(outputPath);
 
@@ -29,7 +27,7 @@ export function copyFilesDir(filesBasePath: string, context: NetworkContext): vo
   }
 }
 
-export function renderFileToDir(basePath: string, filePath: string, context: NetworkContext): void {
+export function renderFileToDir(basePath: string, filePath: string, context: ConfigContext): void {
   if (!validateDirectoryExists(resolvePath(basePath))) {
     throw new Error(`The template base path '${basePath}' does not exist.`);
   }
@@ -105,9 +103,9 @@ function* _walkDir(dir: string, skipDirName?: string, basePath = ""): Iterable<s
     const dirPath = resolvePath(dir, f);
     const isDirectory = fs.statSync(dirPath).isDirectory();
     if (isDirectory) {
-        yield *_walkDir(dirPath, skipDirName, joinPath(basePath, f));
+      yield* _walkDir(dirPath, skipDirName, joinPath(basePath, f));
     } else {
-        yield joinPath(basePath, f);
+      yield joinPath(basePath, f);
     }
   }
 }

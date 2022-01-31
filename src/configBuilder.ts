@@ -1,31 +1,34 @@
-import {renderTemplateDir, validateDirectoryExists, copyFilesDir} from "./fileRendering";
+import { renderTemplateDir, validateDirectoryExists, copyFilesDir } from "./fileRendering";
 import path from "path";
 
-export interface NetworkContext {
-    clientType: "goquorum" | "besu";
-    nodeCount: number;
-    privacy: boolean;
-    monitoring: "splunk" | "elk" | "none";
-    blockscout: boolean;
-    outputPath: string;
-    orchestrate: boolean;
-    quorumKeyManager: boolean;
+export interface ConfigContext {
+  consensusAlgo: "ibft1" | "ibft2" | "qbft" | "clique" | "raft";
+  chainID: number;
+  blockperiod: boolean;
+  requesttimeout: number;
+  epochlength: number;
+  difficulty: number;
+  gaslimit: number;
+  coinbase: number; // maybe take string of hex?
+  maxsize: number;
+  txnsize: number;
+  validators: number;
+  members: number;
+  bootnodes: number;
+  curve: "k1" | "r1";
+  staticnodes: boolean;
+  permissions: boolean;
+  tessera: boolean;
+  userinput: boolean;
+  outputPath: string;
 }
 
-export function buildNetwork(context: NetworkContext): void {
+export function buildConfig(context: ConfigContext): void {
   const templatesDirPath = path.resolve(__dirname, "..", "templates");
   const filesDirPath = path.resolve(__dirname, "..", "files");
   let projectToolName = "";
   let projectToolPath = "";
   let projectToolOutputPath = "";
-
-  if (context.orchestrate) {
-    projectToolName = "Orchestrate";
-    projectToolPath = "orchestrate";
-  } else if (context.quorumKeyManager) {
-    projectToolName = "Quorum Key Manager";
-    projectToolPath = "quorum-key-manager";
-  }
 
   try {
     const blockchainClient = context.clientType === "besu" ? "Besu" : "GoQuorum" ;
@@ -77,15 +80,6 @@ export function buildNetwork(context: NetworkContext): void {
 
     console.log(`Installation complete.`);
 
-    if (projectToolName !== "") {
-      console.log();
-      console.log(`To start ${projectToolName}, run 'npm install' and 'npm start' in the directory, '${projectToolOutputPath}'`);
-      console.log(`For more information on the Orchestrate, see 'README.md' in the directory, '${projectToolOutputPath}'`);
-    } else {
-      console.log();
-      console.log(`To start your test network, run 'run.sh' in the directory, '${context.outputPath}'`);
-      console.log(`For more information on the test network, see 'README.md' in the directory, '${context.outputPath}'`);
-    }
   } catch (err: any) {
       console.log(`Installation failed. Error: ${(err as Error).message}`);
     }
