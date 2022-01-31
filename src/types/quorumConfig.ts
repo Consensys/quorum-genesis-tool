@@ -1,6 +1,11 @@
 import { Consensus } from "./consensus";
 import { CryptoCurve } from "./cryptoCurve";
 
+export type PrivacyConfig = {
+    enabled: boolean;
+    password: string;
+};
+
 export type QuorumConfig = {
     consensus: Consensus;
     chainID: number;
@@ -19,7 +24,6 @@ export type QuorumConfig = {
     curve: CryptoCurve;
     staticnodes: boolean;
     permissions: boolean;
-    privacy: boolean;
-    privacyPassword: string;
+    privacy: PrivacyConfig;
     outputPath: string;
 };

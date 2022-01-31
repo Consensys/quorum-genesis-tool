@@ -5,7 +5,8 @@ import keccak from "keccak";
 import { randomBytes } from "crypto";
 import { Address, NodeKeys, PrivateKey, PublicKey, EthAccount } from "../types/nodeKeys";
 import Wallet from "ethereumjs-wallet";
-import rlp from "rlp";
+import RLP from 'rlp';
+import { Input } from "rlp";
 import { Consensus } from "../types/consensus";
 
 const VANITY_DATA = "0x0000000000000000000000000000000000000000000000000000000000000000";
@@ -66,7 +67,7 @@ export async function generateNodeKeys(password: string) : Promise<NodeKeys> {
 
 export function generateExtraDataString(validatorAddressList: Address[], consensus: Consensus) : string {
 
-  let extraData : rlp.Input ;
+  let extraData : Input
   switch(consensus) {
     case Consensus.clique: {
       // clique just appends https://besu.hyperledger.org/en/latest/HowTo/Configure/Consensus-Protocols/Clique/
@@ -83,11 +84,11 @@ export function generateExtraDataString(validatorAddressList: Address[], consens
     }
     // ibft, ibft2, qbft
     default: {
-      const roundBuffer : Buffer = new Buffer(4);
+      const roundBuffer : Buffer = Buffer.alloc(4);
       roundBuffer.writeUInt32LE(0, 0);
       // ibft, ibft2, qbft as normal ie RLP([32 bytes Vanity, List<Validators>, No Vote, Round=Int(0), 0 Seals]).
-      const extraDataObject : rlp.Input = [new Uint8Array(32), validatorAddressList, null, roundBuffer, []];
-      extraData = rlp.encode(extraDataObject).toString('hex');
+      const extraDataObject : Input = [new Uint8Array(32), validatorAddressList, null, roundBuffer, []];
+      extraData = RLP.encode(extraDataObject).toString('hex');
       break;
     }
  }

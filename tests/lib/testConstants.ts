@@ -1,7 +1,12 @@
 
 import { Consensus } from "../../src/types/consensus";
-import { QuorumConfig } from "../../src/types/quorumConfig";
+import { QuorumConfig, PrivacyConfig } from "../../src/types/quorumConfig";
 import { CryptoCurve } from "../../src/types/cryptoCurve";
+
+export const TEST_PRIVACY_CONFIG : PrivacyConfig = {
+    enabled: true,
+    password: "",
+}
 
 export const TEST_QUORUM_CONFIG : QuorumConfig = {
     consensus: Consensus.qbft,
@@ -21,8 +26,7 @@ export const TEST_QUORUM_CONFIG : QuorumConfig = {
     curve: CryptoCurve.k1,
     staticnodes: true,
     permissions: true,
-    privacy: false,
-    privacyPassword: "",
+    privacy: TEST_PRIVACY_CONFIG,
     outputPath: "./output"
  };
 

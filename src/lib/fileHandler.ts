@@ -23,20 +23,16 @@ export function setupOutputFolder(path : string, quorumConfig: QuorumConfig, tem
   return path;
 }
 
-//TODO: besu config.toml + tessera config
-export function writeNodeKeys(path: string, nodekeys: NodeKeys, quorumConfig: QuorumConfig, templatesPath=TEMPLATES_PATH) : void {
+// TODO: besu config.toml + tessera config
+export function writeNodeKeys(path: string, nodekeys: NodeKeys) : void {
   if (!fse.existsSync(path)) fse.mkdirSync(path, {recursive: true});
-  //nodekeys
+  // nodekeys
   fse.writeFileSync(path + "/nodekey", nodekeys.privateKey.toString('hex'));
   fse.writeFileSync(path + "/nodekey.pub", nodekeys.publicKey.toString('hex'));
   fse.writeFileSync(path + "/address", nodekeys.address.toString('hex'));
-  //account keys
+  // account keys
   fse.writeFileSync(path + "/accountKeystore", nodekeys.ethAccount.keystore);
   fse.writeFileSync(path + "/accountPassword", nodekeys.ethAccount.password);
   fse.writeFileSync(path + "/accountPrivateKey", nodekeys.ethAccount.privateKey);
   fse.writeFileSync(path + "/accountAddress", nodekeys.ethAccount.address);
-
-  //TODO: remove me
-  console.log(quorumConfig);
-  console.log(templatesPath);
 }

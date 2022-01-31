@@ -1,35 +1,49 @@
 
-import { QuorumConfig } from "../types/quorumConfig";
+import { QuorumConfig, PrivacyConfig } from "../types/quorumConfig";
+import { NodeKeys, Address } from "../types/nodeKeys";
 import * as fileHandler from "./fileHandler";
 import * as nodekeys from "./nodeKeys";
 
-const OUTPUT_BASE_DIR = "./output"
+const OUTPUT_BASE_DIR = "./output";
+
+async function generateNodeConfig(numNodes: number, nodeType: string, privacy: PrivacyConfig, outputDir: string) : Promise<NodeKeys[]> {
+  const nNodes = numNodes;
+  const nodes : NodeKeys[] = [];
+  for(let i=0; i<nNodes; i++) {
+    const nodeData = await nodekeys.generateNodeKeys(privacy.password);
+    nodes.push(nodeData);
+  }
+  nodes.map((v, i) => {
+    fileHandler.writeNodeKeys(outputDir + "/" + nodeType + i.toString(), v);
+  });
+  return nodes;
+}
 
 
 export async function generateNetworkConfig(quorumConfig: QuorumConfig) : Promise<string> {
 
     // Create a new root folder each time - dont destroy anything that existed
     const ts : string = fileHandler.createTimestamp();
-    const output_dir : string = OUTPUT_BASE_DIR + "/" + ts;
+    const outputDir : string = OUTPUT_BASE_DIR + "/" + ts;
 
-    fileHandler.setupOutputFolder(output_dir, quorumConfig);
+    fileHandler.setupOutputFolder(outputDir, quorumConfig);
 
-    console.log("Creating validators config")
-    
-    const nValidators = quorumConfig.validators
-    let validators = []
-    for(let i=0; i<nValidators; i++) {
-      let nodeData = await nodekeys.generateNodeKeys(quorumConfig.privacyPassword);
-      validators.push(nodeData)
-    }
-    validators.map((v, i) => {
-      fileHandler.writeNodeKeys(output_dir + "/validator" + i, v, quorumConfig);
-    })
-  
+    console.log("Creating validators...");
+    const validators = await generateNodeConfig(quorumConfig.validators, "validator", quorumConfig.privacy, outputDir);
+    console.log(validators);
+
     // console.log("Generating extra data string")
-    // let validatorAddressBuffers = validators.map(v => v.address)
-    // let extraDataString = ibftGen.generateIbftExtraDataString(validatorAddressBuffers).toString('hex')
-    // console.log("Updating genesis file")
+    const validatorAddressBuffers : Address[] = validators.map(v => v.address);
+    const extraDataString : string = nodekeys.generateExtraDataString(validatorAddressBuffers, quorumConfig.consensus);
+    console.log("EEEXXXTTTRA  : " + extraDataString);
 
-    return output_dir;
+    console.log("Creating bootnodes...");
+    const bootnodes = await generateNodeConfig(quorumConfig.bootnodes, "bootnode", quorumConfig.privacy, outputDir);
+    console.log(bootnodes);
+
+    console.log("Creating members...");
+    const members = await generateNodeConfig(quorumConfig.members, "member", quorumConfig.privacy, outputDir);
+    console.log(members);
+
+    return outputDir;
 }
