@@ -1,5 +1,6 @@
 
 import { QuorumConfig, PrivacyConfig } from "../types/quorumConfig";
+import { Consensus } from "../types/consensus";
 import { NodeKeys, Address } from "../types/nodeKeys";
 import * as genesis from "./genesisGenerate";
 import * as fileHandler from "./fileHandler";
@@ -20,9 +21,7 @@ async function generateNodeConfig(numNodes: number, nodeType: string, privacy: P
   return nodes;
 }
 
-
 export async function generateNetworkConfig(quorumConfig: QuorumConfig) : Promise<string> {
-
     // Create a new root folder each time - dont destroy anything that existed
     const ts : string = fileHandler.createTimestamp();
     const outputDir : string = OUTPUT_BASE_DIR + "/" + ts;
@@ -31,20 +30,42 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig) : Promis
 
     console.log("Creating validators...");
     const validators = await generateNodeConfig(quorumConfig.validators, "validator", quorumConfig.privacy, outputDir);
-    console.log(validators);
-
     console.log("Generating extra data string");
     const validatorAddressBuffers : Address[] = validators.map(v => v.address);
     const extraData : string = nodekeys.generateExtraDataString(validatorAddressBuffers, quorumConfig.consensus);
-    genesis.updateBesuGenesis(outputDir, quorumConfig, extraData);
+
+    const consensus = quorumConfig.consensus;
+    switch(consensus) {
+      case Consensus.clique: {
+        genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
+        genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
+        break;
+      }
+      case Consensus.raft: {
+        genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
+        break;
+      }
+      case Consensus.ibft: {
+        genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
+        break;
+      }
+      case Consensus.ibft2: {
+        genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
+        break;
+      }
+      // qbft
+      default: {
+        genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
+        genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
+        break;
+      }
+    }
 
     console.log("Creating bootnodes...");
-    const bootnodes = await generateNodeConfig(quorumConfig.bootnodes, "bootnode", quorumConfig.privacy, outputDir);
-    console.log(bootnodes);
+    await generateNodeConfig(quorumConfig.bootnodes, "bootnode", quorumConfig.privacy, outputDir);
 
     console.log("Creating members...");
-    const members = await generateNodeConfig(quorumConfig.members, "member", quorumConfig.privacy, outputDir);
-    console.log(members);
+    await generateNodeConfig(quorumConfig.members, "member", quorumConfig.privacy, outputDir);
 
     return outputDir;
 }

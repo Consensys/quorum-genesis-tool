@@ -16,8 +16,8 @@ export type QuorumConfig = {
     gasLimit: string;
     gasFreeNetwork: boolean;
     coinbase: string;
-    maxCodeSize: string;
-    txnSizeLimit: string;
+    maxCodeSize: number;
+    txnSizeLimit: number;
     validators: number;
     members: number;
     bootnodes: number;

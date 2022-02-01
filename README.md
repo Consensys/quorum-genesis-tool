@@ -22,3 +22,5 @@ Create the artifacts with:
 
 
 ## Troubleshooting
+
+txnsizelimit = yourNumber.toString('hex');

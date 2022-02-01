@@ -1,11 +1,18 @@
 
 
 type Algorithm = {
-  blockperiodseconds: number;
-  epochlength: number;
-  requesttimeoutseconds: number;
+  blockperiodseconds?: number;
+  requesttimeoutseconds?: number;
+  epochlength?: number;
+  epoch?: number;
   policy?: number;
   ceil2Nby3Block?: number;
+  testQBFTBlock?: number;
+};
+
+type CodeSize = {
+  block: number;
+  size: number;
 };
 
 type GenesisConfig = {
@@ -17,8 +24,12 @@ type GenesisConfig = {
   eip158Block: number;
   byzantiumBlock: number;
   constantinopleBlock: number;
+  isQuorum?: boolean;
   contractSizeLimit?: string;
+  txnSizeLimit?: number;
+  maxCodeSizeConfig?: [ CodeSize ];
   ibft2?: Algorithm;
+  istanbul?: Algorithm;
   qbft?: Algorithm;
   clique?: Algorithm;
 };
@@ -29,7 +40,7 @@ export type Alloc = {
   privateKey?: string;
 };
 
-export type BesuGenesis = {
+export type Genesis = {
   nonce: string;
   timestamp: string;
   extraData: string;
@@ -45,6 +56,7 @@ export type BesuGenesis = {
   };
   config: GenesisConfig;
 };
+
 
 const DefaultGenesisConfig : GenesisConfig = {
   chainId: 1337,
@@ -62,7 +74,12 @@ const DefaultAlloc : Alloc= {
   comment: "test account"
 };
 
-export const DefaultBesuGenesis : BesuGenesis = {
+export const DefaultCodeSize : CodeSize = {
+  block: 0,
+  size: 64,
+};
+
+export const DefaultGenesis : Genesis = {
   nonce : "0x0",
   timestamp: "0x58ee40ba",
   extraData: "0x0",
