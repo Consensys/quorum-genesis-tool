@@ -43,6 +43,9 @@ _coinbaseQuestion.transformerValidator = integerValidator(_coinbaseQuestion, _ma
 const _gasLimitQuestion: QuestionTree = commonQs.gasLimitQuestion;
 _gasLimitQuestion.transformerValidator = integerValidator(_gasLimitQuestion, _coinbaseQuestion);
 
+const _gasFreeQuestion: QuestionTree = commonQs.gasFreeQuestion;
+_gasFreeQuestion.transformerValidator = getYesNoValidator(_gasFreeQuestion, _gasLimitQuestion, 'y');
+
 const _difficultyQuestion: QuestionTree = commonQs.difficultyQuestion;
 _difficultyQuestion.transformerValidator = integerValidator(_difficultyQuestion, _gasLimitQuestion, 1);
 

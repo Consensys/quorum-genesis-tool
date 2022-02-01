@@ -14,6 +14,7 @@
   "scripts": {
     "clean": "rm -rf build output",
     "build": "tsc",
+    "postbuild": "cp -R src/templates build",
     "test": "jest --verbose",
     "lint": "eslint './src/**'",
     "lintAndFix": "eslint --fix './src/**'",

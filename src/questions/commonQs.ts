@@ -1,4 +1,3 @@
-/* eslint-disable object-shorthand */
 import { QuestionTree } from "../types/questions";
 
 export const tesseraQuestion: QuestionTree = {
@@ -7,7 +6,7 @@ export const tesseraQuestion: QuestionTree = {
 };
 
 export const outputUserInputs: QuestionTree = {
-  name: "outputPath",
+  name: "userinput",
   prompt: "Export your answers to file? Default: y",
 };
 
@@ -60,6 +59,11 @@ export const coinbaseQuestion: QuestionTree = {
 export const gasLimitQuestion: QuestionTree = {
   name: "gasLimit",
   prompt: "Set your gas limit value: (integer)",
+};
+
+export const gasFreeQuestion: QuestionTree = {
+  name: "gasFreeNetwork",
+  prompt: "Is this a gas free network?: (y/n)"
 };
 
 export const difficultyQuestion: QuestionTree = {
