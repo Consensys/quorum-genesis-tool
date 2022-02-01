@@ -24,4 +24,12 @@ Create the artifacts with:
 ## Troubleshooting
 
 txnsizelimit = yourNumber.toString('hex');
-# TODO test istanbul and clique and raft genesis
+
+
+## TODO
+
+- check out the genesis files with the quickstart
+- check the hex string and number values in the genesis & quorumConfig
+- static files & permissions
+- join questions with generation
+- readme
