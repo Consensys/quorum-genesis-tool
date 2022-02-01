@@ -10,7 +10,9 @@ const GOQUORUM_GENESIS_FILE="genesisGoQuorum.json";
 
 export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extraData: string) : string {
   const genesisFile = path + '/' + BESU_GENESIS_FILE;
-  let besu : Genesis = DefaultGenesis ;
+  //TODO fix me via a function call - JS does copy as a shallow copy so if you attempt to reuse this var for goquorum, it has been modified and isn't correct
+  // this creates  a deep copy of the object so the original is untouched and can be reused
+  const besu : Genesis =  (JSON.parse(JSON.stringify(DefaultGenesis)) as Genesis);
   besu.extraData = extraData;
   besu.gasLimit = quorumConfig.gasLimit;
   besu.config.chainId = quorumConfig.chainID;
@@ -51,10 +53,7 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
 
 export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, extraData: string) : string {
   const genesisFile = path + '/' + GOQUORUM_GENESIS_FILE;
-  let goquorum : Genesis = DefaultGenesis ;
-  console.log("**********************");
-  console.log(goquorum);
-  console.log("**********************");
+  const goquorum : Genesis = (JSON.parse(JSON.stringify(DefaultGenesis)) as Genesis);
   goquorum.extraData = extraData;
   goquorum.gasLimit = quorumConfig.gasLimit;
   goquorum.config.chainId = quorumConfig.chainID;
