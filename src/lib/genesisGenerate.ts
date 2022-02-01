@@ -74,7 +74,12 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
       };
       break;
     }
+<<<<<<< HEAD
     case Consensus.qbft: {
+=======
+    // qbft
+    default: {
+>>>>>>> 4876484 (naming refactor, tests not working)
       besu.config.qbft = {
         blockperiodseconds : quorumConfig.blockperiod,
         epochlength : quorumConfig.epochLength,
@@ -82,6 +87,7 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
       };
       break;
     }
+<<<<<<< HEAD
     default: {
       break;
     }
@@ -144,3 +150,8 @@ export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, 
   fs.writeFileSync(genesisFile, JSON.stringify(goquorum, null, 2));
   return genesisFile;
 }
+=======
+  }
+  fse.writeFileSync(genesisFile, JSON.stringify(besu, null, 2));
+}
+>>>>>>> 4876484 (naming refactor, tests not working)

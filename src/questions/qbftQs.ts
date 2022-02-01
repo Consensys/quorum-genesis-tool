@@ -1,19 +1,19 @@
 /* eslint-disable object-shorthand */
 import { QuestionTree } from "../types/questions";
-import { _getYesNoValidator, _integerValidator, _outputDirQuestion } from "./common";
+import { getYesNoValidator, integerValidator, outputDirQuestion } from "./common";
 import * as commonQs from "./commonQs";
 
 const _outputUserInputs: QuestionTree = commonQs.outputUserInputs;
-_outputUserInputs.transformerValidator = _getYesNoValidator(_outputUserInputs, _outputDirQuestion, "y");
+_outputUserInputs.transformerValidator = getYesNoValidator(_outputUserInputs, outputDirQuestion, "y");
 
 const _tesseraQuestion: QuestionTree = commonQs.tesseraQuestion;
-_tesseraQuestion.transformerValidator = _getYesNoValidator(_tesseraQuestion, _outputUserInputs, "y");
+_tesseraQuestion.transformerValidator = getYesNoValidator(_tesseraQuestion, _outputUserInputs, "y");
 
 const _permissionQuestion: QuestionTree = commonQs.permissionQuestion;
-_permissionQuestion.transformerValidator = _getYesNoValidator(_permissionQuestion, _tesseraQuestion, "y");
+_permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _tesseraQuestion, "y");
 
 const _staticNodesQuestion: QuestionTree = commonQs.staticNodesQuestion;
-_staticNodesQuestion.transformerValidator = _getYesNoValidator(_staticNodesQuestion, _permissionQuestion, "y");
+_staticNodesQuestion.transformerValidator = getYesNoValidator(_staticNodesQuestion, _permissionQuestion, "y");
 
 const _curveQuestion: QuestionTree = commonQs.curveQuestion;
 _curveQuestion.options =
@@ -23,39 +23,39 @@ _curveQuestion.options =
 ];
 
 const _bootnodesQuestion: QuestionTree = commonQs.bootnodesQuestion;
-_bootnodesQuestion.transformerValidator = _integerValidator(_bootnodesQuestion, _curveQuestion, 2);
+_bootnodesQuestion.transformerValidator = integerValidator(_bootnodesQuestion, _curveQuestion, 2);
 
 const _membersQuestion: QuestionTree = commonQs.membersQuestion;
-_membersQuestion.transformerValidator = _integerValidator(_membersQuestion, _bootnodesQuestion, 1);
+_membersQuestion.transformerValidator = integerValidator(_membersQuestion, _bootnodesQuestion, 1);
 
 const _validatorsQuestion: QuestionTree = commonQs.validatorsQuestion;
-_validatorsQuestion.transformerValidator = _integerValidator(_validatorsQuestion, _membersQuestion, 4);
+_validatorsQuestion.transformerValidator = integerValidator(_validatorsQuestion, _membersQuestion, 4);
 
 const _txnSizeLimitQuestion: QuestionTree = commonQs.txnSizeLimitQuestion;
-_txnSizeLimitQuestion.transformerValidator = _integerValidator(_txnSizeLimitQuestion, _validatorsQuestion);
+_txnSizeLimitQuestion.transformerValidator = integerValidator(_txnSizeLimitQuestion, _validatorsQuestion);
 
 const _maxCodeSizeQuestion: QuestionTree = commonQs.maxCodeSizeQuestion;
-_maxCodeSizeQuestion.transformerValidator = _integerValidator(_maxCodeSizeQuestion, _txnSizeLimitQuestion);
+_maxCodeSizeQuestion.transformerValidator = integerValidator(_maxCodeSizeQuestion, _txnSizeLimitQuestion);
 
 const _coinbaseQuestion: QuestionTree = commonQs.coinbaseQuestion;
-_coinbaseQuestion.transformerValidator = _integerValidator(_coinbaseQuestion, _maxCodeSizeQuestion);
+_coinbaseQuestion.transformerValidator = integerValidator(_coinbaseQuestion, _maxCodeSizeQuestion);
 
 const _gasLimitQuestion: QuestionTree = commonQs.gasLimitQuestion;
-_gasLimitQuestion.transformerValidator = _integerValidator(_gasLimitQuestion, _coinbaseQuestion);
+_gasLimitQuestion.transformerValidator = integerValidator(_gasLimitQuestion, _coinbaseQuestion);
 
 const _difficultyQuestion: QuestionTree = commonQs.difficultyQuestion;
-_difficultyQuestion.transformerValidator = _integerValidator(_difficultyQuestion, _gasLimitQuestion, 1);
+_difficultyQuestion.transformerValidator = integerValidator(_difficultyQuestion, _gasLimitQuestion, 1);
 
 const _epochQuestion: QuestionTree = commonQs.epochQuestion;
-_epochQuestion.transformerValidator = _integerValidator(_epochQuestion, _difficultyQuestion);
+_epochQuestion.transformerValidator = integerValidator(_epochQuestion, _difficultyQuestion);
 
 const _requestTimeoutQuestion: QuestionTree = commonQs.requestTimeoutQuestion;
-_requestTimeoutQuestion.transformerValidator = _integerValidator(_requestTimeoutQuestion, _epochQuestion);
+_requestTimeoutQuestion.transformerValidator = integerValidator(_requestTimeoutQuestion, _epochQuestion);
 
 
 const _blockPeriodQuestion: QuestionTree = commonQs.blockPeriodQuestion;
-_blockPeriodQuestion.transformerValidator = _integerValidator(_blockPeriodQuestion, _requestTimeoutQuestion);
+_blockPeriodQuestion.transformerValidator = integerValidator(_blockPeriodQuestion, _requestTimeoutQuestion);
 
 
 export const _chainIDQuestion: QuestionTree = commonQs.chainIDQuestion;
-_chainIDQuestion.transformerValidator = _integerValidator(_chainIDQuestion, _blockPeriodQuestion);
+_chainIDQuestion.transformerValidator = integerValidator(_chainIDQuestion, _blockPeriodQuestion);
