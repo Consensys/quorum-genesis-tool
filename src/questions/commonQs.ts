@@ -53,7 +53,7 @@ export const maxCodeSizeQuestion: QuestionTree = {
 
 export const coinbaseQuestion: QuestionTree = {
   name: "coinbase",
-  prompt: "Set your coinbase address for rewards: (hex)",
+  prompt: "Set your coinbase address for rewards: (string)",
 };
 
 export const gasLimitQuestion: QuestionTree = {
@@ -68,7 +68,7 @@ export const gasFreeQuestion: QuestionTree = {
 
 export const difficultyQuestion: QuestionTree = {
   name: "difficulty",
-  prompt: "Set your difficulty: (integer) Default: 1",
+  prompt: "Set your difficulty: (integer) Default: 0x1",
 };
 
 export const epochQuestion: QuestionTree = {

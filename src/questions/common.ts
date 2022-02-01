@@ -35,3 +35,20 @@ export function integerValidator(question: QuestionTree, nextQuestion?: Question
 
   };
 }
+
+export function stringValidator(question: QuestionTree, nextQuestion?: QuestionTree, defaultResponse?: string) {
+  return (rawInput: string, answers: AnswerMap) => {
+    const normalizedInput = rawInput.toLowerCase();
+    if (defaultResponse && !normalizedInput) {
+      answers[question.name] = defaultResponse;
+      return nextQuestion;
+    } else if (typeof (normalizedInput) === 'string' && normalizedInput !== '') {
+      answers[question.name] = normalizedInput;
+      return nextQuestion;
+    } else {
+      console.log(chalk.red("Sorry, but I didn't understand your answer. Please enter a valid string,\n" +
+          "or just hit enter default is available.\n"));
+      return question;
+    }
+  };
+}

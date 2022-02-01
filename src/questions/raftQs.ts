@@ -1,7 +1,7 @@
 /* eslint-disable object-shorthand */
 import { CryptoCurve } from "../types/cryptoCurve";
 import { QuestionTree } from "../types/questions";
-import { getYesNoValidator, integerValidator } from "./common";
+import { getYesNoValidator, integerValidator, stringValidator } from "./common";
 import * as commonQs from "./commonQs";
 
 const _outputUserInputs: QuestionTree = Object.assign({}, commonQs.outputUserInputs);
@@ -38,16 +38,16 @@ const _maxCodeSizeQuestion: QuestionTree = Object.assign({}, commonQs.maxCodeSiz
 _maxCodeSizeQuestion.transformerValidator = integerValidator(_maxCodeSizeQuestion, _txnSizeLimitQuestion);
 
 const _coinbaseQuestion: QuestionTree = Object.assign({}, commonQs.coinbaseQuestion);
-_coinbaseQuestion.transformerValidator = integerValidator(_coinbaseQuestion, _maxCodeSizeQuestion);
+_coinbaseQuestion.transformerValidator = stringValidator(_coinbaseQuestion, _maxCodeSizeQuestion);
 
 const _gasLimitQuestion: QuestionTree = Object.assign({}, commonQs.gasLimitQuestion);
-_gasLimitQuestion.transformerValidator = integerValidator(_gasLimitQuestion, _coinbaseQuestion);
+_gasLimitQuestion.transformerValidator = stringValidator(_gasLimitQuestion, _coinbaseQuestion);
 
 const _gasFreeQuestion: QuestionTree = Object.assign({}, commonQs.gasFreeQuestion);
 _gasFreeQuestion.transformerValidator = getYesNoValidator(_gasFreeQuestion, _gasLimitQuestion, 'y');
 
 const _difficultyQuestion: QuestionTree = Object.assign({}, commonQs.difficultyQuestion);
-_difficultyQuestion.transformerValidator = integerValidator(_difficultyQuestion, _gasLimitQuestion, 1);
+_difficultyQuestion.transformerValidator = stringValidator(_difficultyQuestion, _gasFreeQuestion, '0x1');
 
 export const _chainIDQuestion: QuestionTree = Object.assign({}, commonQs.chainIDQuestion);
 _chainIDQuestion.transformerValidator = integerValidator(_chainIDQuestion, _difficultyQuestion);

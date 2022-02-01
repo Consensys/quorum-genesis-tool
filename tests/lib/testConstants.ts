@@ -37,9 +37,3 @@ export const TEST_QUORUM_CONFIG : QuorumConfig = {
     address: "3db22f82cab50038f33e33cb35a86c92f5bc18f4",
     password: ""
 };
-
-export const TEST_QUESTION: QuestionTree = {
-  name: "chainID",
-  prompt: "Set your chainID value: (integer)",
-};
-
