@@ -7,7 +7,7 @@ export const tesseraQuestion: QuestionTree = {
 };
 
 export const outputUserInputs: QuestionTree = {
-  name: "userinput",
+  name: "outputPath",
   prompt: "Export your answers to file? Default: y",
 };
 

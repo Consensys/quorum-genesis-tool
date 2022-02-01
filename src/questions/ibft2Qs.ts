@@ -1,12 +1,12 @@
 /* eslint-disable object-shorthand */
 import { CryptoCurve } from "../types/cryptoCurve";
 import { QuestionTree } from "../types/questions";
-import { getYesNoValidator, integerValidator, outputPath } from "./common";
+import { getYesNoValidator, integerValidator } from "./common";
 import * as commonQs from "./commonQs";
 
 
 const _outputUserInputs: QuestionTree = commonQs.outputUserInputs;
-_outputUserInputs.transformerValidator = getYesNoValidator(_outputUserInputs, outputPath, "y");
+_outputUserInputs.transformerValidator = getYesNoValidator(_outputUserInputs, undefined, "y");
 
 const _permissionQuestion: QuestionTree = commonQs.permissionQuestion;
 _permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _outputUserInputs, "y");
