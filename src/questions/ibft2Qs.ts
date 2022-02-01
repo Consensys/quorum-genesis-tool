@@ -1,14 +1,17 @@
 import { CryptoCurve } from "../types/cryptoCurve";
 import { QuestionTree } from "../types/questions";
-import { getYesNoValidator, integerValidator, stringValidator } from "./common";
+import { getYesNoValidator, integerValidator, passwordValidator, stringValidator } from "./common";
 import * as commonQs from "./commonQs";
 
 
 const _outputUserInputs: QuestionTree = Object.assign({}, commonQs.outputUserInputs);
 _outputUserInputs.transformerValidator = getYesNoValidator(_outputUserInputs, undefined, "y");
 
+const _privacyQuestion: QuestionTree = Object.assign({}, commonQs.privacyQuestion);
+_privacyQuestion.transformerValidator = passwordValidator(_privacyQuestion, _outputUserInputs);
+
 const _permissionQuestion: QuestionTree = Object.assign({}, commonQs.permissionQuestion);
-_permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _outputUserInputs, "y");
+_permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _privacyQuestion, "y");
 
 const _staticNodesQuestion: QuestionTree = Object.assign({}, commonQs.staticNodesQuestion);
 _staticNodesQuestion.transformerValidator = getYesNoValidator(_staticNodesQuestion, _permissionQuestion, "y");
@@ -46,5 +49,5 @@ _requestTimeoutQuestion.transformerValidator = integerValidator(_requestTimeoutQ
 const _blockPeriodQuestion: QuestionTree = Object.assign({}, commonQs.blockPeriodQuestion);
 _blockPeriodQuestion.transformerValidator = integerValidator(_blockPeriodQuestion, _requestTimeoutQuestion);
 
-export const _chainIDQuestion: QuestionTree = Object.assign({}, commonQs.blockPeriodQuestion);
+export const _chainIDQuestion: QuestionTree = Object.assign({}, commonQs.chainIDQuestion);
 _chainIDQuestion.transformerValidator = integerValidator(_chainIDQuestion, _blockPeriodQuestion);

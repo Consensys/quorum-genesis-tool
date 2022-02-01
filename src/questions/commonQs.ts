@@ -1,8 +1,8 @@
 import { QuestionTree } from "../types/questions";
 
-export const tesseraQuestion: QuestionTree = {
+export const privacyQuestion: QuestionTree = {
   name: "privacy",
-  prompt: "Generate tessera config file? Default: y",
+  prompt: "Set password on key: (Leave empty for no password)",
 };
 
 export const outputUserInputs: QuestionTree = {

@@ -1,17 +1,17 @@
 /* eslint-disable object-shorthand */
 import { CryptoCurve } from "../types/cryptoCurve";
 import { QuestionTree } from "../types/questions";
-import { getYesNoValidator, integerValidator, stringValidator } from "./common";
+import { getYesNoValidator, integerValidator, passwordValidator, stringValidator } from "./common";
 import * as commonQs from "./commonQs";
 
 const _outputUserInputs: QuestionTree = Object.assign({}, commonQs.outputUserInputs);
 _outputUserInputs.transformerValidator = getYesNoValidator(_outputUserInputs, undefined, "y");
 
-const _tesseraQuestion: QuestionTree = Object.assign({}, commonQs.tesseraQuestion);
-_tesseraQuestion.transformerValidator = getYesNoValidator(_tesseraQuestion, _outputUserInputs, "y");
+const _privacyQuestion: QuestionTree = Object.assign({}, commonQs.privacyQuestion);
+_privacyQuestion.transformerValidator = passwordValidator(_privacyQuestion, _outputUserInputs);
 
 const _permissionQuestion: QuestionTree = Object.assign({}, commonQs.permissionQuestion);
-_permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _tesseraQuestion, "y");
+_permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _privacyQuestion, "y");
 
 const _staticNodesQuestion: QuestionTree = Object.assign({}, commonQs.staticNodesQuestion);
 _staticNodesQuestion.transformerValidator = getYesNoValidator(_staticNodesQuestion, _permissionQuestion, "y");
@@ -38,7 +38,7 @@ const _maxCodeSizeQuestion: QuestionTree = Object.assign({}, commonQs.maxCodeSiz
 _maxCodeSizeQuestion.transformerValidator = integerValidator(_maxCodeSizeQuestion, _txnSizeLimitQuestion);
 
 const _coinbaseQuestion: QuestionTree = Object.assign({}, commonQs.coinbaseQuestion);
-_coinbaseQuestion.transformerValidator = stringValidator(_coinbaseQuestion, _maxCodeSizeQuestion);
+_coinbaseQuestion.transformerValidator = stringValidator(_coinbaseQuestion, _maxCodeSizeQuestion, "0x1");
 
 const _gasLimitQuestion: QuestionTree = Object.assign({}, commonQs.gasLimitQuestion);
 _gasLimitQuestion.transformerValidator = stringValidator(_gasLimitQuestion, _coinbaseQuestion);

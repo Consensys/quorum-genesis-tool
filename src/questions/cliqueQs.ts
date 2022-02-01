@@ -1,14 +1,17 @@
 /* eslint-disable object-shorthand */
 import { QuestionTree } from "../types/questions";
-import { getYesNoValidator, integerValidator, stringValidator } from "./common";
+import { getYesNoValidator, integerValidator, stringValidator, passwordValidator } from "./common";
 import * as commonQs from "./commonQs";
 import { CryptoCurve } from "../types/cryptoCurve";
 
 const _outputUserInputs: QuestionTree = Object.assign({}, commonQs.outputUserInputs);
 _outputUserInputs.transformerValidator = getYesNoValidator(_outputUserInputs, undefined, "y");
 
+const _privacyQuestion: QuestionTree = Object.assign({}, commonQs.privacyQuestion);
+_privacyQuestion.transformerValidator = passwordValidator(_privacyQuestion, _outputUserInputs);
+
 const _permissionQuestion: QuestionTree = Object.assign({}, commonQs.permissionQuestion);
-_permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _outputUserInputs, "y");
+_permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _privacyQuestion, "y");
 
 const _staticNodesQuestion: QuestionTree = Object.assign({}, commonQs.staticNodesQuestion);
 _staticNodesQuestion.transformerValidator = getYesNoValidator(_staticNodesQuestion, _permissionQuestion, "y");
@@ -29,7 +32,7 @@ const _validatorsQuestion: QuestionTree = Object.assign({}, commonQs.validatorsQ
 _validatorsQuestion.transformerValidator = integerValidator(_validatorsQuestion, _membersQuestion, 4);
 
 const _coinbaseQuestion: QuestionTree = Object.assign({}, commonQs.coinbaseQuestion);
-_coinbaseQuestion.transformerValidator = stringValidator(_coinbaseQuestion, _validatorsQuestion);
+_coinbaseQuestion.transformerValidator = stringValidator(_coinbaseQuestion, _validatorsQuestion, "0x1");
 
 const _gasLimitQuestion: QuestionTree = Object.assign({}, commonQs.gasLimitQuestion);
 _gasLimitQuestion.transformerValidator = stringValidator(_gasLimitQuestion, _coinbaseQuestion);
