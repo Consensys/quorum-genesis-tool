@@ -24,3 +24,4 @@ Create the artifacts with:
 ## Troubleshooting
 
 txnsizelimit = yourNumber.toString('hex');
+# TODO test istanbul and clique and raft genesis

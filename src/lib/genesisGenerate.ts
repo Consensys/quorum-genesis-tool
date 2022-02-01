@@ -10,7 +10,7 @@ const GOQUORUM_GENESIS_FILE="genesisGoQuorum.json";
 
 export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extraData: string) : string {
   const genesisFile = path + '/' + BESU_GENESIS_FILE;
-  const besu : Genesis = DefaultGenesis ;
+  let besu : Genesis = DefaultGenesis ;
   besu.extraData = extraData;
   besu.gasLimit = quorumConfig.gasLimit;
   besu.config.chainId = quorumConfig.chainID;
@@ -33,13 +33,15 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
       };
       break;
     }
-    // qbft
-    default: {
+    case Consensus.qbft: {
       besu.config.qbft = {
         blockperiodseconds : quorumConfig.blockperiod,
         epochlength : quorumConfig.epochLength,
         requesttimeoutseconds : quorumConfig.requestTimeout,
       };
+      break;
+    }
+    default: {
       break;
     }
   }
@@ -49,7 +51,10 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
 
 export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, extraData: string) : string {
   const genesisFile = path + '/' + GOQUORUM_GENESIS_FILE;
-  const goquorum : Genesis = DefaultGenesis ;
+  let goquorum : Genesis = DefaultGenesis ;
+  console.log("**********************");
+  console.log(goquorum);
+  console.log("**********************");
   goquorum.extraData = extraData;
   goquorum.gasLimit = quorumConfig.gasLimit;
   goquorum.config.chainId = quorumConfig.chainID;
@@ -59,8 +64,8 @@ export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, 
   goquorum.config.txnSizeLimit = quorumConfig.txnSizeLimit;
 
   const consensus = quorumConfig.consensus;
+
   switch(consensus) {
-    // raft = no block so ignoring
     // TODO: check this for clique
     case Consensus.clique: {
       goquorum.config.clique = {
@@ -78,14 +83,20 @@ export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, 
       };
       break;
     }
-    // qbft
-    default: {
+    case Consensus.qbft: {
       goquorum.config.istanbul = {
         policy: 0,
         epoch : quorumConfig.epochLength,
         ceil2Nby3Block: 0,
         testQBFTBlock: 0,
       };
+      break;
+    }
+    case Consensus.raft: {
+      // raft = no block so ignoring
+     break;
+    }
+    default: {
       break;
     }
   }

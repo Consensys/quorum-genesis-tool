@@ -55,8 +55,9 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig) : Promis
       }
       // qbft
       default: {
-        genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
         genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
+        genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
+
         break;
       }
     }
