@@ -2,6 +2,7 @@
 import { QuestionTree } from "../types/questions";
 import { getYesNoValidator, integerValidator, outputPath } from "./common";
 import * as commonQs from "./commonQs";
+import { CryptoCurve } from "../types/cryptoCurve";
 
 const _outputUserInputs: QuestionTree = commonQs.outputUserInputs;
 _outputUserInputs.transformerValidator = getYesNoValidator(_outputUserInputs, outputPath, "y");
@@ -14,8 +15,8 @@ _staticNodesQuestion.transformerValidator = getYesNoValidator(_staticNodesQuesti
 
 const _curveQuestion: QuestionTree = commonQs.curveQuestion;
 _curveQuestion.options = [
-  { label: "secp256k1", value: "k1", nextQuestion: _staticNodesQuestion, default: true },
-  { label: "secp256r1", value: "r1", nextQuestion: _staticNodesQuestion }
+  { label: "secp256k1", value: CryptoCurve.k1, nextQuestion: _staticNodesQuestion, default: true },
+  { label: "secp256r1", value: CryptoCurve.r1, nextQuestion: _staticNodesQuestion }
 ];
 
 const _bootnodesQuestion: QuestionTree = commonQs.bootnodesQuestion;

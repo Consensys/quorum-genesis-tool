@@ -1,4 +1,5 @@
 /* eslint-disable object-shorthand */
+import { CryptoCurve } from "../types/cryptoCurve";
 import { QuestionTree } from "../types/questions";
 import { getYesNoValidator, integerValidator, outputPath } from "./common";
 import * as commonQs from "./commonQs";
@@ -16,10 +17,9 @@ const _staticNodesQuestion: QuestionTree = commonQs.staticNodesQuestion;
 _staticNodesQuestion.transformerValidator = getYesNoValidator(_staticNodesQuestion, _permissionQuestion, "y");
 
 const _curveQuestion: QuestionTree = commonQs.curveQuestion;
-_curveQuestion.options =
-[
-  { label: "secp256k1", value: "k1", nextQuestion: _staticNodesQuestion, default: true },
-  { label: "secp256r1", value: "r1", nextQuestion: _staticNodesQuestion }
+_curveQuestion.options = [
+  { label: "secp256k1", value: CryptoCurve.k1, nextQuestion: _staticNodesQuestion, default: true },
+  { label: "secp256r1", value: CryptoCurve.r1, nextQuestion: _staticNodesQuestion }
 ];
 
 const _bootnodesQuestion: QuestionTree = commonQs.bootnodesQuestion;
