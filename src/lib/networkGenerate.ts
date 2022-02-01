@@ -1,6 +1,7 @@
 
 import { QuorumConfig, PrivacyConfig } from "../types/quorumConfig";
 import { NodeKeys, Address } from "../types/nodeKeys";
+// import * as genesis from "./genesisGenerate";
 import * as fileHandler from "./fileHandler";
 import * as nodekeys from "./nodeKeys";
 
@@ -32,9 +33,12 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig) : Promis
     const validators = await generateNodeConfig(quorumConfig.validators, "validator", quorumConfig.privacy, outputDir);
     console.log(validators);
 
-    console.log("Generating extra data string")
+    console.log("Generating extra data string");
     const validatorAddressBuffers : Address[] = validators.map(v => v.address);
-    const extraDataString : string = nodekeys.generateExtraDataString(validatorAddressBuffers, quorumConfig.consensus);
+    const extraData : string = nodekeys.generateExtraDataString(validatorAddressBuffers, quorumConfig.consensus);
+    // TODO: update me
+    console.log(extraData);
+    // genesis.updateBesuGenesis(outputDir, quorumConfig, extraData);
 
     console.log("Creating bootnodes...");
     const bootnodes = await generateNodeConfig(quorumConfig.bootnodes, "bootnode", quorumConfig.privacy, outputDir);
