@@ -6,13 +6,13 @@
   "repository": "git@github.com:ConsenSys/quorum-genesis-tool.git",
   "contributors": [
     "Joshua Fernandes <3722503+joshuafernandes@users.noreply.github.com>",
-    "Eric Lin <+ezzahhh@users.noreply.github.com>"
+    "Eric Lin <ezzahhh@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
   "private": false,
   "bin": "./index.js",
   "scripts": {
-    "clean": "rm -rf build",
+    "clean": "rm -rf build output",
     "build": "tsc",
     "test": "jest --verbose",
     "lint": "eslint './src/**'",
@@ -23,23 +23,17 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "cli-spinners": "^2.6.1",
-    "elliptic": "^6.5.4",
-    "elliptic-curve": "^0.1.0",
     "ethereumjs-wallet": "^1.0.2",
-    "fs-extra": "^10.0.0",
     "keccak": "^3.0.2",
     "log-update": "^5.0.0",
     "nunjucks": "^3.2.3",
-    "open": "^8.4.0",
     "rlp": "^3.0.0",
     "secp256k1": "^4.0.3",
     "secp256r1": "^0.0.3",
-    "tmp": "^0.2.1",
     "toml": "^3.0.0",
     "yargs": "^17.3.1"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.4.0",
     "@types/keccak": "^3.0.1",
     "@types/node": "^17.0.10",

@@ -22,3 +22,14 @@ Create the artifacts with:
 
 
 ## Troubleshooting
+
+txnsizelimit = yourNumber.toString('hex');
+
+
+## TODO
+
+- check out the genesis files with the quickstart
+- check the hex string and number values in the genesis & quorumConfig
+- static files & permissions
+- join questions with generation
+- readme

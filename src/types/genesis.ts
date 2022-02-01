@@ -1,14 +1,21 @@
 
 
-type Algorithm = {
-  blockperiodseconds: number;
-  epochlength: number;
-  requesttimeoutseconds: number;
+export type Algorithm = {
+  blockperiodseconds?: number;
+  requesttimeoutseconds?: number;
+  epochlength?: number;
+  epoch?: number;
   policy?: number;
   ceil2Nby3Block?: number;
+  testQBFTBlock?: number;
 };
 
-type GenesisConfig = {
+export type CodeSize = {
+  block: number;
+  size: number;
+};
+
+export type GenesisConfig = {
   chainId: number;
   homesteadBlock: number;
   eip150Block: number;
@@ -17,8 +24,12 @@ type GenesisConfig = {
   eip158Block: number;
   byzantiumBlock: number;
   constantinopleBlock: number;
+  isQuorum?: boolean;
   contractSizeLimit?: string;
+  txnSizeLimit?: number;
+  maxCodeSizeConfig?: [ CodeSize ];
   ibft2?: Algorithm;
+  istanbul?: Algorithm;
   qbft?: Algorithm;
   clique?: Algorithm;
 };
@@ -29,22 +40,20 @@ export type Alloc = {
   privateKey?: string;
 };
 
-export type BesuGenesis = {
+export type Genesis = {
   nonce: string;
   timestamp: string;
   extraData: string;
   gasLimit: string;
-  difficulty: string;
-  mixHash: string;
-  coinbase: string;
-  'number': string;
   gasUsed: string;
+  'number': string;
+  difficulty: string;
+  coinbase: string;
+  mixHash: string;
   parentHash: string;
   alloc: {
     [id: string]: Alloc;
   };
   config: GenesisConfig;
 };
-
-
 
