@@ -1,10 +1,10 @@
 /* eslint-disable object-shorthand */
 import { QuestionTree } from "../types/questions";
-import { getYesNoValidator, integerValidator, outputDirQuestion } from "./common";
+import { getYesNoValidator, integerValidator, outputPath } from "./common";
 import * as commonQs from "./commonQs";
 
 const _outputUserInputs: QuestionTree = commonQs.outputUserInputs;
-_outputUserInputs.transformerValidator = getYesNoValidator(_outputUserInputs, outputDirQuestion, "y");
+_outputUserInputs.transformerValidator = getYesNoValidator(_outputUserInputs, outputPath, "y");
 
 const _permissionQuestion: QuestionTree = commonQs.permissionQuestion;
 _permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _outputUserInputs, "y");

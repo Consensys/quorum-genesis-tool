@@ -1,7 +1,7 @@
 
 import * as networkGen from "../../src/lib/networkGenerate";
 import { Consensus } from "../../src/types/consensus";
-import { TEST_QUORUM_CONFIG } from "./testConstants"
+import { TEST_QUORUM_CONFIG } from "./testConstants";
 
 describe("Network Generation tests", () => {
 

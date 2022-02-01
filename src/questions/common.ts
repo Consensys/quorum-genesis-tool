@@ -4,7 +4,7 @@ import { readdirSync } from "fs";
 import { QuestionTree, AnswerMap } from "../types/questions";
 import chalk from "chalk";
 
-export const outputDirQuestion: QuestionTree = {
+export const outputPath: QuestionTree = {
   name: "outputPath",
   prompt: "Where should we create the config files for this network? Please\n" +
 "choose either an empty directory, or a path to a new directory that does\n" +
@@ -25,7 +25,7 @@ export const outputDirQuestion: QuestionTree = {
           `already contains some files. Please clear the directory before continuing, or choose\n` +
           `a different one.\n`
         ));
-        return outputDirQuestion;
+        return outputPath;
       }
     } catch (err: any) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -37,7 +37,7 @@ export const outputDirQuestion: QuestionTree = {
           `Whoops! There was an error when checking your output directory (${err.code as string}). Please\n` +
           `choose a different one before proceeding.\n`
         ));
-        return outputDirQuestion;
+        return outputPath;
       }
     }
 

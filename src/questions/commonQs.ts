@@ -2,7 +2,7 @@
 import { QuestionTree } from "../types/questions";
 
 export const tesseraQuestion: QuestionTree = {
-  name: "tessera",
+  name: "privacy",
   prompt: "Generate tessera config file? Default: y",
 };
 
@@ -43,12 +43,12 @@ export const validatorsQuestion: QuestionTree = {
 };
 
 export const txnSizeLimitQuestion: QuestionTree = {
-  name: "txnsize",
+  name: "txnSizeLimit",
   prompt: "Set your transaction size limit value: (integer)",
 };
 
 export const maxCodeSizeQuestion: QuestionTree = {
-  name: "maxsize",
+  name: "maxCodeSize",
   prompt: "Set your max code size value: (integer)",
 };
 
@@ -58,7 +58,7 @@ export const coinbaseQuestion: QuestionTree = {
 };
 
 export const gasLimitQuestion: QuestionTree = {
-  name: "gaslimit",
+  name: "gasLimit",
   prompt: "Set your gas limit value: (integer)",
 };
 
@@ -68,12 +68,12 @@ export const difficultyQuestion: QuestionTree = {
 };
 
 export const epochQuestion: QuestionTree = {
-  name: "epochlength",
+  name: "epochLength",
   prompt: "Set your epoch length value: (integer)",
 };
 
 export const requestTimeoutQuestion: QuestionTree = {
-  name: "requesttimeout",
+  name: "requestTimeout",
   prompt: "Set your requestTimeoutSeconds value: (integer)",
 };
 
