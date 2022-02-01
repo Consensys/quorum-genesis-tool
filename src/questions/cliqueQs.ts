@@ -1,85 +1,46 @@
 /* eslint-disable object-shorthand */
 import { QuestionTree } from "../types/questions";
 import { _getYesNoValidator, _integerValidator, _outputDirQuestion } from "./common";
+import * as commonQs from "./commonQs";
 
-const _outputUserInputs: QuestionTree = {
-  name: "userinput",
-  prompt: "Export your answers to file? Default: y",
-};
+const _outputUserInputs: QuestionTree = commonQs.outputUserInputs;
 _outputUserInputs.transformerValidator = _getYesNoValidator(_outputUserInputs, _outputDirQuestion, "y");
 
-const _permissionQuestion: QuestionTree = {
-  name: "permissions",
-  prompt: "Generate permissions config file? Default: y",
-};
+const _permissionQuestion: QuestionTree = commonQs.permissionQuestion;
 _permissionQuestion.transformerValidator = _getYesNoValidator(_permissionQuestion, _outputUserInputs, "y");
 
-const _staticNodesQuestion: QuestionTree = {
-  name: "staticnodes",
-  prompt: "Generate static node config file? Default: y",
-};
+const _staticNodesQuestion: QuestionTree = commonQs.staticNodesQuestion;
 _staticNodesQuestion.transformerValidator = _getYesNoValidator(_staticNodesQuestion, _permissionQuestion, "y");
 
-const _curveQuestion: QuestionTree = {
-  name: "curve",
-  prompt: "Choose your encryption curve: Default: [1]",
-  options: [
-    { label: "secp256k1", value: "k1", nextQuestion: _staticNodesQuestion, default: true },
-    { label: "secp256r1", value: "r1", nextQuestion: _staticNodesQuestion }
-  ]
-};
+const _curveQuestion: QuestionTree = commonQs.curveQuestion;
+_curveQuestion.options = [
+  { label: "secp256k1", value: "k1", nextQuestion: _staticNodesQuestion, default: true },
+  { label: "secp256r1", value: "r1", nextQuestion: _staticNodesQuestion }
+];
 
-const _bootnodesQuestion: QuestionTree = {
-  name: "bootnodes",
-  prompt: "Choose number of bootnode node keys to generate: (integer) Default: 2",
-};
+const _bootnodesQuestion: QuestionTree = commonQs.bootnodesQuestion;
 _bootnodesQuestion.transformerValidator = _integerValidator(_bootnodesQuestion, _curveQuestion, 2);
 
-const _membersQuestion: QuestionTree = {
-  name: "members",
-  prompt: "Choose number of member node keys to generate: (integer)",
-};
+const _membersQuestion: QuestionTree = commonQs.membersQuestion;
 _membersQuestion.transformerValidator = _integerValidator(_membersQuestion, _bootnodesQuestion, 1);
 
-const _validatorsQuestion: QuestionTree = {
-  name: "validators",
-  prompt: "Choose number of validator node keys to generate: (integer) Default: 4",
-};
+const _validatorsQuestion: QuestionTree = commonQs.validatorsQuestion;
 _validatorsQuestion.transformerValidator = _integerValidator(_validatorsQuestion, _membersQuestion, 4);
 
-const _coinbaseQuestion: QuestionTree = {
-  name: "coinbase",
-  prompt: "Set your coinbase address for rewards: (hex)",
-};
+const _coinbaseQuestion: QuestionTree = commonQs.coinbaseQuestion;
 _coinbaseQuestion.transformerValidator = _integerValidator(_coinbaseQuestion, _validatorsQuestion);
 
-const _gasLimitQuestion: QuestionTree = {
-  name: "gaslimit",
-  prompt: "Set your gas limit value: (integer)",
-};
+const _gasLimitQuestion: QuestionTree = commonQs.gasLimitQuestion;
 _gasLimitQuestion.transformerValidator = _integerValidator(_gasLimitQuestion, _coinbaseQuestion);
 
-const _difficultyQuestion: QuestionTree = {
-  name: "difficulty",
-  prompt: "Set your difficulty: (integer) Default: 1",
-};
+const _difficultyQuestion: QuestionTree = commonQs.difficultyQuestion;
 _difficultyQuestion.transformerValidator = _integerValidator(_difficultyQuestion, _gasLimitQuestion, 1);
 
-const _epochQuestion: QuestionTree = {
-  name: "epochlength",
-  prompt: "Set your epoch length value: (integer)",
-};
+const _epochQuestion: QuestionTree = commonQs.epochQuestion;
 _epochQuestion.transformerValidator = _integerValidator(_epochQuestion, _difficultyQuestion);
 
-const _blockPeriodQuestion: QuestionTree = {
-  name: "blockperiod",
-  prompt: "Set your blockperiodseconds value: (integer)",
-};
+const _blockPeriodQuestion: QuestionTree = commonQs.blockPeriodQuestion;
 _blockPeriodQuestion.transformerValidator = _integerValidator(_blockPeriodQuestion, _epochQuestion);
 
-
-export const _chainIDQuestion: QuestionTree = {
-  name: "chainID",
-  prompt: "Set your chainID value: (integer)",
-};
+export const _chainIDQuestion: QuestionTree = commonQs.chainIDQuestion;
 _chainIDQuestion.transformerValidator = _integerValidator(_chainIDQuestion, _blockPeriodQuestion);
