@@ -2,11 +2,12 @@
 import { Consensus } from "../../src/types/consensus";
 import { QuorumConfig, PrivacyConfig } from "../../src/types/quorumConfig";
 import { CryptoCurve } from "../../src/types/cryptoCurve";
+import { QuestionTree } from "../../src/types/questions";
 
-export const TEST_PRIVACY_CONFIG : PrivacyConfig = {
-    enabled: true,
-    password: "",
-}
+export const TEST_PRIVACY_CONFIG: PrivacyConfig = {
+  enabled: true,
+  password: "",
+};
 
 export const TEST_QUORUM_CONFIG : QuorumConfig = {
     consensus: Consensus.qbft,
@@ -36,4 +37,3 @@ export const TEST_QUORUM_CONFIG : QuorumConfig = {
     address: "3db22f82cab50038f33e33cb35a86c92f5bc18f4",
     password: ""
 };
-   

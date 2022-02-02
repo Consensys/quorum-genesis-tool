@@ -6,7 +6,7 @@
   "repository": "git@github.com:ConsenSys/quorum-genesis-tool.git",
   "contributors": [
     "Joshua Fernandes <3722503+joshuafernandes@users.noreply.github.com>",
-    "Eric Lin <ezzahhh@users.noreply.github.com>"
+    "Eric Lin <38420555+Ezzahhh@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
   "private": false,
@@ -14,6 +14,7 @@
   "scripts": {
     "clean": "rm -rf build output",
     "build": "tsc",
+    "postbuild": "cp -R src/templates build",
     "test": "jest --verbose",
     "lint": "eslint './src/**'",
     "lintAndFix": "eslint --fix './src/**'",

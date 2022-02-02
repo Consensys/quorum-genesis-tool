@@ -11,8 +11,8 @@ export type Algorithm = {
 };
 
 export type CodeSize = {
-  block: number;
-  size: number;
+  block?: number;
+  size?: number;
 };
 
 export type GenesisConfig = {
