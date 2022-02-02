@@ -22,7 +22,7 @@ export function setupOutputFolder(path : string, quorumConfig: QuorumConfig, tem
   return path;
 }
 
-// TODO: besu config.toml + tessera config
+// TODO: besu config.toml
 export function writeNodeKeys(path: string, nodekeys: NodeKeys) : void {
   if (!fs.existsSync(path)) fs.mkdirSync(path, {recursive: true});
   // nodekeys
@@ -35,3 +35,16 @@ export function writeNodeKeys(path: string, nodekeys: NodeKeys) : void {
   fs.writeFileSync(path + "/accountPrivateKey", nodekeys.ethAccount.privateKey);
   fs.writeFileSync(path + "/accountAddress", nodekeys.ethAccount.address);
 }
+
+export function createStaticNodes(path : string, nodes: string[]) : string {
+  const staticNodes : string [] = nodes.map(_ => "enode://"+ _ +"@<HOST>:30303");
+  fs.writeFileSync(path + "/static-nodes.json", JSON.stringify(staticNodes, null, 2));
+  return path;
+}
+
+export function createPermissions(path : string, nodes: string[]) : string {
+  const staticNodes : string [] = nodes.map(_ => "enode://"+ _ +"@<HOST>:30303");
+  fs.writeFileSync(path + "/static-nodes.json", JSON.stringify(staticNodes, null, 2));
+  return path;
+}
+

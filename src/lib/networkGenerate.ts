@@ -63,10 +63,15 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig) : Promis
     }
 
     console.log("Creating bootnodes...");
-    await generateNodeConfig(quorumConfig.bootnodes, "bootnode", quorumConfig.privacy, outputDir);
+    const bootnodes = await generateNodeConfig(quorumConfig.bootnodes, "bootnode", quorumConfig.privacy, outputDir);
 
     console.log("Creating members...");
-    await generateNodeConfig(quorumConfig.members, "member", quorumConfig.privacy, outputDir);
+    const members = await generateNodeConfig(quorumConfig.members, "member", quorumConfig.privacy, outputDir);
+
+    // static nodes generation
+    const allNodes : NodeKeys[] = validators.concat(bootnodes, members);
+    const allNodesEnodes : string [] = allNodes.map(_ => _.publicKey.toString('hex'));
+    fileHandler.createStaticNodes(outputDir, allNodesEnodes);
 
     return outputDir;
 }
