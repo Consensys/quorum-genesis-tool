@@ -31,7 +31,7 @@ function createDefaultGenesis(): Genesis {
     nonce : "0x0",
     timestamp: "0x58ee40ba",
     extraData: "0x0",
-    gasLimit: "0xf7b760",
+    gasLimit: "0xfffffffff",
     gasUsed: "0x0",
     'number': "0x0",
     difficulty: "0x1",
@@ -54,8 +54,9 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
   const besu : Genesis = createDefaultGenesis();
   besu.extraData = extraData;
   besu.gasLimit = quorumConfig.gasLimit;
+  besu.coinbase = quorumConfig.coinbase;
+  besu.difficulty = quorumConfig.difficulty.toString(16);
   besu.config.chainId = quorumConfig.chainID;
-
   const consensus = quorumConfig.consensus;
   switch(consensus) {
     case Consensus.clique: {
@@ -91,22 +92,23 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
 }
 
 export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, extraData: string) : string {
-  const genesisFile = path + '/' + GOQUORUM_GENESIS_FILE;
-  const goquorum : Genesis = createDefaultGenesis();
-  goquorum.extraData = extraData;
-  goquorum.gasLimit = quorumConfig.gasLimit;
-  goquorum.config.chainId = quorumConfig.chainID;
-  goquorum.config.isQuorum = true;
-
   const DefaultCodeSize : CodeSize = {
     block: 0,
     size: quorumConfig.maxCodeSize,
   };
+
+  const genesisFile = path + '/' + GOQUORUM_GENESIS_FILE;
+  const goquorum : Genesis = createDefaultGenesis();
+  goquorum.extraData = extraData;
+  goquorum.gasLimit = quorumConfig.gasLimit;
+  goquorum.coinbase = quorumConfig.coinbase;
+  goquorum.difficulty = quorumConfig.difficulty.toString(16);
+  goquorum.config.isQuorum = true;
+  goquorum.config.chainId = quorumConfig.chainID;
   goquorum.config.maxCodeSizeConfig = [ DefaultCodeSize ];
   goquorum.config.txnSizeLimit = quorumConfig.txnSizeLimit;
 
   const consensus = quorumConfig.consensus;
-
   switch(consensus) {
     // TODO: check this for clique
     case Consensus.clique: {

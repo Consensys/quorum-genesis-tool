@@ -56,10 +56,8 @@ Set your requestTimeoutSeconds value: (integer)
 10
 Set your epoch length value: (integer)
 30000
-Set your difficulty: (integer) Default: 0x1
-0x1
-Is this a gas free network?: (y/n)
-n
+Set your difficulty: (integer) Default: 1
+1
 Set your gas limit value: (integer)
 16234336
 Set your coinbase address for rewards: (string) Default: 0x0000000000000000000000000000000000000000
@@ -78,16 +76,12 @@ Choose your encryption curve: Default: [1]
         1. secp256k1
         2. secp256r1
 1
-Generate static node config file? Default: y
-y
-Generate permissions config file? Default: y
-y
-Set password on key: (Leave empty for no password)
+Set account password: (Leave empty for no password)
 
 ```
  
-This prompts you to pick a consensus algorithm variant, and specifics for your genesis file. By 
-default artifact files are stored at `./output/<TIMESTAMP>`, where *TIMESTAMP* is the time in a user friendly string:
+This prompts you to pick a consensus algorithm variant, and specifics for your genesis file. By default, 
+artifact files are stored at `./output/<TIMESTAMP>`, where *TIMESTAMP* is the time in a user friendly string:
 
 ```
 
@@ -104,13 +98,9 @@ The arguments ```--consensus``` and ```--clientType``` are required, the others 
 
 ## Troubleshooting
 
-txnsizelimit = yourNumber.toString('hex');
-
-
 ## TODO
 
 - besu config.toml
-- check the hex string and number values in the genesis & quorumConfig
 - check out the genesis files with the quickstart
 - yargs 
 
