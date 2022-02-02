@@ -4,6 +4,7 @@ import { QuestionTree } from "../types/questions";
 import { integerValidator, passwordValidator, stringValidator } from "./common";
 import * as commonQs from "./commonQs";
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const _accountPasswordQuestion: QuestionTree = Object.assign({}, commonQs.accountPasswordQuestion);
 _accountPasswordQuestion.transformerValidator = passwordValidator(_accountPasswordQuestion, undefined);
 
@@ -35,7 +36,7 @@ const _gasLimitQuestion: QuestionTree = Object.assign({}, commonQs.gasLimitQuest
 _gasLimitQuestion.transformerValidator = stringValidator(_gasLimitQuestion, _coinbaseQuestion, "0xFFFF");
 
 const _difficultyQuestion: QuestionTree = Object.assign({}, commonQs.difficultyQuestion);
-_difficultyQuestion.transformerValidator = integerValidator(_difficultyQuestion, _gasLimitQuestion,  1);
+_difficultyQuestion.transformerValidator = integerValidator(_difficultyQuestion, _gasLimitQuestion, 1);
 
 export const _chainIDQuestion: QuestionTree = Object.assign({}, commonQs.chainIDQuestion);
 _chainIDQuestion.transformerValidator = integerValidator(_chainIDQuestion, _difficultyQuestion, 1337);
