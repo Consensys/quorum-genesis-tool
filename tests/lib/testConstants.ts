@@ -9,9 +9,8 @@ export const TEST_QUORUM_CONFIG : QuorumConfig = {
     blockperiod: 5,
     requestTimeout: 10,
     epochLength: 30000,
-    difficulty: "0x1",
+    difficulty: 1,
     gasLimit: "0x1fffffffffffff",
-    gasFreeNetwork: false,
     coinbase: "0x0000000000000000000000000000000000000000",
     maxCodeSize: 255,
     txnSizeLimit: 255,
@@ -20,8 +19,6 @@ export const TEST_QUORUM_CONFIG : QuorumConfig = {
     bootnodes: 2,
     accountPassword: "",
     curve: CryptoCurve.k1,
-    staticnodes: true,
-    permissions: true,
     outputPath: "./output"
  };
 
