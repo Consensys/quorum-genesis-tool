@@ -2,12 +2,7 @@ import { QuestionTree } from "../types/questions";
 
 export const privacyQuestion: QuestionTree = {
   name: "privacy",
-  prompt: "Set password on key: (Leave empty for no password)",
-};
-
-export const outputUserInputs: QuestionTree = {
-  name: "userinput",
-  prompt: "Export your answers to file? Default: y",
+  prompt: "Set your account password: (empty for none)"
 };
 
 export const permissionQuestion: QuestionTree = {

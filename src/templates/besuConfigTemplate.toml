@@ -1,0 +1,60 @@
+# network
+network-id="{{chainID}}"
+
+# gas
+{% if gasFreeNetwork -%}
+min-gas-price=0
+{% endif -%}
+
+# data
+data-path="/data"
+logging="INFO"
+
+genesis-file="/data/genesisBesu.json"
+host-whitelist=["*"]
+
+# p2p
+p2p-host="<REPLACE_ME>"
+p2p-port="<REPLACE_ME>"
+max-peers=25
+
+# rpc
+rpc-http-enabled=true
+rpc-http-host="0.0.0.0"
+rpc-http-port=8545
+rpc-http-api=["ADMIN", "DEBUG, "NET", "ETH", "MINER", "WEB3", "QBFT", "CLIQUE", "EEA", "IBFT"]
+rpc-http-cors-origins=["all"]
+
+# ws
+rpc-ws-enabled=true
+rpc-ws-host="0.0.0.0"
+rpc-ws-port=8546
+rpc-ws-api=["ADMIN", "DEBUG, "NET", "ETH", "MINER", "WEB3", "QBFT", "CLIQUE", "EEA", "IBFT"]
+
+# graphql
+graphql-http-enabled=true
+graphql-http-host="0.0.0.0"
+graphql-http-port=8547
+graphql-http-cors-origins=["all"]
+
+# metrics
+metrics-enabled=true
+metrics-host="0.0.0.0"
+metrics-port=9545
+
+# privacy
+# privacy-enabled=true
+# privacy-url="http://<HOST>:<PORT>"
+# privacy-public-key-file=""
+
+{% if bootnodes|length > 0 -%}
+# bootnodes
+bootnodes={{bootnodes}}
+{% endif -%}
+
+# permissions
+# permissions-nodes-config-file-enabled=false
+# permissions-nodes-config-file="/config/permissions_config.toml"
+
+# static nodes
+static-nodes-file="/config/static-nodes.json"
