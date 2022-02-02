@@ -36,15 +36,19 @@ export function writeNodeKeys(path: string, nodekeys: NodeKeys) : void {
   fs.writeFileSync(path + "/accountAddress", nodekeys.ethAccount.address);
 }
 
-export function createStaticNodes(path : string, nodes: string[]) : string {
+export function createStaticNodes(path : string, nodes: string[]) : void {
   const staticNodes : string [] = nodes.map(_ => "enode://"+ _ +"@<HOST>:30303");
   fs.writeFileSync(path + "/static-nodes.json", JSON.stringify(staticNodes, null, 2));
-  return path;
 }
 
-export function createPermissions(path : string, nodes: string[]) : string {
+export function createGoQuorumPermissionsFile(path : string, nodes: string[]) : void {
+  const staticNodes : string [] = nodes.map(_ => "enode://"+ _ +"@<HOST>:30303?discport=0&raftport=53000");
+  fs.writeFileSync(path + "/goquorum-permissioned-nodes.json", JSON.stringify(staticNodes, null, 2));
+  fs.writeFileSync(path + "/goquorum-disallowed-nodes.json", JSON.stringify([], null, 2));
+}
+
+export function createBesuPermissionsFile(path : string, nodes: string[]) : void {
   const staticNodes : string [] = nodes.map(_ => "enode://"+ _ +"@<HOST>:30303");
-  fs.writeFileSync(path + "/static-nodes.json", JSON.stringify(staticNodes, null, 2));
-  return path;
+  fs.writeFileSync(path + "/besu-permissioned-nodes.json", "nodes-allowlist=");
+  fs.appendFileSync(path + "/besu-permissioned-nodes.json", JSON.stringify(staticNodes, null, 2));
 }
-
