@@ -31,13 +31,6 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
 
   console.log("Creating bootnodes...");
   const bootnodes = await generateNodeConfig(quorumConfig.bootnodes, "bootnode", quorumConfig.accountPassword, outputDir);
-  // console.log("Rendering Besu config file...");
-  const mapping = {
-    bootnodes: JSON.stringify(bootnodes.map(_ => _.publicKey.toString('hex')).map(_ => "enode://" + _ + "@<HOST>:30303")
-    ),
-    chainID: quorumConfig.chainID,
-  };
-  besuConfig.renderConfigToml(outputDir, mapping);
 
   console.log("Creating members...");
   const members = await generateNodeConfig(quorumConfig.members, "member", quorumConfig.accountPassword, outputDir);
@@ -56,6 +49,7 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
   switch (consensus) {
     case Consensus.clique: {
       genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
+      besuConfig.createBesuConfig(bootnodes, quorumConfig, outputDir);
       genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
       fileHandler.createBesuPermissionsFile(outputDir, allNodesEnodes);
       fileHandler.createGoQuorumPermissionsFile(outputDir, allNodesEnodes);
@@ -73,6 +67,7 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
     }
     case Consensus.ibft2: {
       genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
+      besuConfig.createBesuConfig(bootnodes, quorumConfig, outputDir);
       fileHandler.createBesuPermissionsFile(outputDir, allNodesEnodes);
       break;
     }
@@ -80,6 +75,7 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
     default: {
       genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
       genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
+      besuConfig.createBesuConfig(bootnodes, quorumConfig, outputDir);
       fileHandler.createBesuPermissionsFile(outputDir, allNodesEnodes);
       fileHandler.createGoQuorumPermissionsFile(outputDir, allNodesEnodes);
       break;
