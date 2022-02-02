@@ -113,5 +113,5 @@ txnsizelimit = yourNumber.toString('hex');
 - check the hex string and number values in the genesis & quorumConfig
 - check out the genesis files with the quickstart
 - yargs 
-- readme
+
 
