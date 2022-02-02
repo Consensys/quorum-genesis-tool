@@ -1,10 +1,8 @@
 # network
 network-id="{{chainID}}"
 
-# gas
-{% if gasFreeNetwork -%}
-min-gas-price=0
-{% endif -%}
+# gas -- uncomment line below for gas free network
+# min-gas-price=0
 
 # data
 data-path="/data"

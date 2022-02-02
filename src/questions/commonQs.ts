@@ -1,18 +1,8 @@
 import { QuestionTree } from "../types/questions";
 
 export const privacyQuestion: QuestionTree = {
-  name: "privacy",
+  name: "accountPassword",
   prompt: "Set your account password: (empty for none)"
-};
-
-export const permissionQuestion: QuestionTree = {
-  name: "permissions",
-  prompt: "Generate permissions config file? Default: y",
-};
-
-export const staticNodesQuestion: QuestionTree = {
-  name: "staticnodes",
-  prompt: "Generate static node config file? Default: y",
 };
 
 export const curveQuestion: QuestionTree = {
@@ -54,11 +44,6 @@ export const coinbaseQuestion: QuestionTree = {
 export const gasLimitQuestion: QuestionTree = {
   name: "gasLimit",
   prompt: "Set your gas limit value: (integer)",
-};
-
-export const gasFreeQuestion: QuestionTree = {
-  name: "gasFreeNetwork",
-  prompt: "Is this a gas free network?: (y/n)"
 };
 
 export const difficultyQuestion: QuestionTree = {

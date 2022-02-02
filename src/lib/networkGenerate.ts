@@ -34,9 +34,10 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
 
   console.log("Rendering Besu config file...");
   const mapping = {
-    bootnodes: JSON.stringify(bootnodes.map(_ => _.publicKey.toString('hex')).map(_ => "enode://" + _ + "@<HOST>:30303"))
+    bootnodes: JSON.stringify(bootnodes.map(_ => _.publicKey.toString('hex')).map(_ => "enode://" + _ + "@<HOST>:30303")
+    ),
+    chainID: quorumConfig.chainID,
   };
-  console.log(mapping);
   besuConfig.renderConfigToml(outputDir, mapping);
 
   console.log("Creating members...");
