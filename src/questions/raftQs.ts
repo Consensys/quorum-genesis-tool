@@ -1,22 +1,16 @@
 /* eslint-disable object-shorthand */
 import { CryptoCurve } from "../types/cryptoCurve";
 import { QuestionTree } from "../types/questions";
-import { getYesNoValidator, integerValidator, passwordValidator, stringValidator } from "./common";
+import { integerValidator, passwordValidator, stringValidator } from "./common";
 import * as commonQs from "./commonQs";
 
 const _privacyQuestion: QuestionTree = Object.assign({}, commonQs.privacyQuestion);
 _privacyQuestion.transformerValidator = passwordValidator(_privacyQuestion, undefined);
 
-const _permissionQuestion: QuestionTree = Object.assign({}, commonQs.permissionQuestion);
-_permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _privacyQuestion, "y");
-
-const _staticNodesQuestion: QuestionTree = Object.assign({}, commonQs.staticNodesQuestion);
-_staticNodesQuestion.transformerValidator = getYesNoValidator(_staticNodesQuestion, _permissionQuestion, "y");
-
 const _curveQuestion: QuestionTree = Object.assign({}, commonQs.curveQuestion);
 _curveQuestion.options = [
-  { label: "secp256k1", value: CryptoCurve.k1, nextQuestion: _staticNodesQuestion, default: true },
-  { label: "secp256r1", value: CryptoCurve.r1, nextQuestion: _staticNodesQuestion }
+  { label: "secp256k1", value: CryptoCurve.k1, nextQuestion: _privacyQuestion, default: true },
+  { label: "secp256r1", value: CryptoCurve.r1, nextQuestion: _privacyQuestion }
 ];
 
 const _bootnodesQuestion: QuestionTree = Object.assign({}, commonQs.bootnodesQuestion);
@@ -40,11 +34,8 @@ _coinbaseQuestion.transformerValidator = stringValidator(_coinbaseQuestion, _max
 const _gasLimitQuestion: QuestionTree = Object.assign({}, commonQs.gasLimitQuestion);
 _gasLimitQuestion.transformerValidator = stringValidator(_gasLimitQuestion, _coinbaseQuestion);
 
-const _gasFreeQuestion: QuestionTree = Object.assign({}, commonQs.gasFreeQuestion);
-_gasFreeQuestion.transformerValidator = getYesNoValidator(_gasFreeQuestion, _gasLimitQuestion, 'y');
-
 const _difficultyQuestion: QuestionTree = Object.assign({}, commonQs.difficultyQuestion);
-_difficultyQuestion.transformerValidator = stringValidator(_difficultyQuestion, _gasFreeQuestion, '0x1');
+_difficultyQuestion.transformerValidator = stringValidator(_difficultyQuestion, _gasLimitQuestion, '0x1');
 
 export const _chainIDQuestion: QuestionTree = Object.assign({}, commonQs.chainIDQuestion);
 _chainIDQuestion.transformerValidator = integerValidator(_chainIDQuestion, _difficultyQuestion);
