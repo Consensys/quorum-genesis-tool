@@ -8,7 +8,7 @@ network-id="{{chainID}}"
 data-path="/data"
 logging="INFO"
 
-genesis-file="/data/genesisBesu.json"
+genesis-file="/config/genesisBesu.json"
 host-whitelist=["*"]
 
 # p2p
@@ -51,7 +51,7 @@ bootnodes={{bootnodes}}
 {% endif -%}
 
 # permissions
-# permissions-nodes-config-file-enabled=false
+# permissions-nodes-config-file-enabled=true
 # permissions-nodes-config-file="/config/permissions_config.toml"
 
 # static nodes

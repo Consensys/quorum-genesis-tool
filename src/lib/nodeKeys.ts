@@ -29,7 +29,7 @@ export function derivePublicKey(privKey: Buffer): PublicKey {
 
 export function deriveAddress(pubKey: Uint8Array) : Address  {
   if(!Buffer.isBuffer(pubKey)) {
-    console.log("ERROR - pubKey is not a buffer");
+    console.error("ERROR - pubKey is not a buffer");
     process.exit();
   }
   const keyHash : Address = keccak('keccak256').update(pubKey).digest();

@@ -24,7 +24,7 @@ export async function main(): Promise<void> {
   let answers = {};
   const qr = new QuestionRenderer(rootQuestion);
   answers = await qr.render(); // begin rendering the questions
-  console.log(answers); // log answer output for debugging
+  // console.log(answers); // log answer output for debugging
 
   await generateNetworkConfig(answers as QuorumConfig); // build artifacts
   // TODO: add section here to output the answers in a json format and write to file

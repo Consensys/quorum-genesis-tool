@@ -31,8 +31,7 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
 
   console.log("Creating bootnodes...");
   const bootnodes = await generateNodeConfig(quorumConfig.bootnodes, "bootnode", quorumConfig.accountPassword, outputDir);
-
-  console.log("Rendering Besu config file...");
+  // console.log("Rendering Besu config file...");
   const mapping = {
     bootnodes: JSON.stringify(bootnodes.map(_ => _.publicKey.toString('hex')).map(_ => "enode://" + _ + "@<HOST>:30303")
     ),
@@ -45,7 +44,6 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
 
   console.log("Creating validators...");
   const validators = await generateNodeConfig(quorumConfig.validators, "validator", quorumConfig.accountPassword, outputDir);
-  console.log("Generating extra data string");
   const validatorAddressBuffers: Address[] = validators.map(v => v.address);
   const extraData: string = nodekeys.generateExtraDataString(validatorAddressBuffers, quorumConfig.consensus);
 
@@ -88,5 +86,6 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
     }
   }
 
+  console.log("Artifacts in folder: " + outputDir);
   return outputDir;
 }
