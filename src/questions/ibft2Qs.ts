@@ -4,11 +4,8 @@ import { getYesNoValidator, integerValidator, passwordValidator, stringValidator
 import * as commonQs from "./commonQs";
 
 
-const _outputUserInputs: QuestionTree = Object.assign({}, commonQs.outputUserInputs);
-_outputUserInputs.transformerValidator = getYesNoValidator(_outputUserInputs, undefined, "y");
-
 const _privacyQuestion: QuestionTree = Object.assign({}, commonQs.privacyQuestion);
-_privacyQuestion.transformerValidator = passwordValidator(_privacyQuestion, _outputUserInputs);
+_privacyQuestion.transformerValidator = passwordValidator(_privacyQuestion, undefined);
 
 const _permissionQuestion: QuestionTree = Object.assign({}, commonQs.permissionQuestion);
 _permissionQuestion.transformerValidator = getYesNoValidator(_permissionQuestion, _privacyQuestion, "y");
