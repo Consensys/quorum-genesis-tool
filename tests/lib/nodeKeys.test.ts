@@ -29,7 +29,7 @@ describe("NodeKeys generation", () => {
   });
 
   it("should generate an object with nodekeys and account keys", async () => {
-    const nodeKeys : NodeKeys = await nodekeys.generateNodeKeys(TEST_NODE.password);
+    const nodeKeys : NodeKeys = await nodekeys.generateNodeKeys(TEST_NODE.password, TEST_NODE.curve);
     expect(nodeKeys).not.toBe(null);
   });
 

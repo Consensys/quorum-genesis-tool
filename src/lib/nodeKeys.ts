@@ -1,13 +1,15 @@
 
+import { Address, NodeKeys, PrivateKey, PublicKey, EthAccount } from "../types/nodeKeys";
+import { Consensus } from "../types/consensus";
+import { CryptoCurve } from "../types/cryptoCurve";
 import secp256k1 from "secp256k1";
-// import secp256r1 from "secp256r1";
 import keccak from "keccak";
 import { randomBytes } from "crypto";
-import { Address, NodeKeys, PrivateKey, PublicKey, EthAccount } from "../types/nodeKeys";
+import * as R1 from "./nodeKeysR1";
 import Wallet from "ethereumjs-wallet";
 import RLP from 'rlp';
 import { Input } from "rlp";
-import { Consensus } from "../types/consensus";
+
 
 const VANITY_DATA = "0x0000000000000000000000000000000000000000000000000000000000000000";
 const CLIQUE_PROPOSER_SIGNATURE = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
@@ -49,9 +51,16 @@ export async function generateEthAccount(password: string): Promise<EthAccount> 
   return ethAccount;
 }
 
-export async function generateNodeKeys(password: string): Promise<NodeKeys> {
-  const privateKey: PrivateKey = generatePrivateKey();
-  const publicKey: PublicKey = derivePublicKey(privateKey);
+export async function generateNodeKeys(password: string, curve: CryptoCurve): Promise<NodeKeys> {
+  let privateKey : PrivateKey;
+  let publicKey: PublicKey;
+  if (curve === CryptoCurve.k1) {
+    privateKey = generatePrivateKey();
+    publicKey = derivePublicKey(privateKey);
+  } else {
+    privateKey = R1.generatePrivateKey();
+    publicKey = R1.derivePublicKey(privateKey);
+  }
   const address: Address = deriveAddress(publicKey);
   const ethAccount: EthAccount = await generateEthAccount(password);
   const nodeKeys: NodeKeys = {
