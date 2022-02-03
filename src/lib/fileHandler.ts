@@ -12,7 +12,6 @@ export function createTimestamp() : string {
                                                                                 .replace('T', '-').replace(/:/g, '-');
 }
 
-// TODO: check whether we copy both genesis files or just one per the consensus algorithm
 export function setupOutputFolder(path : string, quorumConfig: QuorumConfig, templatesPath=TEMPLATES_PATH) : string {
   // create the base path if it doesnt exist
   if (!fs.existsSync(path)) fs.mkdirSync(path, {recursive: true});
@@ -22,7 +21,6 @@ export function setupOutputFolder(path : string, quorumConfig: QuorumConfig, tem
   return path;
 }
 
-// TODO: besu config.toml
 export function writeNodeKeys(path: string, nodekeys: NodeKeys) : void {
   if (!fs.existsSync(path)) fs.mkdirSync(path, {recursive: true});
   // nodekeys

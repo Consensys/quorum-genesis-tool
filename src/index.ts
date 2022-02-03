@@ -4,7 +4,7 @@ import { QuestionRenderer } from "./questionRenderer";
 import { generateNetworkConfig } from "./lib/networkGenerate";
 // import { ConfigContext } from "./types/config";
 import { QuorumConfig } from "./types/quorumConfig";
-import yargs = require('yargs/yargs');
+import yargs from "yargs/yargs";
 import chalk from "chalk";
 import { CryptoCurve } from "./types/cryptoCurve";
 
@@ -19,8 +19,6 @@ export async function main(): Promise<void> {
     ));
     process.exit(1);
   }
-
-  // TODO: add section here to pick up CLI args using yargs
 
   let answers = {};
   if (process.argv.slice(2).length > 0) {
@@ -67,7 +65,6 @@ export async function main(): Promise<void> {
   }
 
   await generateNetworkConfig(answers as QuorumConfig); // build artifacts
-  // TODO: add section here to output the answers in a json format and write to file
   setTimeout(() => {
     process.exit(0);
   }, 500);

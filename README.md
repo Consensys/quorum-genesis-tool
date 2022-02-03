@@ -12,6 +12,9 @@
 
 ## Usage
 
+**NOTE**: Where possible, based on the consensus algortithm selected, the Quorum Genesis Tool will create keys and genesis files for both HLF Besu and GoQuorum and you can pick the one you'd like to use. At present only **QBFT** has cross client compatibility.
+
+
 Create the artifacts with:
 
 ```bash
@@ -84,24 +87,24 @@ Set your account password: (empty for none)
 This prompts you to pick a consensus algorithm variant, and specifics for your genesis file. By default, 
 artifact files are stored at `./output/<TIMESTAMP>`, where *TIMESTAMP* is the time in a user friendly string:
 
-```
+
 
 
 Alternatively, you can use cli options and skip the prompt above like so:
 
-TODO: update me
+To generate keys for QBFT (default) with 4 validators, 2 bootnodes and 2 members:
 ```
-npx quorum-genesis-tool --clientType besu --outputPath ./quorum-test-network --monitoring default --privacy true --orchestrate false --quorumKeyManager false
+npx quorum-genesis-tool --consensus QBFT
 ```
 
-The arguments ```--consensus``` and ```--clientType``` are required, the others contain defaults if left blank.
+To generate config for HLF Besu using QBFT
+```
+npx quorum-genesis-tool --consensus qbft --chainID 400 --blockperiod 5 --requestTimeout 10 --epochLength 30000 --difficulty 1 --gasLimit '0xFFFFFF' --coinbase '0x0000000000000000000000000000000000000000' --validators 4 --members 1 --bootnodes 0
+```
 
+To generate config for GoQuorum using IBFT
+```
+npx quorum-genesis-tool --consensus ibft --chainID 400 --blockperiod 5 --requestTimeout 10 --epochLength 30000 --difficulty 1 --gasLimit '0xFFFFFF' --coinbase '0x0000000000000000000000000000000000000000' --validators 4 --members 1 --bootnodes 0
+```
 
 ## Troubleshooting
-
-## TODO
-
-- check out the genesis files with the quickstart
-- yargs 
-
-

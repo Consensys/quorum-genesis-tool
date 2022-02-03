@@ -102,7 +102,7 @@ export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, 
   goquorum.extraData = extraData;
   goquorum.gasLimit = quorumConfig.gasLimit;
   goquorum.coinbase = quorumConfig.coinbase;
-  goquorum.difficulty = quorumConfig.difficulty.toString(16);
+  goquorum.difficulty = '0x' + quorumConfig.difficulty.toString(16);
   goquorum.config.isQuorum = true;
   goquorum.config.chainId = quorumConfig.chainID;
   goquorum.config.maxCodeSizeConfig = [ DefaultCodeSize ];
@@ -110,7 +110,6 @@ export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, 
 
   const consensus = quorumConfig.consensus;
   switch(consensus) {
-    // TODO: check this for clique
     case Consensus.clique: {
       goquorum.config.clique = {
           policy: 0,
