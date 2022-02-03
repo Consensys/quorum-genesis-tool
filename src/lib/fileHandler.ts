@@ -6,23 +6,23 @@ import fs from "fs";
 
 const TEMPLATES_PATH = path.join(__dirname, "../templates");
 
-export function createTimestamp() : string {
-  return new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
-                                                                                .substr(0,19)
-                                                                                .replace('T', '-').replace(/:/g, '-');
+export function createTimestamp(): string {
+  return new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString()
+    .substr(0, 19)
+    .replace('T', '-').replace(/:/g, '-');
 }
 
-export function setupOutputFolder(path : string, quorumConfig: QuorumConfig, templatesPath=TEMPLATES_PATH) : string {
+export function setupOutputFolder(path: string, quorumConfig: QuorumConfig, templatesPath = TEMPLATES_PATH): string {
   // create the base path if it doesnt exist
-  if (!fs.existsSync(path)) fs.mkdirSync(path, {recursive: true});
-  fs.copyFileSync(templatesPath+'/README.md', path+'/README.md');
+  if (!fs.existsSync(path)) fs.mkdirSync(path, { recursive: true });
+  fs.copyFileSync(templatesPath + '/README.md', path + '/README.md');
   // save the values from the user to file
   fs.writeFileSync(path + "/userData.json", JSON.stringify(quorumConfig, null, 2));
   return path;
 }
 
-export function writeNodeKeys(path: string, nodekeys: NodeKeys) : void {
-  if (!fs.existsSync(path)) fs.mkdirSync(path, {recursive: true});
+export function writeNodeKeys(path: string, nodekeys: NodeKeys): void {
+  if (!fs.existsSync(path)) fs.mkdirSync(path, { recursive: true });
   // nodekeys
   fs.writeFileSync(path + "/nodekey", nodekeys.privateKey.toString('hex'));
   fs.writeFileSync(path + "/nodekey.pub", nodekeys.publicKey.toString('hex'));
@@ -34,19 +34,19 @@ export function writeNodeKeys(path: string, nodekeys: NodeKeys) : void {
   fs.writeFileSync(path + "/accountAddress", nodekeys.ethAccount.address);
 }
 
-export function createStaticNodes(path : string, nodes: string[]) : void {
-  const staticNodes : string [] = nodes.map(_ => "enode://"+ _ +"@<HOST>:30303");
+export function createStaticNodes(path: string, nodes: string[]): void {
+  const staticNodes: string[] = nodes.map(_ => "enode://" + _ + "@<HOST>:30303");
   fs.writeFileSync(path + "/static-nodes.json", JSON.stringify(staticNodes, null, 2));
 }
 
-export function createGoQuorumPermissionsFile(path : string, nodes: string[]) : void {
-  const staticNodes : string [] = nodes.map(_ => "enode://"+ _ +"@<HOST>:30303?discport=0&raftport=53000");
+export function createGoQuorumPermissionsFile(path: string, nodes: string[]): void {
+  const staticNodes: string[] = nodes.map(_ => "enode://" + _ + "@<HOST>:30303?discport=0&raftport=53000");
   fs.writeFileSync(path + "/goquorum-permissioned-nodes.json", JSON.stringify(staticNodes, null, 2));
   fs.writeFileSync(path + "/goquorum-disallowed-nodes.json", JSON.stringify([], null, 2));
 }
 
-export function createBesuPermissionsFile(path : string, nodes: string[]) : void {
-  const staticNodes : string [] = nodes.map(_ => "enode://"+ _ +"@<HOST>:30303");
-  fs.writeFileSync(path + "/besu-permissioned-nodes.json", "nodes-allowlist=");
-  fs.appendFileSync(path + "/besu-permissioned-nodes.json", JSON.stringify(staticNodes, null, 2));
+export function createBesuPermissionsFile(path: string, nodes: string[]): void {
+  const staticNodes: string[] = nodes.map(_ => "enode://" + _ + "@<HOST>:30303");
+  fs.writeFileSync(path + "/besu-permissioned-nodes.toml", "nodes-allowlist=");
+  fs.appendFileSync(path + "/besu-permissioned-nodes.toml", JSON.stringify(staticNodes, null, 2));
 }
