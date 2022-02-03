@@ -9,6 +9,7 @@
     "Eric Lin <38420555+Ezzahhh@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
+  "keywords": ["quorum", "genesis", "goquorum", "besu", "ethereum", "genesis-file" ],
   "private": false,
   "bin": "./index.js",
   "scripts": {
