@@ -6,8 +6,9 @@ import { QuorumConfig } from "../types/quorumConfig";
 
 njks.configure({ autoescape: false });
 function renderConfigToml(output: string, values: object) {
-  const cfg = njks.render(path.resolve(__dirname, '../templates/besuConfigTemplate.toml'), values);
-  fs.writeFileSync(output + "/besu" + '/config.toml', cfg);
+  const templateSrc = fs.readFileSync(path.resolve(__dirname, '../templates/besuConfigTemplate.toml'), "utf-8");
+  const result = njks.renderString(templateSrc, values);
+  fs.writeFileSync(output + "/besu" + '/config.toml', result);
 }
 
 export function createBesuConfig(bootnodes: NodeKeys[], quorumConfig: QuorumConfig, output: string) {

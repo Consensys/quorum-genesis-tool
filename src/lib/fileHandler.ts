@@ -17,7 +17,8 @@ export function createTimestamp(): string {
 export function setupOutputFolder(path: string, quorumConfig: QuorumConfig, templatesPath = TEMPLATES_PATH): string {
   // create the base path if it doesnt exist
   if (!fs.existsSync(path)) fs.mkdirSync(path, { recursive: true });
-  fs.copyFileSync(templatesPath + '/README.md', path + '/README.md');
+  console.log(templatesPath);
+  // fs.copyFileSync(templatesPath + '/README.md', path + '/README.md');
   // save the values from the user to file
   fs.writeFileSync(path + "/userData.json", JSON.stringify(quorumConfig, null, 2));
   [GOQ_SUB, BESU_SUB].forEach((client) => {
