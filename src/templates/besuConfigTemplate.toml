@@ -8,7 +8,7 @@ network-id="{{chainID}}"
 data-path="/data"
 logging="INFO"
 
-genesis-file="/config/genesisBesu.json"
+genesis-file="/config/genesis.json"
 host-whitelist=["*"]
 
 # p2p

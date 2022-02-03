@@ -5,9 +5,8 @@ import { QuorumConfig } from "../types/quorumConfig";
 import { Genesis, GenesisConfig, Alloc, CodeSize } from "../types/genesis";
 import fs from "fs";
 
-const BESU_GENESIS_FILE = "genesisBesu.json";
-const GOQUORUM_GENESIS_FILE = "genesisGoQuorum.json";
-const GOQ_SUB = "/goquorum";
+const GENESIS_FILE = "genesis.json";
+const GOQ_SUB = "/goQuorum";
 const BESU_SUB = "/besu";
 
 
@@ -51,7 +50,7 @@ function createDefaultGenesis(): Genesis {
 }
 
 export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extraData: string): string {
-  const genesisFile = path + BESU_SUB + '/' + BESU_GENESIS_FILE;
+  const genesisFile = path + BESU_SUB + '/' + GENESIS_FILE;
   const besu: Genesis = createDefaultGenesis();
   besu.extraData = extraData;
   besu.gasLimit = quorumConfig.gasLimit;
@@ -98,7 +97,7 @@ export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, 
     size: quorumConfig.maxCodeSize,
   };
 
-  const genesisFile = path + GOQ_SUB + '/' + GOQUORUM_GENESIS_FILE;
+  const genesisFile = path + GOQ_SUB + '/' + GENESIS_FILE;
   const goquorum: Genesis = createDefaultGenesis();
   goquorum.extraData = extraData;
   goquorum.gasLimit = quorumConfig.gasLimit;
