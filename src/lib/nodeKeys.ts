@@ -82,11 +82,21 @@ export function generateExtraDataString(validatorAddressList: Address[], consens
       extraData = VANITY_DATA;
       break;
     }
-    // ibft, ibft2, qbft
+    // ibft 
+    case Consensus.ibft: {
+      const roundBuffer : Buffer = Buffer.alloc(64);
+      roundBuffer.writeUInt32LE(0, 0);
+      // ibft = 0x + <32 bytes Vanity> + RLP(List<Validators>, proposer Seals, seals]).
+      const extraDataContent : Input = [validatorAddressList, null, []];
+      const extraDataCoded : Uint8Array = RLP.encode(extraDataContent);
+      extraData = VANITY_DATA + Buffer.from(extraDataCoded).toString('hex');
+      break;
+    }
+    // ibft2, qbft
     default: {
       const roundBuffer : Buffer = Buffer.alloc(4);
       roundBuffer.writeUInt32LE(0, 0);
-      // ibft, ibft2, qbft as normal ie RLP([32 bytes Vanity, List<Validators>, No Vote, Round=Int(0), 0 Seals]).
+      // ibft2, qbft as normal ie RLP([32 bytes Vanity, List<Validators>, No Vote, Round=Int(0), 0 Seals]).
       const extraDataContent : Input = [new Uint8Array(32), validatorAddressList, null, roundBuffer, []];
       const extraDataCoded : Uint8Array = RLP.encode(extraDataContent);
       extraData = '0x' + Buffer.from(extraDataCoded).toString('hex');
