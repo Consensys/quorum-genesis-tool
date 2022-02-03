@@ -1,6 +1,6 @@
 {
   "name": "quorum-genesis-tool",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A utility that lets developers create genesis files and node (&account) keys from ConsenSys!",
   "main": "build/index.js",
   "repository": "git@github.com:ConsenSys/quorum-genesis-tool.git",

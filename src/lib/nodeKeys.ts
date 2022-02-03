@@ -52,14 +52,14 @@ export async function generateEthAccount(password: string): Promise<EthAccount> 
 }
 
 export async function generateNodeKeys(password: string, curve: CryptoCurve): Promise<NodeKeys> {
-  let privateKey : PrivateKey;
+  let privateKey: PrivateKey;
   let publicKey: PublicKey;
-  if (curve === CryptoCurve.k1) {
-    privateKey = generatePrivateKey();
-    publicKey = derivePublicKey(privateKey);
-  } else {
+  if (curve === CryptoCurve.r1) {
     privateKey = R1.generatePrivateKey();
     publicKey = R1.derivePublicKey(privateKey);
+  } else {
+    privateKey = generatePrivateKey();
+    publicKey = derivePublicKey(privateKey);
   }
   const address: Address = deriveAddress(publicKey);
   const ethAccount: EthAccount = await generateEthAccount(password);
