@@ -2,19 +2,19 @@
 import { QuestionTree } from "../types/questions";
 import { integerValidator, stringValidator, passwordValidator } from "./common";
 import * as commonQs from "./commonQs";
-import { CryptoCurve } from "../types/cryptoCurve";
+// import { CryptoCurve } from "../types/cryptoCurve";
 
 const _accountPasswordQuestion: QuestionTree = Object.assign({}, commonQs.accountPasswordQuestion);
 _accountPasswordQuestion.transformerValidator = passwordValidator(_accountPasswordQuestion, undefined);
 
-const _curveQuestion: QuestionTree = Object.assign({}, commonQs.curveQuestion);
-_curveQuestion.options = [
-  { label: "secp256k1", value: CryptoCurve.k1, nextQuestion: _accountPasswordQuestion, default: true },
-  { label: "secp256r1", value: CryptoCurve.r1, nextQuestion: _accountPasswordQuestion }
-];
+// const _curveQuestion: QuestionTree = Object.assign({}, commonQs.curveQuestion);
+// _curveQuestion.options = [
+//   { label: "secp256k1", value: CryptoCurve.k1, nextQuestion: _accountPasswordQuestion, default: true },
+//   { label: "secp256r1", value: CryptoCurve.r1, nextQuestion: _accountPasswordQuestion }
+// ];
 
 const _bootnodesQuestion: QuestionTree = Object.assign({}, commonQs.bootnodesQuestion);
-_bootnodesQuestion.transformerValidator = integerValidator(_bootnodesQuestion, _curveQuestion, 2);
+_bootnodesQuestion.transformerValidator = integerValidator(_bootnodesQuestion, _accountPasswordQuestion, 2);
 
 const _membersQuestion: QuestionTree = Object.assign({}, commonQs.membersQuestion);
 _membersQuestion.transformerValidator = integerValidator(_membersQuestion, _bootnodesQuestion, 2);

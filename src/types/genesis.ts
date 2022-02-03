@@ -27,11 +27,12 @@ export type GenesisConfig = {
   isQuorum?: boolean;
   contractSizeLimit?: string;
   txnSizeLimit?: number;
-  maxCodeSizeConfig?: [ CodeSize ];
+  maxCodeSizeConfig?: [CodeSize];
   ibft2?: Algorithm;
   istanbul?: Algorithm;
   qbft?: Algorithm;
   clique?: Algorithm;
+  ecCurve?: 'secp256k1' | 'secp256r1';
 };
 
 export type Alloc = {

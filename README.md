@@ -1,14 +1,14 @@
 # Quorum Genesis Tool
 
-
 ## Table of Contents
+
 1. [Prerequisites](#prerequisites)
 2. [Usage](#usage)
 3. [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
 
-- [Nodejs](https://nodejs.org/en/download/) 
+- [Nodejs](https://nodejs.org/en/download/)
 
 ## Usage
 
@@ -51,59 +51,55 @@ Which consensus algorithm will you use? Default: QBFT
         3. QBFT
         4. Clique
         5. RAFT
- 
+
 Set your chainID value: (integer) Default: 1337
- 
+
 Set your blockperiodseconds value: (integer) Default: 5
- 
+
 Set your requestTimeoutSeconds value: (integer) Default: 10
- 
+
 Set your epoch length value: (integer) Default: 30000
- 
+
 Set your difficulty: (integer) Default: 1
- 
+
 Set your gas limit value: (string) Default: 0xFFFF
- 
+
 Set your coinbase address for rewards: (string) Default: 0x0000000000000000000000000000000000000000
- 
+
 Set your max code size value: (integer) Default: 64
- 
+
 Set your transaction size limit value: (integer) Default: 64
- 
+
 Choose number of validator node keys to generate: (integer) Default: 4
- 
+
 Choose number of member node keys to generate: (integer) Default: 2
- 
+
 Choose number of bootnode node keys to generate: (integer) Default: 2
- 
-Choose your encryption curve: Default: [1]
-        1. secp256k1
-        2. secp256r1
- 
+
 Set your account password: (empty for none)
 
 
 ```
- 
-This prompts you to pick a consensus algorithm variant, and specifics for your genesis file. By default, 
-artifact files are stored at `./output/<TIMESTAMP>`, where *TIMESTAMP* is the time in a user friendly string:
 
-
-
+This prompts you to pick a consensus algorithm variant, and specifics for your genesis file. By default,
+artifact files are stored at `./output/<TIMESTAMP>`, where _TIMESTAMP_ is the time in a user friendly string:
 
 Alternatively, you can use cli options and skip the prompt above like so:
 
 To generate keys for QBFT (default) with 4 validators, 2 bootnodes and 2 members:
+
 ```
 npx quorum-genesis-tool --consensus QBFT
 ```
 
 To generate config for HLF Besu using QBFT
+
 ```
 npx quorum-genesis-tool --consensus qbft --chainID 400 --blockperiod 5 --requestTimeout 10 --epochLength 30000 --difficulty 1 --gasLimit '0xFFFFFF' --coinbase '0x0000000000000000000000000000000000000000' --validators 4 --members 1 --bootnodes 0
 ```
 
 To generate config for GoQuorum using IBFT
+
 ```
 npx quorum-genesis-tool --consensus ibft --chainID 400 --blockperiod 5 --requestTimeout 10 --epochLength 30000 --difficulty 1 --gasLimit '0xFFFFFF' --coinbase '0x0000000000000000000000000000000000000000' --validators 4 --members 1 --bootnodes 0
 ```
@@ -113,7 +109,7 @@ npx quorum-genesis-tool --consensus ibft --chainID 400 --blockperiod 5 --request
 Once generated, the output should resemble the file structure below.
 
 ```bash
-  ├── validator0                    
+  ├── validator0
   │   └──  nodekey                      # the node private key
   │   └──  nodekey.pub                  # the node's public key which is used in the enode
   │   └──  address                      # the node's address which is used to vote the validator in/out
@@ -122,17 +118,17 @@ Once generated, the output should resemble the file structure below.
   │   └──  accountPassword              # GoQuorum only - the account's password (you would have supplied this)
   │   └──  accountPrivateKey            # GoQuorum only - the account's private key
   │               └── ...
-  ├── validatorN                       
+  ├── validatorN
   │   └──  nodekey                      # the node private key
   │   └──  nodekey.pub                  # the node's public key which is used in the enode
   │   └──  ...
   |
-  ├── bootnodeN                       
+  ├── bootnodeN
   │   └──  nodekey                      # the node private key
   │   └──  nodekey.pub                  # the node's public key which is used in the enode
   │   └──  ...
   |
-  ├── memberN                      
+  ├── memberN
   │   └──  nodekey                      # the node private key
   │   └──  nodekey.pub                  # the node's public key which is used in the enode
   │   └──  ...
@@ -149,14 +145,12 @@ Once generated, the output should resemble the file structure below.
   │   └──  disallowed-nodes.json        # disallowed nodes for any GoQuorum node ie this new nodes will not connect to any nodes on this list
   │
   └── userData.json                     # this answers provided in a single map
-  └── README.md                         # this file     
-  
+  └── README.md                         # this file
+
 ```
 
 Please remember to do the following:
 
-1. Update the **<HOST>**  in both the permissions file and the static nodes files. Please note the selected ports are default and you may need to check firewall rules if using alternate ports
+1. Update the **<HOST>** in both the permissions file and the static nodes files. Please note the selected ports are default and you may need to check firewall rules if using alternate ports
 2. As above, update the permissions.json files
-3. update **<HOST>** in every Besu nodes' config.toml 
-
-
+3. update **<HOST>** in every Besu nodes' config.toml

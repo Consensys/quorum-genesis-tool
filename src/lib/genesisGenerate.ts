@@ -4,6 +4,7 @@ import { Consensus } from "../types/consensus";
 import { QuorumConfig } from "../types/quorumConfig";
 import { Genesis, GenesisConfig, Alloc, CodeSize } from "../types/genesis";
 import fs from "fs";
+import { CryptoCurve } from "../types/cryptoCurve";
 
 const GENESIS_FILE = "genesis.json";
 const GOQ_SUB = "/goQuorum";
@@ -58,6 +59,9 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
   besu.difficulty = quorumConfig.difficulty.toString(16);
   besu.config.chainId = quorumConfig.chainID;
   const consensus = quorumConfig.consensus;
+  if (quorumConfig.curve === CryptoCurve.r1) {
+    besu.config.ecCurve = 'secp256r1';
+  }
   switch (consensus) {
     case Consensus.clique: {
       besu.config.clique = {

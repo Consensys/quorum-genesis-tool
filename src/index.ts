@@ -1,12 +1,10 @@
 import { rootQuestion } from "./questions";
 import { QuestionRenderer } from "./questionRenderer";
-// import { buildConfig } from "./configBuilder";
 import { generateNetworkConfig } from "./lib/networkGenerate";
-// import { ConfigContext } from "./types/config";
 import { QuorumConfig } from "./types/quorumConfig";
 import yargs from "yargs/yargs";
 import chalk from "chalk";
-import { CryptoCurve } from "./types/cryptoCurve";
+// import { CryptoCurve } from "./types/cryptoCurve";
 
 export async function main(): Promise<void> {
   if (process.platform === "win32") {
@@ -36,7 +34,7 @@ export async function main(): Promise<void> {
       validators: { type: 'number', demandOption: true, default: 4, describe: 'Number of validator node keys to generate' },
       members: { type: 'number', demandOption: true, default: 1, describe: 'Number of member node keys to generate' },
       bootnodes: { type: 'number', demandOption: true, default: 2, describe: 'Number of bootnode node keys to generate' },
-      curve: { type: 'string', demandOption: true, default: CryptoCurve.k1, choices: [CryptoCurve.k1, CryptoCurve.r1], describe: 'Type of curve for keys' },
+      // curve: { type: 'string', demandOption: false, default: CryptoCurve.k1, choices: [CryptoCurve.k1, CryptoCurve.r1], describe: 'Type of curve for keys' },
       accountPassword: { type: 'string', demandOption: false, default: '', describe: 'Password for keys' },
       outputPath: { type: 'string', demandOption: false, default: './output', describe: 'Output path relative to current directory' }
     }).argv;
