@@ -1,6 +1,6 @@
 {
   "name": "quorum-genesis-tool",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A utility that lets developers create genesis files and node (&account) keys from ConsenSys!",
   "main": "build/index.js",
   "repository": "git@github.com:ConsenSys/quorum-genesis-tool.git",
@@ -9,7 +9,14 @@
     "Eric Lin <38420555+Ezzahhh@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
-  "keywords": ["quorum", "genesis", "goquorum", "besu", "ethereum", "genesis-file" ],
+  "keywords": [
+    "quorum",
+    "genesis",
+    "goquorum",
+    "besu",
+    "ethereum",
+    "genesis-file"
+  ],
   "private": false,
   "bin": "./index.js",
   "scripts": {
