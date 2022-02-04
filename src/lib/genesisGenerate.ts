@@ -56,7 +56,7 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
   besu.extraData = extraData;
   besu.gasLimit = quorumConfig.gasLimit;
   besu.coinbase = quorumConfig.coinbase;
-  besu.difficulty = quorumConfig.difficulty.toString(16);
+  besu.difficulty = '0x' + quorumConfig.difficulty.toString(16);
   besu.config.chainId = quorumConfig.chainID;
   const consensus = quorumConfig.consensus;
   if (quorumConfig.curve === CryptoCurve.r1) {
