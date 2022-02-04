@@ -44,11 +44,11 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
   // static nodes generation
   const allNodes: NodeKeys[] = validators.concat(bootnodes, members);
   const allNodesEnodes: string[] = allNodes.map(_ => _.publicKey.toString('hex'));
-  fileHandler.createStaticNodes(outputDir, allNodesEnodes);
 
   const consensus = quorumConfig.consensus;
   switch (consensus) {
     case Consensus.clique: {
+      fileHandler.createStaticNodes(outputDir, allNodesEnodes, true, true);
       genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
       besuConfig.createBesuConfig(bootnodes, quorumConfig, outputDir);
       genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
@@ -57,16 +57,19 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
       break;
     }
     case Consensus.raft: {
+      fileHandler.createStaticNodes(outputDir, allNodesEnodes, false, true);
       genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
       fileHandler.createGoQuorumPermissionsFile(outputDir, allNodesEnodes);
       break;
     }
     case Consensus.ibft: {
+      fileHandler.createStaticNodes(outputDir, allNodesEnodes, false, true);
       genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
       fileHandler.createGoQuorumPermissionsFile(outputDir, allNodesEnodes);
       break;
     }
     case Consensus.ibft2: {
+      fileHandler.createStaticNodes(outputDir, allNodesEnodes, true, false);
       genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
       besuConfig.createBesuConfig(bootnodes, quorumConfig, outputDir);
       fileHandler.createBesuPermissionsFile(outputDir, allNodesEnodes);
@@ -74,6 +77,7 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
     }
     // qbft
     default: {
+      fileHandler.createStaticNodes(outputDir, allNodesEnodes, true, true);
       genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
       genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
       besuConfig.createBesuConfig(bootnodes, quorumConfig, outputDir);

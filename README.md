@@ -86,6 +86,37 @@ artifact files are stored at `./output/<TIMESTAMP>`, where _TIMESTAMP_ is the ti
 
 Alternatively, you can use cli options and skip the prompt above like so:
 
+```
+npx quorum-genesis-tool --help
+
+  --help             Show help                                         [boolean]
+  --version          Show version number                               [boolean]
+  --consensus        Consensus algorithm to use
+        [string] [required] [choices: "ibft", "ibft2", "qbft", "clique", "raft"]
+                                                               [default: "qbft"]
+  --chainID          ChainID for blockchain  [number] [required] [default: 1337]
+  --blockperiod      Number of seconds per block[number] [required] [default: 5]
+  --requestTimeout   Minimum request timeout for each round
+                                                          [number] [default: 10]
+  --epochLength      Number of blocks after which votes reset
+                                            [number] [required] [default: 30000]
+  --difficulty       Difficulty of network      [number] [required] [default: 1]
+  --gasLimit         Block gas limit     [string] [required] [default: "0xFFFF"]
+  --coinbase         Address to pay mining rewards to
+                [string] [default: "0x0000000000000000000000000000000000000000"]
+  --maxCodeSize      Maximum contract size (kb)           [number] [default: 64]
+  --txnSizeLimit     Maximum transaction size (kb)        [number] [default: 64]
+  --validators       Number of validator node keys to generate
+                                                [number] [required] [default: 4]
+  --members          Number of member node keys to generate
+                                                [number] [required] [default: 1]
+  --bootnodes        Number of bootnode node keys to generate
+                                                [number] [required] [default: 2]
+  --accountPassword  Password for keys                    [string] [default: ""]
+  --outputPath       Output path relative to current directory
+                                                  [string] [default: "./output"]
+```
+
 To generate keys for QBFT (default) with 4 validators, 2 bootnodes and 2 members:
 
 ```

@@ -39,11 +39,15 @@ export function writeNodeKeys(path: string, nodekeys: NodeKeys): void {
   fs.writeFileSync(path + "/accountAddress", nodekeys.ethAccount.address);
 }
 
-export function createStaticNodes(path: string, nodes: string[]): void {
+export function createStaticNodes(path: string, nodes: string[], besu: boolean, goq: boolean): void {
   const staticNodes: string[] = nodes.map(_ => "enode://" + _ + "@<HOST>:30303");
   const staticNodesGoQ: string[] = nodes.map(_ => "enode://" + _ + "@<HOST>:30303?discport=0&raftport=53000");
-  fs.writeFileSync(path + BESU_SUB + "/static-nodes.json", JSON.stringify(staticNodes, null, 2));
-  fs.writeFileSync(path + GOQ_SUB + "/static-nodes.json", JSON.stringify(staticNodesGoQ, null, 2));
+  if (besu === true) {
+    fs.writeFileSync(path + BESU_SUB + "/static-nodes.json", JSON.stringify(staticNodes, null, 2));
+  }
+  if (goq === true) {
+    fs.writeFileSync(path + GOQ_SUB + "/static-nodes.json", JSON.stringify(staticNodesGoQ, null, 2));
+  }
 }
 
 export function createGoQuorumPermissionsFile(path: string, nodes: string[]): void {
