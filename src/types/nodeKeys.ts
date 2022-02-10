@@ -18,5 +18,7 @@ export type NodeKeys = {
   privateKey: PrivateKey;
   publicKey: PublicKey;
   address: Address;
-  ethAccount : EthAccount;
+  ethAccount: EthAccount;
 };
+
+

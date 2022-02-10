@@ -36,7 +36,9 @@ export async function main(): Promise<void> {
       bootnodes: { type: 'number', demandOption: true, default: 2, describe: 'Number of bootnode node keys to generate' },
       // curve: { type: 'string', demandOption: false, default: CryptoCurve.k1, choices: [CryptoCurve.k1, CryptoCurve.r1], describe: 'Type of curve for keys' },
       accountPassword: { type: 'string', demandOption: false, default: '', describe: 'Password for keys' },
-      outputPath: { type: 'string', demandOption: false, default: './output', describe: 'Output path relative to current directory' }
+      outputPath: { type: 'string', demandOption: false, default: './output', describe: 'Output path relative to current directory' },
+      tesseraEnabled: { type: 'boolean', demandOption: false, default: false, describe: 'Whether to generate tessera keys' },
+      tesseraPassword: { type: 'string', demandOption: false, default: '', describe: 'Set password to encrypt generated keys' }
     }).argv;
 
     answers = {
@@ -54,7 +56,9 @@ export async function main(): Promise<void> {
       bootnodes: args.bootnodes,
       curve: args.curve,
       accountPassword: args.accountPassword,
-      outputPath: args.outputPath
+      outputPath: args.outputPath,
+      tesseraEnabled: args.tesseraEnabled,
+      tesseraPassword: args.tesseraPassword
     };
   } else {
     const qr = new QuestionRenderer(rootQuestion);
