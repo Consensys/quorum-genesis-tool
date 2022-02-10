@@ -36,30 +36,24 @@ function createDefaultKeyFile(locked: boolean): OUTPUT_KEY_UNLOCK | OUTPUT_KEY_L
 }
 
 function generateKeys(): TesseraKeys {
-  console.log("Generating Tessera keys...");
   const keyPairUint8Array: TesseraKeys = nacl.box.keyPair();
   return { secretKey: Buffer.from(keyPairUint8Array.secretKey), publicKey: Buffer.from(keyPairUint8Array.publicKey) };
 }
 
-async function tesseraOutput(password: string, outputPath: string): Promise<string> {
+export async function tesseraOutput(password: string, outputPath: string, member: number): Promise<void> {
   // this function can be called from networkGenerate and looped outside here for each tessera instance needed (usually 1:1 to validators needed)
-  // outputPath should be passed as /some/directory/validator-1 so we will append -tessera.key and -tessera.pub
   const newKeys: TesseraKeys = generateKeys();
   const encodedPublicKey: string = Buffer.from(newKeys.publicKey).toString("base64");
   const encodedPrivateKey: string = Buffer.from(newKeys.secretKey).toString("base64");
 
   if (password === "") {
     // if no password provided just run key generation and output result
-    console.log("No password provided for Tessera keys. Will not encrypt private key.");
     const defaultKeyFile: OUTPUT_KEY_UNLOCK = createDefaultKeyFile(false) as OUTPUT_KEY_UNLOCK;
 
     defaultKeyFile.data.bytes = encodedPrivateKey;
 
-    fs.writeFileSync(outputPath + "-tessera.key", JSON.stringify(defaultKeyFile, null, 2));
-    fs.writeFileSync(outputPath + "-tessera.pub", encodedPublicKey);
-
-    return outputPath;
-
+    fs.writeFileSync(outputPath + "/member" + member.toString() + "/tessera.key", JSON.stringify(defaultKeyFile, null, 2));
+    fs.writeFileSync(outputPath + "/member" + member.toString() + "/tessera.pub", encodedPublicKey);
   } else {
     // if password is provided then we need to do more steps
     const defaultKeyFile: OUTPUT_KEY_LOCK = createDefaultKeyFile(true) as OUTPUT_KEY_LOCK;
@@ -70,6 +64,7 @@ async function tesseraOutput(password: string, outputPath: string): Promise<stri
       hashLength: 32,
       parallelism: 4,
       raw: true,
+      timeCost: 10,
       salt: randomSalt
     });
 
@@ -80,9 +75,7 @@ async function tesseraOutput(password: string, outputPath: string): Promise<stri
     defaultKeyFile.data.asalt = randomSalt.toString("base64");
     defaultKeyFile.data.sbox = Buffer.from(mySecretBox).toString("base64");
 
-    fs.writeFileSync(outputPath + "-tessera.key", JSON.stringify(defaultKeyFile, null, 2));
-    fs.writeFileSync(outputPath + "-tessera.pub", encodedPublicKey);
-
-    return outputPath;
+    fs.writeFileSync(outputPath + "/member" + member.toString() + "/tessera.key", JSON.stringify(defaultKeyFile, null, 2));
+    fs.writeFileSync(outputPath + "/member" + member.toString() + "/tessera.pub", encodedPublicKey);
   }
 }

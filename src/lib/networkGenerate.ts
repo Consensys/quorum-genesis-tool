@@ -7,6 +7,7 @@ import * as genesis from "./genesisGenerate";
 import * as fileHandler from "./fileHandler";
 import * as nodekeys from "./nodeKeys";
 import * as besuConfig from "./besuConfig";
+import { tesseraOutput } from "./tessera";
 
 const OUTPUT_BASE_DIR = "./output";
 
@@ -85,6 +86,12 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
       fileHandler.createGoQuorumPermissionsFile(outputDir, allNodesEnodes);
       break;
     }
+  }
+
+  if (quorumConfig.tesseraEnabled && quorumConfig.tesseraPassword === '') console.log("No password entered. Will not encrypt private key.");
+  if (quorumConfig.tesseraEnabled) console.log("Generating tessera keys...");
+  for (let val = 0; val < quorumConfig.validators; val++) {
+    await tesseraOutput(quorumConfig.tesseraPassword, outputDir, val);
   }
 
   console.log("Artifacts in folder: " + outputDir);
