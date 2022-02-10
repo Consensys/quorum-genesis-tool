@@ -41,7 +41,7 @@ function generateKeys(): TesseraKeys {
 }
 
 export async function tesseraOutput(password: string, outputPath: string, member: number): Promise<void> {
-  // this function can be called from networkGenerate and looped outside here for each tessera instance needed (usually 1:1 to validators needed)
+  // this function can be called from networkGenerate and looped outside here for each tessera instance needed (usually 1:1 to members needed)
   const newKeys: TesseraKeys = generateKeys();
   const encodedPublicKey: string = Buffer.from(newKeys.publicKey).toString("base64");
   const encodedPrivateKey: string = Buffer.from(newKeys.secretKey).toString("base64");
