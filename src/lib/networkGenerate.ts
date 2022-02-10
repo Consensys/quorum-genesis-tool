@@ -90,7 +90,7 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
 
   if (quorumConfig.tesseraEnabled && quorumConfig.tesseraPassword === '') console.log("No password entered. Will not encrypt private key.");
   if (quorumConfig.tesseraEnabled) console.log("Generating tessera keys...");
-  for (let val = 0; val < quorumConfig.validators; val++) {
+  for (let val = 0; val < quorumConfig.members; val++) {
     await tesseraOutput(quorumConfig.tesseraPassword, outputDir, val);
   }
 
