@@ -139,7 +139,7 @@ To generate config for GoQuorum using IBFT
 npx quorum-genesis-tool --consensus ibft --chainID 400 --blockperiod 5 --requestTimeout 10 --epochLength 30000 --difficulty 1 --gasLimit '0xFFFFFF' --coinbase '0x0000000000000000000000000000000000000000' --validators 4 --members 1 --bootnodes 0
 ```
 
-If you opt to provide a tesseraPassword to encrypt the tessera private keys, you will need to either pass a `passwordFile` field with the password in a file or put the passwords directly into a `passwords` field in the Tessera config. See more [here](https://docs.tessera.consensys.net/en/stable/HowTo/Configure/Keys/File-Based-Key-Pairs/).
+If you opt to provide a tesseraPassword to encrypt the tessera private keys, you will need to pass a `passwordFile` field with the password in a file. You will also need to update the `privateKeyPath` and `publicKeyPath` to the paths where you store your keys. See more [here](https://docs.tessera.consensys.net/en/stable/HowTo/Configure/Keys/File-Based-Key-Pairs/).
 
 ### Using the keys and genesis files on instances
 
