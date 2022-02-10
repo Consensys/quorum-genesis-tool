@@ -89,6 +89,7 @@ Alternatively, you can use cli options and skip the prompt above like so:
 ```
 npx quorum-genesis-tool --help
 
+Options:
   --help             Show help                                         [boolean]
   --version          Show version number                               [boolean]
   --consensus        Consensus algorithm to use
@@ -115,6 +116,9 @@ npx quorum-genesis-tool --help
   --accountPassword  Password for keys                    [string] [default: ""]
   --outputPath       Output path relative to current directory
                                                   [string] [default: "./output"]
+  --tesseraEnabled   Whether to generate tessera keys [boolean] [default: false]
+  --tesseraPassword  Set password to encrypt generated keys
+                                                          [string] [default: ""]
 ```
 
 To generate keys for QBFT (default) with 4 validators, 2 bootnodes and 2 members:
@@ -134,6 +138,8 @@ To generate config for GoQuorum using IBFT
 ```
 npx quorum-genesis-tool --consensus ibft --chainID 400 --blockperiod 5 --requestTimeout 10 --epochLength 30000 --difficulty 1 --gasLimit '0xFFFFFF' --coinbase '0x0000000000000000000000000000000000000000' --validators 4 --members 1 --bootnodes 0
 ```
+
+If you opt to provide a tesseraPassword to encrypt the tessera private keys, you will need to either pass a `passwordFile` field with the password in a file or put the passwords directly into a `passwords` field in the Tessera config. See more [here](https://docs.tessera.consensys.net/en/stable/HowTo/Configure/Keys/File-Based-Key-Pairs/).
 
 ### Using the keys and genesis files on instances
 
@@ -184,4 +190,4 @@ Please remember to do the following:
 
 1. Update the **<HOST>** in both the permissions file and the static nodes files. Please note the selected ports are default and you may need to check firewall rules if using alternate ports
 2. As above, update the permissions.json files
-3. update **<HOST>** in every Besu nodes' config.toml
+3. Update **<HOST>** in every Besu nodes' config.toml
