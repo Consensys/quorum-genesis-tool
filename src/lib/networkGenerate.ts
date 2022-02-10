@@ -8,6 +8,7 @@ import * as fileHandler from "./fileHandler";
 import * as nodekeys from "./nodeKeys";
 import * as besuConfig from "./besuConfig";
 import { tesseraOutput } from "./tessera";
+import { createTesseraConfig } from "./tesseraConfig";
 
 const OUTPUT_BASE_DIR = "./output";
 
@@ -91,7 +92,8 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
   if (quorumConfig.tesseraEnabled && quorumConfig.tesseraPassword === '') console.log("No password entered. Will not encrypt private key.");
   if (quorumConfig.tesseraEnabled) console.log("Generating tessera keys...");
   for (let val = 0; val < quorumConfig.members; val++) {
-    await tesseraOutput(quorumConfig.tesseraPassword, outputDir, val);
+    const { privateKeyPath, publicKeyPath } = await tesseraOutput(quorumConfig.tesseraPassword, outputDir, val);
+    createTesseraConfig(privateKeyPath, publicKeyPath, quorumConfig, outputDir, val);
   }
 
   console.log("Artifacts in folder: " + outputDir);
