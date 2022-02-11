@@ -10,8 +10,6 @@ import * as besuConfig from "./besuConfig";
 import { tesseraOutput } from "./tessera";
 import { createTesseraConfig } from "./tesseraConfig";
 
-const OUTPUT_BASE_DIR = "./output";
-
 async function generateNodeConfig(numNodes: number, nodeType: string, accountPassword: string, curve: CryptoCurve, outputDir: string): Promise<NodeKeys[]> {
   const nNodes = numNodes;
   const nodes: NodeKeys[] = [];
@@ -27,6 +25,7 @@ async function generateNodeConfig(numNodes: number, nodeType: string, accountPas
 
 export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise<string> {
   // Create a new root folder each time - dont destroy anything that existed
+  const OUTPUT_BASE_DIR = `${quorumConfig.outputPath}/output`;
   const ts: string = fileHandler.createTimestamp();
   const outputDir: string = OUTPUT_BASE_DIR + "/" + ts;
 
