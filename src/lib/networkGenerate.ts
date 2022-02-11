@@ -25,7 +25,7 @@ async function generateNodeConfig(numNodes: number, nodeType: string, accountPas
 
 export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise<string> {
   // Create a new root folder each time - dont destroy anything that existed
-  const OUTPUT_BASE_DIR = `${quorumConfig.outputPath}/output`;
+  const OUTPUT_BASE_DIR = `${quorumConfig.outputPath}`;
   const ts: string = fileHandler.createTimestamp();
   const outputDir: string = OUTPUT_BASE_DIR + "/" + ts;
 
