@@ -44,7 +44,8 @@ export async function main(): Promise<void> {
     answers = {
       consensus: args.consensus,
       chainID: args.chainID,
-      blockperiod: args.requestTimeout,
+      blockperiod: args.blockperiod,
+      requestTimeout: args.requestTimeout,
       epochLength: args.epochLength,
       difficulty: args.difficulty,
       gasLimit: args.gasLimit,
