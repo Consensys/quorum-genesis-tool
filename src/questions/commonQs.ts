@@ -1,10 +1,24 @@
 import { QuestionTree } from "../types/questions";
 
+export const outputPathQuestion: QuestionTree = {
+  name: "outputPath",
+  prompt: "Set your output path for the artifacts: (default ./output)"
+};
+
 export const accountPasswordQuestion: QuestionTree = {
   name: "accountPassword",
   prompt: "Set your account password: (empty for none)"
 };
 
+export const tesseraPasswordQuestion: QuestionTree = {
+  name: "tesseraPassword",
+  prompt: "Set your tessera password: (empty for none)"
+};
+
+export const tesseraEnabled: QuestionTree = {
+  name: "tesseraEnabled",
+  prompt: "Use Tessera for private transactions?: [y/N]"
+};
 export const curveQuestion: QuestionTree = {
   name: "curve",
   prompt: "Choose your encryption curve: Default: [1]",
