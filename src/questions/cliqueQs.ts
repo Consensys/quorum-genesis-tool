@@ -1,11 +1,15 @@
 /* eslint-disable object-shorthand */
 import { QuestionTree } from "../types/questions";
-import { integerValidator, stringValidator, passwordValidator } from "./common";
+import { integerValidator, stringValidator, passwordValidator, getYesNoValidator } from "./common";
 import * as commonQs from "./commonQs";
 // import { CryptoCurve } from "../types/cryptoCurve";
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+const _outputPathQuestion: QuestionTree = Object.assign({}, commonQs.outputPathQuestion);
+_outputPathQuestion.transformerValidator = stringValidator(_outputPathQuestion, undefined, './output');
+
 const _accountPasswordQuestion: QuestionTree = Object.assign({}, commonQs.accountPasswordQuestion);
-_accountPasswordQuestion.transformerValidator = passwordValidator(_accountPasswordQuestion, undefined);
+_accountPasswordQuestion.transformerValidator = passwordValidator(_accountPasswordQuestion, _outputPathQuestion);
 
 // const _curveQuestion: QuestionTree = Object.assign({}, commonQs.curveQuestion);
 // _curveQuestion.options = [
@@ -13,14 +17,26 @@ _accountPasswordQuestion.transformerValidator = passwordValidator(_accountPasswo
 //   { label: "secp256r1", value: CryptoCurve.r1, nextQuestion: _accountPasswordQuestion }
 // ];
 
-const _bootnodesQuestion: QuestionTree = Object.assign({}, commonQs.bootnodesQuestion);
-_bootnodesQuestion.transformerValidator = integerValidator(_bootnodesQuestion, _accountPasswordQuestion, 2);
+const _tesseraPasswordQuestion: QuestionTree = Object.assign({}, commonQs.tesseraPasswordQuestion);
+_tesseraPasswordQuestion.transformerValidator = passwordValidator(_tesseraPasswordQuestion, _accountPasswordQuestion);
+
+const _tesseraEnabledQuestion: QuestionTree = Object.assign({}, commonQs.tesseraEnabled);
+_tesseraEnabledQuestion.transformerValidator = getYesNoValidator(_tesseraEnabledQuestion, _tesseraPasswordQuestion, "n");
 
 const _membersQuestion: QuestionTree = Object.assign({}, commonQs.membersQuestion);
-_membersQuestion.transformerValidator = integerValidator(_membersQuestion, _bootnodesQuestion, 2);
+_membersQuestion.transformerValidator = integerValidator(_membersQuestion, _tesseraEnabledQuestion, 1);
 
 const _validatorsQuestion: QuestionTree = Object.assign({}, commonQs.validatorsQuestion);
 _validatorsQuestion.transformerValidator = integerValidator(_validatorsQuestion, _membersQuestion, 4);
+
+const _bootnodesQuestion: QuestionTree = Object.assign({}, commonQs.bootnodesQuestion);
+_bootnodesQuestion.transformerValidator = integerValidator(_bootnodesQuestion, _validatorsQuestion, 2);
+
+const _txnSizeLimitQuestion: QuestionTree = Object.assign({}, commonQs.txnSizeLimitQuestion);
+_txnSizeLimitQuestion.transformerValidator = integerValidator(_txnSizeLimitQuestion, _bootnodesQuestion, 64);
+
+const _maxCodeSizeQuestion: QuestionTree = Object.assign({}, commonQs.maxCodeSizeQuestion);
+_maxCodeSizeQuestion.transformerValidator = integerValidator(_maxCodeSizeQuestion, _txnSizeLimitQuestion, 64);
 
 const _coinbaseQuestion: QuestionTree = Object.assign({}, commonQs.coinbaseQuestion);
 _coinbaseQuestion.transformerValidator = stringValidator(_coinbaseQuestion, _validatorsQuestion, "0x0000000000000000000000000000000000000000");

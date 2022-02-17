@@ -1,12 +1,13 @@
 
+import * as njks from "nunjucks";
 import { QuorumConfig } from "../types/quorumConfig";
 import { NodeKeys } from "../types/nodeKeys";
-import path from "path";
 import fs from "fs";
+import path from "path";
 
-const TEMPLATES_PATH = path.join(__dirname, "../templates");
 const GOQ_SUB = "/goQuorum";
 const BESU_SUB = "/besu";
+njks.configure({ autoescape: false });
 
 export function createTimestamp(): string {
   return new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString()
@@ -14,16 +15,21 @@ export function createTimestamp(): string {
     .replace('T', '-').replace(/:/g, '-');
 }
 
-export function setupOutputFolder(path: string, quorumConfig: QuorumConfig, templatesPath = TEMPLATES_PATH): string {
+export function setupOutputFolder(fpath: string, quorumConfig: QuorumConfig): string {
   // create the base path if it doesnt exist
-  if (!fs.existsSync(path)) fs.mkdirSync(path, { recursive: true });
-  fs.copyFileSync(templatesPath + '/README.md', path + '/README.md');
+  if (!fs.existsSync(fpath)) fs.mkdirSync(fpath, { recursive: true });
+
+  // template for the README.md
+  const templateSrc = fs.readFileSync(path.resolve(__dirname, '../templates/README.md'), "utf-8");
+  const result = njks.renderString(templateSrc, quorumConfig);
+  fs.writeFileSync(fpath + '/README.md', result);
+
   // save the values from the user to file
-  fs.writeFileSync(path + "/userData.json", JSON.stringify(quorumConfig, null, 2));
+  fs.writeFileSync(fpath + "/userData.json", JSON.stringify(quorumConfig, null, 2));
   [GOQ_SUB, BESU_SUB].forEach((client) => {
-    fs.mkdirSync(path + client, { recursive: true });
+    fs.mkdirSync(fpath + client, { recursive: true });
   });
-  return path;
+  return fpath;
 }
 
 export function writeNodeKeys(path: string, nodekeys: NodeKeys): void {

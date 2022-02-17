@@ -50,3 +50,58 @@ Please remember to do the following:
 1. Update the **<HOST>**  in both the permissions file and the static nodes files. Please note the selected ports are default and you may need to check firewall rules if using alternate ports
 2. As above, update the permissions.json files
 3. update **<HOST>** in every Besu nodes' config.toml 
+
+
+
+### To start a HLF Besu node: 
+
+```bash
+/opt/besu/bin/besu --config-file=/config/config.toml 
+```
+
+Please refer to the [docs](https://besu.hyperledger.org/en/latest/HowTo/Configure/Using-Configuration-File/) for details on more cli args 
+
+
+### To start a GoQuorum node:
+
+```bash
+geth --datadir=/data init /config/genesis.json;
+
+# move nodekeys to the /data directory AFTER the init command
+cp /config/accountKeystore /data/keystore/key;
+cp /config/nodekey /data/geth/nodekey;
+
+export ADDRESS=$$(grep -o '"address": *"[^"]*"' /config/accountKeystore | grep -o '"[^"]*"$$' | sed 's/"//g')
+
+geth \
+  --datadir /data \
+  --nodiscover \
+  --verbosity 5 \
+  {%- if consensus === 'raft' -%}
+  --raft --raftblocktime 300 --raftport 53000 \
+  {%- else -%}
+  --istanbul.blockperiod {{ blockperiod }} --mine --miner.threads 1 --miner.gasprice 0 --emitcheckpoints \
+  {%- endif -%}
+  --syncmode full --nousb \
+  --metrics --pprof --pprof.addr 0.0.0.0 --pprof.port 9545 \
+  --networkid {{ chainID }} \
+  --http --http.addr 0.0.0.0 --http.port 8545 --http.corsdomain "*" --http.vhosts "*" \ 
+  --ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins "*" \
+  {%- if consensus === 'raft' -%}
+  --http.api admin,trace,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft \
+  --ws.api admin,trace,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft \
+  {%- elif consensus === 'ibft' -%}
+  --http.api admin,trace,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,istanbul \
+  --ws.api admin,trace,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,istanbul \
+  {%- else -%}
+  --http.api admin,trace,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,istanbul,qbft \
+  --ws.api admin,trace,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,istanbul,qbft \
+  {%- endif -%}
+  --port 30303 \
+  --unlock $${ADDRESS} --allow-insecure-unlock \
+  --password /config/accountPassword \
+  &> /var/log/quorum/geth-$$HOSTNAME-$$(hostname -i).log | tee -a /var/log/quorum/geth-$$HOSTNAME-$$(hostname -i).log
+
+```
+
+Please refer to the [docs](https://geth.ethereum.org/docs/interface/command-line-options) for details on more cli args 

@@ -37,6 +37,15 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
   console.log("Creating members...");
   const members = await generateNodeConfig(quorumConfig.members, "member", quorumConfig.accountPassword, quorumConfig.curve, outputDir);
 
+  if (quorumConfig.tesseraEnabled) {
+    if (quorumConfig.tesseraPassword === '') console.log("No password entered. Will not encrypt private key.");
+    console.log("Generating tessera keys...");
+    for (let val = 0; val < quorumConfig.members; val++) {
+      const { privateKeyPath, publicKeyPath } = await tesseraOutput(quorumConfig.tesseraPassword, outputDir, val);
+      createTesseraConfig(privateKeyPath, publicKeyPath, quorumConfig, outputDir, val);
+    }
+  }
+
   console.log("Creating validators...");
   const validators = await generateNodeConfig(quorumConfig.validators, "validator", quorumConfig.accountPassword, quorumConfig.curve, outputDir);
   const validatorAddressBuffers: Address[] = validators.map(v => v.address);
@@ -88,12 +97,7 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
     }
   }
 
-  if (quorumConfig.tesseraEnabled && quorumConfig.tesseraPassword === '') console.log("No password entered. Will not encrypt private key.");
-  if (quorumConfig.tesseraEnabled) console.log("Generating tessera keys...");
-  for (let val = 0; val < quorumConfig.members; val++) {
-    const { privateKeyPath, publicKeyPath } = await tesseraOutput(quorumConfig.tesseraPassword, outputDir, val);
-    createTesseraConfig(privateKeyPath, publicKeyPath, quorumConfig, outputDir, val);
-  }
+
 
   console.log("Artifacts in folder: " + outputDir);
   return outputDir;
