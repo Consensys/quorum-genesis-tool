@@ -51,6 +51,9 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
   const validatorAddressBuffers: Address[] = validators.map(v => v.address);
   const extraData: string = nodekeys.generateExtraDataString(validatorAddressBuffers, quorumConfig.consensus);
 
+  // concatenate NodeKeys array to pass into the Genesis functions
+  const NodeKeyConcat: NodeKeys[] = bootnodes.concat(members, validators);
+
   // static nodes generation
   const allNodes: NodeKeys[] = validators.concat(bootnodes, members);
   const allNodesEnodes: string[] = allNodes.map(_ => _.publicKey.toString('hex'));
@@ -59,28 +62,28 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
   switch (consensus) {
     case Consensus.clique: {
       fileHandler.createStaticNodes(outputDir, allNodesEnodes, true, true);
-      genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
+      genesis.createBesuGenesis(outputDir, quorumConfig, extraData, NodeKeyConcat);
       besuConfig.createBesuConfig(bootnodes, quorumConfig, outputDir);
-      genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
+      genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData, NodeKeyConcat);
       fileHandler.createBesuPermissionsFile(outputDir, allNodesEnodes);
       fileHandler.createGoQuorumPermissionsFile(outputDir, allNodesEnodes);
       break;
     }
     case Consensus.raft: {
       fileHandler.createStaticNodes(outputDir, allNodesEnodes, false, true);
-      genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
+      genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData, NodeKeyConcat);
       fileHandler.createGoQuorumPermissionsFile(outputDir, allNodesEnodes);
       break;
     }
     case Consensus.ibft: {
       fileHandler.createStaticNodes(outputDir, allNodesEnodes, false, true);
-      genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
+      genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData, NodeKeyConcat);
       fileHandler.createGoQuorumPermissionsFile(outputDir, allNodesEnodes);
       break;
     }
     case Consensus.ibft2: {
       fileHandler.createStaticNodes(outputDir, allNodesEnodes, true, false);
-      genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
+      genesis.createBesuGenesis(outputDir, quorumConfig, extraData, NodeKeyConcat);
       besuConfig.createBesuConfig(bootnodes, quorumConfig, outputDir);
       fileHandler.createBesuPermissionsFile(outputDir, allNodesEnodes);
       break;
@@ -88,16 +91,14 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
     // qbft
     default: {
       fileHandler.createStaticNodes(outputDir, allNodesEnodes, true, true);
-      genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData);
-      genesis.createBesuGenesis(outputDir, quorumConfig, extraData);
+      genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData, NodeKeyConcat);
+      genesis.createBesuGenesis(outputDir, quorumConfig, extraData, NodeKeyConcat);
       besuConfig.createBesuConfig(bootnodes, quorumConfig, outputDir);
       fileHandler.createBesuPermissionsFile(outputDir, allNodesEnodes);
       fileHandler.createGoQuorumPermissionsFile(outputDir, allNodesEnodes);
       break;
     }
   }
-
-
 
   console.log("Artifacts in folder: " + outputDir);
   return outputDir;
