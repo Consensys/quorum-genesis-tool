@@ -2,7 +2,7 @@
 
 import { Consensus } from "../types/consensus";
 import { QuorumConfig } from "../types/quorumConfig";
-import { Genesis, GenesisConfig, CodeSize } from "../types/genesis";
+import { Genesis, GenesisConfig, CodeSize, Alloc } from "../types/genesis";
 import fs from "fs";
 import { CryptoCurve } from "../types/cryptoCurve";
 import { NodeKeys } from "../types/nodeKeys";
@@ -13,6 +13,11 @@ const BESU_SUB = "/besu";
 
 
 function createDefaultGenesis(): Genesis {
+
+  const DefaultAlloc: Alloc = {
+    balance: "90000000000000000000000",
+    comment: "test account from the quorum-dev-quickstart"
+  };
 
   const DefaultGenesisConfig: GenesisConfig = {
     chainId: 1337,
@@ -37,9 +42,12 @@ function createDefaultGenesis(): Genesis {
     mixHash: "0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365",
     parentHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
     config: DefaultGenesisConfig,
-    alloc: {}
+    alloc: {
+      "fe3b557e8fb62b89f4916b721be55ceb828dbd73": DefaultAlloc,
+      "f17f52151EbEF6C7334FAD080c5704D77216b732": DefaultAlloc,
+      "627306090abaB3A6e1400e9345bC60c78a8BEf57": DefaultAlloc,
+    }
   };
-
   return genesis;
 }
 
