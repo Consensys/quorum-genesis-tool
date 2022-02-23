@@ -2,9 +2,10 @@
 
 import { Consensus } from "../types/consensus";
 import { QuorumConfig } from "../types/quorumConfig";
-import { Genesis, GenesisConfig, Alloc, CodeSize } from "../types/genesis";
+import { Genesis, GenesisConfig, CodeSize } from "../types/genesis";
 import fs from "fs";
 import { CryptoCurve } from "../types/cryptoCurve";
+import { NodeKeys } from "../types/nodeKeys";
 
 const GENESIS_FILE = "genesis.json";
 const GOQ_SUB = "/goQuorum";
@@ -12,10 +13,6 @@ const BESU_SUB = "/besu";
 
 
 function createDefaultGenesis(): Genesis {
-  const DefaultAlloc: Alloc = {
-    balance: "90000000000000000000000",
-    comment: "test account"
-  };
 
   const DefaultGenesisConfig: GenesisConfig = {
     chainId: 1337,
@@ -40,17 +37,13 @@ function createDefaultGenesis(): Genesis {
     mixHash: "0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365",
     parentHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
     config: DefaultGenesisConfig,
-    alloc: {
-      "fe3b557e8fb62b89f4916b721be55ceb828dbd73": DefaultAlloc,
-      "f17f52151EbEF6C7334FAD080c5704D77216b732": DefaultAlloc,
-      "627306090abaB3A6e1400e9345bC60c78a8BEf57": DefaultAlloc,
-    }
+    alloc: {}
   };
 
   return genesis;
 }
 
-export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extraData: string): string {
+export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extraData: string, node: NodeKeys[]): string {
   const genesisFile = path + BESU_SUB + '/' + GENESIS_FILE;
   const besu: Genesis = createDefaultGenesis();
   besu.extraData = extraData;
@@ -62,6 +55,11 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
   if (quorumConfig.curve === CryptoCurve.r1) {
     besu.config.ecCurve = 'secp256r1';
   }
+  node.forEach((account) => {
+    besu.alloc[account.ethAccount.address] = {
+      "balance": "1000000000000000000000000000"
+    };
+  });
   switch (consensus) {
     case Consensus.clique: {
       besu.config.clique = {
@@ -95,7 +93,7 @@ export function createBesuGenesis(path: string, quorumConfig: QuorumConfig, extr
   return genesisFile;
 }
 
-export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, extraData: string): string {
+export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, extraData: string, node: NodeKeys[]): string {
   const DefaultCodeSize: CodeSize = {
     block: 0,
     size: quorumConfig.maxCodeSize,
@@ -111,7 +109,11 @@ export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, 
   goquorum.config.chainId = quorumConfig.chainID;
   goquorum.config.maxCodeSizeConfig = [DefaultCodeSize];
   goquorum.config.txnSizeLimit = quorumConfig.txnSizeLimit;
-
+  node.forEach((account) => {
+    goquorum.alloc[account.ethAccount.address] = {
+      "balance": "1000000000000000000000000000"
+    };
+  });
   const consensus = quorumConfig.consensus;
   switch (consensus) {
     case Consensus.clique: {
