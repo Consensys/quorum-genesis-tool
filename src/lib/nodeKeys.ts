@@ -83,7 +83,7 @@ export function generateExtraDataString(validatorAddressList: Address[], consens
       // 65 bytes for the proposer signature. In the genesis block there is no initial proposer, so the proposer signature is all zeros.
       // [0x prefix, 32 bytes vanity, List<Validators> (20bytes each), proposer signature - 65 bytes of 0s (see comment above)]
       const signers: string[] = validatorAddressList.map(_ => _.toString('hex'));
-      extraData = [VANITY_DATA, signers[0], CLIQUE_PROPOSER_SIGNATURE].join('');
+      extraData = [VANITY_DATA, signers.join(''), CLIQUE_PROPOSER_SIGNATURE].join('');
       break;
     }
     case Consensus.raft: {
