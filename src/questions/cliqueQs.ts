@@ -39,7 +39,7 @@ const _maxCodeSizeQuestion: QuestionTree = Object.assign({}, commonQs.maxCodeSiz
 _maxCodeSizeQuestion.transformerValidator = integerValidator(_maxCodeSizeQuestion, _txnSizeLimitQuestion, 64);
 
 const _coinbaseQuestion: QuestionTree = Object.assign({}, commonQs.coinbaseQuestion);
-_coinbaseQuestion.transformerValidator = stringValidator(_coinbaseQuestion, _validatorsQuestion, "0x0000000000000000000000000000000000000000");
+_coinbaseQuestion.transformerValidator = stringValidator(_coinbaseQuestion, _maxCodeSizeQuestion, "0x0000000000000000000000000000000000000000");
 
 const _gasLimitQuestion: QuestionTree = Object.assign({}, commonQs.gasLimitQuestion);
 _gasLimitQuestion.transformerValidator = stringValidator(_gasLimitQuestion, _coinbaseQuestion, "0xFFFF");
