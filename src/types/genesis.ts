@@ -6,6 +6,7 @@ export type Algorithm = {
   epochlength?: number;
   epoch?: number;
   policy?: number;
+  period?: number;
   ceil2Nby3Block?: number;
   testQBFTBlock?: number;
 };

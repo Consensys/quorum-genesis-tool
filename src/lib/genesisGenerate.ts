@@ -127,6 +127,7 @@ export function createGoQuorumGenesis(path: string, quorumConfig: QuorumConfig, 
     case Consensus.clique: {
       goquorum.config.clique = {
         policy: 0,
+        period: quorumConfig.blockperiod,
         epoch: quorumConfig.epochLength
       };
       break;
