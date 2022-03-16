@@ -10,7 +10,6 @@ import Wallet from "ethereumjs-wallet";
 import RLP from 'rlp';
 import { Input } from "rlp";
 
-
 const VANITY_DATA = "0x0000000000000000000000000000000000000000000000000000000000000000";
 const CLIQUE_PROPOSER_SIGNATURE = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
@@ -72,18 +71,26 @@ export async function generateNodeKeys(password: string, curve: CryptoCurve): Pr
   return nodeKeys;
 }
 
-// extraData field calculation
+// goquorum requires the validator accounts addresses not the validator nodekey addresses
+// https://github.com/ethereum/EIPs/issues/225
+export function generateQuorumCliqueExtraDataString(signers: string[]) {
+  const extraData: Input = [VANITY_DATA, signers.join(''), CLIQUE_PROPOSER_SIGNATURE].join('');
+  return extraData;
+}
 
+// extraData field calculation
 export function generateExtraDataString(validatorAddressList: Address[], consensus: Consensus): string {
 
   let extraData: Input;
   switch (consensus) {
     case Consensus.clique: {
+      // NOTE: this is only applicable to Besu for clique. For GoQ please see the method above `generateQuorumCliqueExtraDataString`
+      //
       // clique just appends https://besu.hyperledger.org/en/latest/HowTo/Configure/Consensus-Protocols/Clique/
       // 65 bytes for the proposer signature. In the genesis block there is no initial proposer, so the proposer signature is all zeros.
       // [0x prefix, 32 bytes vanity, List<Validators> (20bytes each), proposer signature - 65 bytes of 0s (see comment above)]
       const signers: string[] = validatorAddressList.map(_ => _.toString('hex'));
-      extraData = [VANITY_DATA, signers[0], CLIQUE_PROPOSER_SIGNATURE].join('');
+      extraData = [VANITY_DATA, signers.join(''), CLIQUE_PROPOSER_SIGNATURE].join('');
       break;
     }
     case Consensus.raft: {

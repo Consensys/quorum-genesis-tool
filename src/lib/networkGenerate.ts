@@ -64,7 +64,10 @@ export async function generateNetworkConfig(quorumConfig: QuorumConfig): Promise
       fileHandler.createStaticNodes(outputDir, allNodesEnodes, true, true);
       genesis.createBesuGenesis(outputDir, quorumConfig, extraData, NodeKeyConcat);
       besuConfig.createBesuConfig(bootnodes, quorumConfig, outputDir);
-      genesis.createGoQuorumGenesis(outputDir, quorumConfig, extraData, NodeKeyConcat);
+      // goquorum requires the validator accounts addresses not the validator nodekey addresses
+      const validatorAccountAddresses: string[] = validators.map(v => v.ethAccount.address.replace('0x',''));
+      const quorumExtraData: string = nodekeys.generateQuorumCliqueExtraDataString(validatorAccountAddresses);
+      genesis.createGoQuorumGenesis(outputDir, quorumConfig, quorumExtraData, NodeKeyConcat);
       fileHandler.createBesuPermissionsFile(outputDir, allNodesEnodes);
       fileHandler.createGoQuorumPermissionsFile(outputDir, allNodesEnodes);
       break;
