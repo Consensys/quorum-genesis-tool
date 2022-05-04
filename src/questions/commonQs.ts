@@ -2,22 +2,27 @@ import { QuestionTree } from "../types/questions";
 
 export const outputPathQuestion: QuestionTree = {
   name: "outputPath",
-  prompt: "Set your output path for the artifacts: (default ./output)"
+  prompt: "Set your output path for the artifacts: (default ./output)",
+};
+
+export const quickstartDevAccountsQuestion: QuestionTree = {
+  name: "quickstartDevAccounts",
+  prompt: "Include quorum-dev-quickstart test accounts: [y/N]",
 };
 
 export const accountPasswordQuestion: QuestionTree = {
   name: "accountPassword",
-  prompt: "Set your account password: (empty for none)"
+  prompt: "Set your account password: (empty for none)",
 };
 
 export const tesseraPasswordQuestion: QuestionTree = {
   name: "tesseraPassword",
-  prompt: "Set your tessera password: (empty for none)"
+  prompt: "Set your tessera password: (empty for none)",
 };
 
 export const tesseraEnabled: QuestionTree = {
   name: "tesseraEnabled",
-  prompt: "Use Tessera for private transactions?: [y/N]"
+  prompt: "Use Tessera for private transactions?: [y/N]",
 };
 export const curveQuestion: QuestionTree = {
   name: "curve",
@@ -26,7 +31,8 @@ export const curveQuestion: QuestionTree = {
 
 export const bootnodesQuestion: QuestionTree = {
   name: "bootnodes",
-  prompt: "Choose number of bootnode node keys to generate: (integer) Default: 2",
+  prompt:
+    "Choose number of bootnode node keys to generate: (integer) Default: 2",
 };
 
 export const membersQuestion: QuestionTree = {
@@ -36,7 +42,8 @@ export const membersQuestion: QuestionTree = {
 
 export const validatorsQuestion: QuestionTree = {
   name: "validators",
-  prompt: "Choose number of validator node keys to generate: (integer) Default: 4",
+  prompt:
+    "Choose number of validator node keys to generate: (integer) Default: 4",
 };
 
 export const txnSizeLimitQuestion: QuestionTree = {
@@ -51,7 +58,8 @@ export const maxCodeSizeQuestion: QuestionTree = {
 
 export const coinbaseQuestion: QuestionTree = {
   name: "coinbase",
-  prompt: "Set your coinbase address for rewards: (string) Default: 0x0000000000000000000000000000000000000000",
+  prompt:
+    "Set your coinbase address for rewards: (string) Default: 0x0000000000000000000000000000000000000000",
 };
 
 export const gasLimitQuestion: QuestionTree = {

@@ -20,4 +20,5 @@ export type QuorumConfig = {
   outputPath: string;
   tesseraEnabled: boolean;
   tesseraPassword: string;
+  quickstartDevAccounts: boolean;
 };
