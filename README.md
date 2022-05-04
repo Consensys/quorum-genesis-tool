@@ -149,7 +149,7 @@ For each node (bootnode/validator/member) an account is generated (files in thei
 
 If the flag `quickstartDevAccounts` is set to `true`, it will include the [quorum-dev-quickstart](https://github.com/ConsenSys/quorum-dev-quickstart) test accounts. _**It is important to remove these accounts when going into production!**_
 
-If the flag is not specified, then it will default to `false` with the assumption that the genesis is to be sued in production. You should specify the flag only if you would like the accounts in testing/dev.
+If the flag is not specified, then it will default to `false` with the assumption that the genesis is to be used in production. You should specify the flag only if you would like the accounts in testing/dev.
 
 **Tessera Passwords and Configuration**
 
