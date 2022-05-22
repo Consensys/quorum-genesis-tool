@@ -37,7 +37,7 @@ export const bootnodesQuestion: QuestionTree = {
 
 export const membersQuestion: QuestionTree = {
   name: "members",
-  prompt: "Choose number of member node keys to generate: (integer) Default: 2",
+  prompt: "Choose number of member node keys to generate: (integer) Default: 1",
 };
 
 export const validatorsQuestion: QuestionTree = {

@@ -72,7 +72,7 @@ Set your transaction size limit value: (integer) Default: 64
 
 Choose number of validator node keys to generate: (integer) Default: 4
 
-Choose number of member node keys to generate: (integer) Default: 2
+Choose number of member node keys to generate: (integer) Default: 1
 
 Choose number of bootnode node keys to generate: (integer) Default: 2
 
