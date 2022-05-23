@@ -25,7 +25,8 @@ const _quickstartDevAccountsQuestion: QuestionTree = Object.assign(
 );
 _quickstartDevAccountsQuestion.transformerValidator = getYesNoValidator(
   _quickstartDevAccountsQuestion,
-  _outputPathQuestion
+  _outputPathQuestion,
+  "n"
 );
 
 const _accountPasswordQuestion: QuestionTree = Object.assign(
