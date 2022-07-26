@@ -22,118 +22,122 @@ export async function main(): Promise<void> {
 
   let answers = {};
   if (process.argv.slice(2).length > 0) {
-    const args = await yargs(process.argv.slice(2)).options({
-      consensus: {
-        type: "string",
-        demandOption: true,
-        default: "qbft",
-        choices: ["ibft", "ibft2", "qbft", "clique", "raft"],
-        describe: "Consensus algorithm to use",
-      },
-      chainID: {
-        type: "number",
-        demandOption: true,
-        default: 1337,
-        describe: "ChainID for blockchain",
-      },
-      blockperiod: {
-        type: "number",
-        demandOption: true,
-        default: 5,
-        describe: "Number of seconds per block",
-      },
-      requestTimeout: {
-        type: "number",
-        demandOption: false,
-        default: 10,
-        describe: "Minimum request timeout for each round",
-      },
-      epochLength: {
-        type: "number",
-        demandOption: true,
-        default: 30000,
-        describe: "Number of blocks after which votes reset",
-      },
-      difficulty: {
-        type: "number",
-        demandOption: true,
-        default: 1,
-        describe: "Difficulty of network",
-      },
-      gasLimit: {
-        type: "string",
-        demandOption: true,
-        default: "0xFFFF",
-        describe: "Block gas limit",
-      },
-      coinbase: {
-        type: "string",
-        demandOption: false,
-        default: "0x0000000000000000000000000000000000000000",
-        describe: "Address to pay mining rewards to",
-      },
-      maxCodeSize: {
-        type: "number",
-        demandOption: false,
-        default: 64,
-        describe: "Maximum contract size (kb)",
-      },
-      txnSizeLimit: {
-        type: "number",
-        demandOption: false,
-        default: 64,
-        describe: "Maximum transaction size (kb)",
-      },
-      validators: {
-        type: "number",
-        demandOption: true,
-        default: 4,
-        describe: "Number of validator node keys to generate",
-      },
-      members: {
-        type: "number",
-        demandOption: true,
-        default: 1,
-        describe: "Number of member node keys to generate",
-      },
-      bootnodes: {
-        type: "number",
-        demandOption: true,
-        default: 2,
-        describe: "Number of bootnode node keys to generate",
-      },
-      // curve: { type: 'string', demandOption: false, default: CryptoCurve.k1, choices: [CryptoCurve.k1, CryptoCurve.r1], describe: 'Type of curve for keys' },
-      accountPassword: {
-        type: "string",
-        demandOption: false,
-        default: "",
-        describe: "Password for keys",
-      },
-      outputPath: {
-        type: "string",
-        demandOption: false,
-        default: "./output",
-        describe: "Output path relative to current directory",
-      },
-      tesseraEnabled: {
-        type: "boolean",
-        demandOption: false,
-        default: false,
-        describe: "Whether to generate tessera keys",
-      },
-      tesseraPassword: {
-        type: "string",
-        demandOption: false,
-        default: "",
-        describe: "Set password to encrypt generated keys",
-      },
-      quickstartDevAccounts: {
-        type: "boolean",
-        demandOption: true,
-        default: false,
-        describe: "Include quorum-dev-quickstart test accounts",
-      },
-    }).argv;
+    const args = await yargs(process.argv.slice(2))
+      .options({
+        consensus: {
+          type: "string",
+          demandOption: true,
+          default: "qbft",
+          choices: ["ibft", "ibft2", "qbft", "clique", "raft"],
+          describe: "Consensus algorithm to use",
+        },
+        chainID: {
+          type: "number",
+          demandOption: true,
+          default: 1337,
+          describe: "ChainID for blockchain",
+        },
+        blockperiod: {
+          type: "number",
+          demandOption: true,
+          default: 5,
+          describe: "Number of seconds per block",
+        },
+        requestTimeout: {
+          type: "number",
+          demandOption: false,
+          default: 10,
+          describe: "Minimum request timeout for each round",
+        },
+        epochLength: {
+          type: "number",
+          demandOption: true,
+          default: 30000,
+          describe: "Number of blocks after which votes reset",
+        },
+        difficulty: {
+          type: "number",
+          demandOption: true,
+          default: 1,
+          describe: "Difficulty of network",
+        },
+        gasLimit: {
+          type: "string",
+          demandOption: true,
+          default: "0xFFFF",
+          describe: "Block gas limit",
+        },
+        coinbase: {
+          type: "string",
+          demandOption: false,
+          default: "0x0000000000000000000000000000000000000000",
+          describe: "Address to pay mining rewards to",
+        },
+        maxCodeSize: {
+          type: "number",
+          demandOption: false,
+          default: 64,
+          describe: "Maximum contract size (kb)",
+        },
+        txnSizeLimit: {
+          type: "number",
+          demandOption: false,
+          default: 64,
+          describe: "Maximum transaction size (kb)",
+        },
+        validators: {
+          type: "number",
+          demandOption: true,
+          default: 4,
+          describe: "Number of validator node keys to generate",
+        },
+        members: {
+          type: "number",
+          demandOption: true,
+          default: 1,
+          describe: "Number of member node keys to generate",
+        },
+        bootnodes: {
+          type: "number",
+          demandOption: true,
+          default: 2,
+          describe: "Number of bootnode node keys to generate",
+        },
+        // curve: { type: 'string', demandOption: false, default: CryptoCurve.k1, choices: [CryptoCurve.k1, CryptoCurve.r1], describe: 'Type of curve for keys' },
+        accountPassword: {
+          type: "string",
+          demandOption: false,
+          default: "",
+          describe: "Password for keys",
+        },
+        outputPath: {
+          type: "string",
+          demandOption: false,
+          default: "./output",
+          describe: "Output path relative to current directory",
+        },
+        tesseraEnabled: {
+          type: "boolean",
+          demandOption: false,
+          default: false,
+          describe: "Whether to generate tessera keys",
+        },
+        tesseraPassword: {
+          type: "string",
+          demandOption: false,
+          default: "",
+          describe: "Set password to encrypt generated keys",
+        },
+        quickstartDevAccounts: {
+          type: "boolean",
+          demandOption: true,
+          default: false,
+          describe: "Include quorum-dev-quickstart test accounts",
+        },
+      })
+      .coerce(["consensus"], (opt: string) => {
+        return opt.toLowerCase();
+      }).argv;
 
     answers = {
       consensus: args.consensus,
