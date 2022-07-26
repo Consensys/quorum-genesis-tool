@@ -126,7 +126,7 @@ Options:
 To generate keys for QBFT (default) with 4 validators, 2 bootnodes and 2 members:
 
 ```
-npx quorum-genesis-tool --consensus QBFT
+npx quorum-genesis-tool --consensus qbft
 ```
 
 To generate config for HLF Besu using QBFT
