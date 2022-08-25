@@ -56,6 +56,8 @@ Set your chainID value: (integer) Default: 1337
 
 Set your blockperiodseconds value: (integer) Default: 5
 
+(GoQ only) Set your emptyblockperiodseconds value: (integer) Default: 60
+
 Set your requestTimeoutSeconds value: (integer) Default: 10
 
 Set your epoch length value: (integer) Default: 30000
@@ -90,34 +92,40 @@ Alternatively, you can use cli options and skip the prompt above like so:
 npx quorum-genesis-tool --help
 
 Options:
-  --help             Show help                                         [boolean]
-  --version          Show version number                               [boolean]
-  --consensus        Consensus algorithm to use
+  --help                   Show help                                   [boolean]
+  --version                Show version number                         [boolean]
+  --consensus              Consensus algorithm to use
         [string] [required] [choices: "ibft", "ibft2", "qbft", "clique", "raft"]
                                                                [default: "qbft"]
-  --chainID          ChainID for blockchain  [number] [required] [default: 1337]
-  --blockperiod      Number of seconds per block[number] [required] [default: 5]
-  --requestTimeout   Minimum request timeout for each round
+  --chainID                ChainID for blockchain
+                                             [number] [required] [default: 1337]
+  --blockperiod            Number of seconds per block
+                                                [number] [required] [default: 5]
+  --requestTimeout         Minimum request timeout for each round
                                                           [number] [default: 10]
-  --epochLength      Number of blocks after which votes reset
+  --emptyBlockPeriod       Reduce number (seconds) of blocks produced when there
+                           are no transactions            [number] [default: 60]
+  --epochLength            Number of blocks after which votes reset
                                             [number] [required] [default: 30000]
-  --difficulty       Difficulty of network      [number] [required] [default: 1]
-  --gasLimit         Block gas limit     [string] [required] [default: "0xFFFF"]
-  --coinbase         Address to pay mining rewards to
+  --difficulty             Difficulty of network[number] [required] [default: 1]
+  --gasLimit               Block gas limit
+                                         [string] [required] [default: "0xFFFF"]
+  --coinbase               Address to pay mining rewards to
                 [string] [default: "0x0000000000000000000000000000000000000000"]
-  --maxCodeSize      Maximum contract size (kb)           [number] [default: 64]
-  --txnSizeLimit     Maximum transaction size (kb)        [number] [default: 64]
-  --validators       Number of validator node keys to generate
+  --maxCodeSize            Maximum contract size (kb)     [number] [default: 64]
+  --txnSizeLimit           Maximum transaction size (kb)  [number] [default: 64]
+  --validators             Number of validator node keys to generate
                                                 [number] [required] [default: 4]
-  --members          Number of member node keys to generate
+  --members                Number of member node keys to generate
                                                 [number] [required] [default: 1]
-  --bootnodes        Number of bootnode node keys to generate
+  --bootnodes              Number of bootnode node keys to generate
                                                 [number] [required] [default: 2]
-  --accountPassword  Password for keys                    [string] [default: ""]
-  --outputPath       Output path relative to current directory
+  --accountPassword        Password for keys              [string] [default: ""]
+  --outputPath             Output path relative to current directory
                                                   [string] [default: "./output"]
-  --tesseraEnabled   Whether to generate tessera keys [boolean] [default: false]
-  --tesseraPassword  Set password to encrypt generated keys
+  --tesseraEnabled         Whether to generate tessera keys
+                                                      [boolean] [default: false]
+  --tesseraPassword        Set password to encrypt generated keys
                                                           [string] [default: ""]
   --quickstartDevAccounts  Include quorum-dev-quickstart test accounts
                                            [boolean] [required] [default: false]
