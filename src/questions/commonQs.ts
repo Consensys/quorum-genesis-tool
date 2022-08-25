@@ -82,6 +82,12 @@ export const requestTimeoutQuestion: QuestionTree = {
   prompt: "Set your requestTimeoutSeconds value: (integer) Default: 10",
 };
 
+export const emptyBlockPeriodQuestion: QuestionTree = {
+  name: "emptyBlockPeriod",
+  prompt:
+    "(GoQ only) Set your emptyblockperiodseconds value: (integer) Default: 60",
+};
+
 export const blockPeriodQuestion: QuestionTree = {
   name: "blockperiod",
   prompt: "Set your blockperiodseconds value: (integer) Default: 5",

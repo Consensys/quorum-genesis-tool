@@ -1,7 +1,7 @@
 export type Algorithm = {
   blockperiodseconds?: number;
   requesttimeoutseconds?: number;
-  emptyBlockPeriodSeconds?: number;
+  emptyblockperiodseconds?: number;
   epochlength?: number;
   epoch?: number;
   policy?: number;

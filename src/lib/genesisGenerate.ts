@@ -155,7 +155,6 @@ export function createGoQuorumGenesis(
         epoch: quorumConfig.epochLength,
         ceil2Nby3Block: 0,
         blockperiodseconds: quorumConfig.blockperiod,
-        emptyBlockPeriodSeconds: quorumConfig.emptyBlockPeriod,
       };
       break;
     }
@@ -166,7 +165,7 @@ export function createGoQuorumGenesis(
         ceil2Nby3Block: 0,
         testQBFTBlock: 0,
         blockperiodseconds: quorumConfig.blockperiod,
-        emptyBlockPeriodSeconds: quorumConfig.emptyBlockPeriod,
+        emptyblockperiodseconds: quorumConfig.emptyBlockPeriod,
       };
       break;
     }
