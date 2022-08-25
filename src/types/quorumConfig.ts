@@ -4,6 +4,7 @@ import { CryptoCurve } from "./cryptoCurve";
 export type QuorumConfig = {
   consensus: Consensus;
   chainID: number;
+  emptyBlockPeriod: number;
   blockperiod: number;
   requestTimeout: number;
   epochLength: number;

@@ -160,13 +160,23 @@ _requestTimeoutQuestion.transformerValidator = integerValidator(
   10
 );
 
+const _emptyBlockPeriodQuestion: QuestionTree = Object.assign(
+  {},
+  commonQs.emptyBlockPeriodQuestion
+);
+_emptyBlockPeriodQuestion.transformerValidator = integerValidator(
+  _emptyBlockPeriodQuestion,
+  _requestTimeoutQuestion,
+  60
+);
+
 const _blockPeriodQuestion: QuestionTree = Object.assign(
   {},
   commonQs.blockPeriodQuestion
 );
 _blockPeriodQuestion.transformerValidator = integerValidator(
   _blockPeriodQuestion,
-  _requestTimeoutQuestion,
+  _emptyBlockPeriodQuestion,
   5
 );
 

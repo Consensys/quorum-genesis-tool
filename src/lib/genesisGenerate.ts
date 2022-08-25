@@ -150,19 +150,22 @@ export function createGoQuorumGenesis(
       break;
     }
     case Consensus.ibft: {
-      goquorum.config.istanbul = {
+      goquorum.config.ibft = {
         policy: 0,
         epoch: quorumConfig.epochLength,
         ceil2Nby3Block: 0,
+        blockperiodseconds: quorumConfig.blockperiod,
       };
       break;
     }
     case Consensus.qbft: {
-      goquorum.config.istanbul = {
+      goquorum.config.qbft = {
         policy: 0,
         epoch: quorumConfig.epochLength,
         ceil2Nby3Block: 0,
         testQBFTBlock: 0,
+        blockperiodseconds: quorumConfig.blockperiod,
+        emptyblockperiodseconds: quorumConfig.emptyBlockPeriod,
       };
       break;
     }

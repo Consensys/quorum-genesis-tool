@@ -6,6 +6,7 @@ export const TEST_QUORUM_CONFIG: QuorumConfig = {
   consensus: Consensus.qbft,
   chainID: 1337,
   blockperiod: 5,
+  emptyBlockPeriod: 60,
   requestTimeout: 10,
   epochLength: 30000,
   difficulty: 1,

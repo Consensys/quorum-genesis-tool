@@ -49,6 +49,13 @@ export async function main(): Promise<void> {
           default: 10,
           describe: "Minimum request timeout for each round",
         },
+        emptyBlockPeriod: {
+          type: "number",
+          demandOption: false,
+          default: 60,
+          describe:
+            "Reduce number (seconds) of blocks produced when there are no transactions",
+        },
         epochLength: {
           type: "number",
           demandOption: true,
@@ -144,6 +151,7 @@ export async function main(): Promise<void> {
       chainID: args.chainID,
       blockperiod: args.blockperiod,
       requestTimeout: args.requestTimeout,
+      emptyBlockPeriod: args.emptyBlockPeriod,
       epochLength: args.epochLength,
       difficulty: args.difficulty,
       gasLimit: args.gasLimit,

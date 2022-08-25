@@ -1,8 +1,7 @@
-
-
 export type Algorithm = {
   blockperiodseconds?: number;
   requesttimeoutseconds?: number;
+  emptyblockperiodseconds?: number;
   epochlength?: number;
   epoch?: number;
   policy?: number;
@@ -30,10 +29,10 @@ export type GenesisConfig = {
   txnSizeLimit?: number;
   maxCodeSizeConfig?: [CodeSize];
   ibft2?: Algorithm;
-  istanbul?: Algorithm;
+  ibft?: Algorithm;
   qbft?: Algorithm;
   clique?: Algorithm;
-  ecCurve?: 'secp256k1' | 'secp256r1';
+  ecCurve?: "secp256k1" | "secp256r1";
 };
 
 export type Alloc = {
@@ -48,7 +47,8 @@ export type Genesis = {
   extraData: string;
   gasLimit: string;
   gasUsed: string;
-  'number': string;
+  // eslint-disable-next-line id-blacklist
+  number: string;
   difficulty: string;
   coinbase: string;
   mixHash: string;
@@ -58,4 +58,3 @@ export type Genesis = {
   };
   config: GenesisConfig;
 };
-
