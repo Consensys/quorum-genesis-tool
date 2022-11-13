@@ -1,6 +1,6 @@
 {
   "name": "quorum-genesis-tool",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "A utility that lets developers create genesis files and node (&account) keys from ConsenSys!",
   "main": "build/index.js",
   "repository": "git@github.com:ConsenSys/quorum-genesis-tool.git",
@@ -27,7 +27,8 @@
     "lint": "eslint './src/**'",
     "lintAndFix": "eslint --fix './src/**'",
     "prepare": "tsc && eslint --fix './src/**'",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "publish": "npm run clean && npm run build && npm run test && npm publish --tag=latest"
   },
   "dependencies": {
     "argon2": "^0.28.4",
