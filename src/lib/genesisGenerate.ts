@@ -26,6 +26,11 @@ function createDefaultGenesis(): Genesis {
     eip158Block: 0,
     byzantiumBlock: 0,
     constantinopleBlock: 0,
+    petersburgBlock: 0,
+    istanbulBlock: 0,
+    muirglacierblock: 0,
+    berlinBlock: 0,
+    londonBlock: 0,
   };
 
   const genesis: Genesis = {

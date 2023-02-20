@@ -24,6 +24,11 @@ export type GenesisConfig = {
   eip158Block: number;
   byzantiumBlock: number;
   constantinopleBlock: number;
+  petersburgBlock: number,
+  istanbulBlock: number,
+  muirglacierblock: number,
+  berlinBlock: number,
+  londonBlock: number,
   isQuorum?: boolean;
   contractSizeLimit?: string;
   txnSizeLimit?: number;
