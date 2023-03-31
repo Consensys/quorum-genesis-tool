@@ -208,3 +208,6 @@ if (require.main === module) {
     process.exit(1);
   }
 }
+
+export { generateNetworkConfig } from './lib/networkGenerate';
+export { QuorumConfig } from './types/quorumConfig';
