@@ -210,4 +210,4 @@ if (require.main === module) {
 }
 
 export { generateNetworkConfig } from './lib/networkGenerate';
-export { QuorumConfig } from './types/quorumConfig';
+export * from './types';
