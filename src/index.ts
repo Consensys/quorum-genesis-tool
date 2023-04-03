@@ -141,6 +141,12 @@ export async function main(): Promise<void> {
           default: false,
           describe: "Include quorum-dev-quickstart test accounts",
         },
+        noOutputTimestamp: {
+          type: "boolean",
+          demandOption: false,
+          default: false,
+          describe: "Remove generated timestamp from output folder name",
+        },
       })
       .coerce(["consensus"], (opt: string) => {
         return opt.toLowerCase();
@@ -167,6 +173,7 @@ export async function main(): Promise<void> {
       tesseraEnabled: args.tesseraEnabled,
       tesseraPassword: args.tesseraPassword,
       quickstartDevAccounts: args.quickstartDevAccounts,
+      noOutputTimestamp: args.noOutputTimestamp,
     };
   } else {
     const qr = new QuestionRenderer(rootQuestion);
@@ -209,5 +216,5 @@ if (require.main === module) {
   }
 }
 
-export { generateNetworkConfig } from './lib/networkGenerate';
-export * from './types';
+export { generateNetworkConfig } from "./lib/networkGenerate";
+export * from "./types";
