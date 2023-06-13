@@ -141,6 +141,12 @@ export async function main(): Promise<void> {
           default: false,
           describe: "Include quorum-dev-quickstart test accounts",
         },
+        prefundedAccounts: {
+          type: "string",
+          demandOption: true,
+          default: "",
+          describe: "Comma separated list of accounts to fund",
+        },
         noOutputTimestamp: {
           type: "boolean",
           demandOption: false,
@@ -174,10 +180,17 @@ export async function main(): Promise<void> {
       tesseraPassword: args.tesseraPassword,
       quickstartDevAccounts: args.quickstartDevAccounts,
       noOutputTimestamp: args.noOutputTimestamp,
+      prefundedAccounts: args.prefundedAccounts,
     };
   } else {
     const qr = new QuestionRenderer(rootQuestion);
     answers = await qr.render(); // begin rendering the questions
+    console.log('__________________________________________________________')
+    console.log('__________________________________________________________')
+    console.log(answers)
+    console.log('__________________________________________________________')
+    console.log('__________________________________________________________')
+
     // console.log(answers); // log answer output for debugging
   }
 
