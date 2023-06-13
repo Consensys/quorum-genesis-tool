@@ -129,6 +129,9 @@ Options:
                                                           [string] [default: ""]
   --quickstartDevAccounts  Include quorum-dev-quickstart test accounts
                                            [boolean] [required] [default: false]
+  --alloc                   Defines accounts with balances
+                                                        [string] [default: "{}"]  
+
 ```
 
 To generate keys for QBFT (default) with 4 validators, 2 bootnodes and 2 members:
