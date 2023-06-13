@@ -145,7 +145,7 @@ export async function main(): Promise<void> {
           type: "string",
           demandOption: true,
           default: "",
-          describe: "Comma separated list of accounts to fund",
+          describe: "JSON format of the prefunded accounts {'address':{balance: '100000'}}",
         },
         noOutputTimestamp: {
           type: "boolean",
@@ -185,11 +185,6 @@ export async function main(): Promise<void> {
   } else {
     const qr = new QuestionRenderer(rootQuestion);
     answers = await qr.render(); // begin rendering the questions
-    console.log('__________________________________________________________')
-    console.log('__________________________________________________________')
-    console.log(answers)
-    console.log('__________________________________________________________')
-    console.log('__________________________________________________________')
 
     // console.log(answers); // log answer output for debugging
   }
