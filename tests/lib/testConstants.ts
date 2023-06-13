@@ -24,6 +24,7 @@ export const TEST_QUORUM_CONFIG: QuorumConfig = {
   tesseraPassword: "",
   quickstartDevAccounts: false,
   noOutputTimestamp: false,
+  prefundedAccounts: "{}",
 };
 
 export const TEST_NODE = {
