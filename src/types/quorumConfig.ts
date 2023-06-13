@@ -23,4 +23,6 @@ export type QuorumConfig = {
   tesseraPassword: string;
   quickstartDevAccounts: boolean;
   noOutputTimestamp: boolean;
+  prefundedAccounts: string;
+
 };
