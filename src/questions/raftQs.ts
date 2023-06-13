@@ -6,6 +6,7 @@ import {
   passwordValidator,
   stringValidator,
   getYesNoValidator,
+  allocStringValidator
 } from "./common";
 import * as commonQs from "./commonQs";
 
@@ -25,8 +26,7 @@ const _prefundedAccountsQuestion: QuestionTree = Object.assign(
   commonQs.prefundedAccountsQuestion
 );
 
-// TODO: We need to actually validate the JSON here
-_prefundedAccountsQuestion.transformerValidator = stringValidator(
+_prefundedAccountsQuestion.transformerValidator = allocStringValidator(
   _prefundedAccountsQuestion,
   _outputPathQuestion,
   "{}"

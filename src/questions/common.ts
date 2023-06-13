@@ -68,3 +68,46 @@ export function passwordValidator(question: QuestionTree, nextQuestion?: Questio
     }
   };
 }
+
+const allocJsonChecks = (jsonAlloc: any) => {
+  if (typeof jsonAlloc !== 'object') {
+    return {status:false, message: "alloc must be an object"};
+  }
+  const keys = Object.keys(jsonAlloc);
+  if (keys.length === 0) {
+    return {status:false, message: "alloc must have at least one address"};
+  }
+  for (const key of keys) {
+    if (typeof jsonAlloc[key] !== 'object') {
+      return {status:false, message: "Account's child key must be an object"};
+    }
+    if (typeof jsonAlloc[key].balance !== 'string') {
+      return {status:false, message: "Account's balance must be a string"};
+    }
+  }
+  return {status:true, message: "Alloc is valid"};
+}
+
+
+export function allocStringValidator(question: QuestionTree, nextQuestion?: QuestionTree, defaultResponse?: string) {
+  return (rawInput: string, answers: AnswerMap) => {
+    const normalizedInput = rawInput.toLowerCase();
+    if (defaultResponse && normalizedInput === '') {
+      answers[question.name] = defaultResponse;
+      return nextQuestion;
+    } else if (typeof (normalizedInput) === 'string' && normalizedInput !== '') { 
+      const additionalChecks: any = allocJsonChecks(JSON.parse(normalizedInput));
+      if (additionalChecks.status) {
+      answers[question.name] = normalizedInput;
+      return nextQuestion;
+      }else{
+        console.log(chalk.red(additionalChecks.message));
+        return question;
+      }
+    } else {
+      console.log(chalk.red("Sorry, but I didn't understand your answer. Please enter a valid string,\n" +
+        "or just hit enter default is available.\n"));
+      return question;
+    }
+  }
+}
