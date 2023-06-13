@@ -19,13 +19,26 @@ _outputPathQuestion.transformerValidator = stringValidator(
   "./output"
 );
 
+const _prefundedAccountsQuestion: QuestionTree = Object.assign(
+  {},
+  commonQs.prefundedAccountsQuestion
+);
+
+// TODO: We need to actually validate the JSON here
+_prefundedAccountsQuestion.transformerValidator = stringValidator(
+  _prefundedAccountsQuestion,
+  _outputPathQuestion,
+  "{}"
+);
+
+
 const _quickstartDevAccountsQuestion: QuestionTree = Object.assign(
   {},
   commonQs.quickstartDevAccountsQuestion
 );
 _quickstartDevAccountsQuestion.transformerValidator = getYesNoValidator(
   _quickstartDevAccountsQuestion,
-  _outputPathQuestion,
+  _prefundedAccountsQuestion,
   "n"
 );
 
