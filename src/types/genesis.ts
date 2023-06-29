@@ -29,6 +29,7 @@ export type GenesisConfig = {
   muirglacierblock: number;
   berlinBlock: number;
   londonBlock: number;
+  zeroBaseFee?: boolean;
   isQuorum?: boolean;
   contractSizeLimit?: string;
   txnSizeLimit?: number;

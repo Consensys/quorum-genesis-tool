@@ -70,6 +70,7 @@ export function createBesuGenesis(
   besu.coinbase = quorumConfig.coinbase;
   besu.difficulty = "0x" + quorumConfig.difficulty.toString(16);
   besu.config.chainId = quorumConfig.chainID;
+  besu.config.zeroBaseFee = true;
   const consensus = quorumConfig.consensus;
   if (quorumConfig.curve === CryptoCurve.r1) {
     besu.config.ecCurve = "secp256r1";
