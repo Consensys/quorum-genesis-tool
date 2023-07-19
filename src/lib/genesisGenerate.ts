@@ -83,14 +83,15 @@ export function createBesuGenesis(
     };
   });
 
-  if(quorumConfig.prefundedAccounts){ 
-    const prefundedAccounts: any = JSON.parse(quorumConfig.prefundedAccounts);
-    Object.entries(prefundedAccounts).forEach(([key, value]: any) => {
+  if (quorumConfig.prefundedAccounts) {
+    const prefundedAccounts = JSON.parse(quorumConfig.prefundedAccounts) as {
+      [key: string]: { balance: string };
+    };
+    Object.entries(prefundedAccounts).forEach(([key, value]) => {
       besu.alloc[key] = {
         balance: value.balance,
       };
-    }
-    );
+    });
   }
   switch (consensus) {
     case Consensus.clique: {
@@ -155,15 +156,15 @@ export function createGoQuorumGenesis(
     };
   });
 
-
-  if(quorumConfig.prefundedAccounts){ 
-    const prefundedAccounts: any = JSON.parse(quorumConfig.prefundedAccounts);
-    Object.entries(prefundedAccounts).forEach(([key, value]: any) => {
+  if (quorumConfig.prefundedAccounts) {
+    const prefundedAccounts = JSON.parse(quorumConfig.prefundedAccounts) as {
+      [key: string]: { balance: string };
+    };
+    Object.entries(prefundedAccounts).forEach(([key, value]) => {
       goquorum.alloc[key] = {
         balance: value.balance,
       };
-    }
-    );
+    });
   }
 
   const consensus = quorumConfig.consensus;
