@@ -1,8 +1,12 @@
+import { Alloc } from "../types";
 import { QuestionTree, AnswerMap } from "../types/questions";
 import chalk from "chalk";
 
-
-export function getYesNoValidator(question: QuestionTree, nextQuestion?: QuestionTree, defaultResponse?: "y" | "n") {
+export function getYesNoValidator(
+  question: QuestionTree,
+  nextQuestion?: QuestionTree,
+  defaultResponse?: "y" | "n"
+) {
   return (rawInput: string, answers: AnswerMap) => {
     const normalizedInput = rawInput.toLowerCase();
     if (defaultResponse && !normalizedInput) {
@@ -12,21 +16,33 @@ export function getYesNoValidator(question: QuestionTree, nextQuestion?: Questio
       answers[question.name] = normalizedInput === "y";
       return nextQuestion;
     } else {
-      console.log(chalk.red("Sorry, but I didn't understand your answer. Please select Y or N,\n" +
-        "or just hit enter if you want the default.\n"));
+      console.log(
+        chalk.red(
+          "Sorry, but I didn't understand your answer. Please select Y or N,\n" +
+            "or just hit enter if you want the default.\n"
+        )
+      );
       return question;
     }
   };
 }
 
-export function integerValidator(question: QuestionTree, nextQuestion?: QuestionTree, defaultResponse?: number) {
+export function integerValidator(
+  question: QuestionTree,
+  nextQuestion?: QuestionTree,
+  defaultResponse?: number
+) {
   return (rawInput: string, answers: AnswerMap) => {
     const normalizedInput = parseInt(rawInput, 10);
     if (defaultResponse && isNaN(normalizedInput)) {
       answers[question.name] = defaultResponse;
       return nextQuestion;
     } else if (normalizedInput < 0 || isNaN(normalizedInput)) {
-      console.log(chalk.red("Sorry, but I didn't understand your answer. Please enter a valid integer.\n"));
+      console.log(
+        chalk.red(
+          "Sorry, but I didn't understand your answer. Please enter a valid integer.\n"
+        )
+      );
       return question;
     } else {
       answers[question.name] = normalizedInput;
@@ -35,79 +51,110 @@ export function integerValidator(question: QuestionTree, nextQuestion?: Question
   };
 }
 
-export function stringValidator(question: QuestionTree, nextQuestion?: QuestionTree, defaultResponse?: string) {
+export function stringValidator(
+  question: QuestionTree,
+  nextQuestion?: QuestionTree,
+  defaultResponse?: string
+) {
   return (rawInput: string, answers: AnswerMap) => {
     const normalizedInput = rawInput.toLowerCase();
-    if (defaultResponse && normalizedInput === '') {
+    if (defaultResponse && normalizedInput === "") {
       answers[question.name] = defaultResponse;
       return nextQuestion;
-    } else if (typeof (normalizedInput) === 'string' && normalizedInput !== '') {
+    } else if (typeof normalizedInput === "string" && normalizedInput !== "") {
       answers[question.name] = normalizedInput;
       return nextQuestion;
     } else {
-      console.log(chalk.red("Sorry, but I didn't understand your answer. Please enter a valid string,\n" +
-        "or just hit enter default is available.\n"));
+      console.log(
+        chalk.red(
+          "Sorry, but I didn't understand your answer. Please enter a valid string,\n" +
+            "or just hit enter default is available.\n"
+        )
+      );
       return question;
     }
   };
 }
 
-export function passwordValidator(question: QuestionTree, nextQuestion?: QuestionTree) {
+export function passwordValidator(
+  question: QuestionTree,
+  nextQuestion?: QuestionTree
+) {
   return (rawInput: string, answers: AnswerMap) => {
     const normalizedInput = rawInput.toString();
-    if (normalizedInput === '') {
+    if (normalizedInput === "") {
       answers[question.name] = normalizedInput;
       return nextQuestion;
-    } else if (typeof (normalizedInput) === 'string' && normalizedInput !== '') {
+    } else if (typeof normalizedInput === "string" && normalizedInput !== "") {
       answers[question.name] = normalizedInput;
       return nextQuestion;
     } else {
-      console.log(chalk.red("Sorry, but I didn't understand your answer. Please enter a valid string,\n" +
-        "or just hit enter default is available.\n"));
+      console.log(
+        chalk.red(
+          "Sorry, but I didn't understand your answer. Please enter a valid string,\n" +
+            "or just hit enter default is available.\n"
+        )
+      );
       return question;
     }
   };
 }
 
-const allocJsonChecks = (jsonAlloc: any) => {
-  if (typeof jsonAlloc !== 'object') {
-    return {status:false, message: "alloc must be an object"};
-  }
-  const keys = Object.keys(jsonAlloc);
-  if (keys.length === 0) {
-    return {status:false, message: "alloc must have at least one address"};
-  }
-  for (const key of keys) {
-    if (typeof jsonAlloc[key] !== 'object') {
-      return {status:false, message: "Account's child key must be an object"};
+const allocJsonChecks = (jsonAlloc: string) => {
+  try {
+    const parsedJSON = JSON.parse(jsonAlloc) as { [key: string]: Alloc }[];
+    if (Object.keys(parsedJSON).length === 0) {
+      return { status: false, message: "alloc must have at least one address" };
     }
-    if (typeof jsonAlloc[key].balance !== 'string') {
-      return {status:false, message: "Account's balance must be a string"};
+    for (const [key, value] of Object.entries(parsedJSON)) {
+      if (typeof key !== "string") {
+        return {
+          status: false,
+          message: "Account key must be a string",
+        };
+      }
+      if (typeof value.balance !== "string") {
+        return {
+          status: false,
+          message: "Account's balance must be a string",
+        };
+      }
     }
+    return { status: true, message: "Alloc is valid" };
+  } catch (e) {
+    console.log(e);
+    return { status: false, message: "alloc must be an object" };
   }
-  return {status:true, message: "Alloc is valid"};
-}
+};
 
-
-export function allocStringValidator(question: QuestionTree, nextQuestion?: QuestionTree, defaultResponse?: string) {
+export function allocStringValidator(
+  question: QuestionTree,
+  nextQuestion?: QuestionTree,
+  defaultResponse?: string
+) {
   return (rawInput: string, answers: AnswerMap) => {
     const normalizedInput = rawInput.toLowerCase();
-    if (defaultResponse && normalizedInput === '') {
+    if (defaultResponse && normalizedInput === "") {
       answers[question.name] = defaultResponse;
       return nextQuestion;
-    } else if (typeof (normalizedInput) === 'string' && normalizedInput !== '') { 
-      const additionalChecks: any = allocJsonChecks(JSON.parse(normalizedInput));
+    } else if (typeof normalizedInput === "string" && normalizedInput !== "") {
+      const additionalChecks: { status: boolean; message: string } =
+        allocJsonChecks(normalizedInput);
       if (additionalChecks.status) {
-      answers[question.name] = normalizedInput;
-      return nextQuestion;
-      }else{
+        answers[question.name] = normalizedInput;
+        return nextQuestion;
+      } else {
         console.log(chalk.red(additionalChecks.message));
         return question;
       }
     } else {
-      console.log(chalk.red("Sorry, but I didn't understand your answer. Please enter a valid string,\n" +
-        "or just hit enter default is available.\n"));
+      console.log(
+        chalk.red(
+          "Sorry, but I didn't understand your answer. Please enter a valid string,\n" +
+            "or just hit enter default is available.\n"
+        )
+      );
       return question;
     }
-  }
+  };
 }
