@@ -85,9 +85,9 @@ export function createBesuGenesis(
   });
 
   if (quorumConfig.prefundedAccounts) {
-    const prefundedAccounts = JSON.parse(
-      quorumConfig.prefundedAccounts
-    ) as Alloc[];
+    const prefundedAccounts = JSON.parse(quorumConfig.prefundedAccounts) as {
+      [key: string]: Alloc;
+    };
     Object.entries(prefundedAccounts).forEach(([key, value]) => {
       besu.alloc[key] = {
         balance: value.balance,
@@ -158,9 +158,9 @@ export function createGoQuorumGenesis(
   });
 
   if (quorumConfig.prefundedAccounts) {
-    const prefundedAccounts = JSON.parse(
-      quorumConfig.prefundedAccounts
-    ) as Alloc[];
+    const prefundedAccounts = JSON.parse(quorumConfig.prefundedAccounts) as {
+      [key: string]: Alloc;
+    };
     Object.entries(prefundedAccounts).forEach(([key, value]) => {
       goquorum.alloc[key] = {
         balance: value.balance,

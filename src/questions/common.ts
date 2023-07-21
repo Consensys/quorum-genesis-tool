@@ -102,7 +102,7 @@ export function passwordValidator(
 
 const allocJsonChecks = (jsonAlloc: string) => {
   try {
-    const parsedJSON = JSON.parse(jsonAlloc) as { [key: string]: Alloc }[];
+    const parsedJSON = JSON.parse(jsonAlloc) as { [key: string]: Alloc };
     if (Object.keys(parsedJSON).length === 0) {
       return { status: false, message: "alloc must have at least one address" };
     }
@@ -122,8 +122,7 @@ const allocJsonChecks = (jsonAlloc: string) => {
     }
     return { status: true, message: "Alloc is valid" };
   } catch (e) {
-    console.log(e);
-    return { status: false, message: "alloc must be an object" };
+    return { status: false, message: "alloc must be a valid json object" };
   }
 };
 
