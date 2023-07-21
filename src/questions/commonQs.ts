@@ -10,6 +10,12 @@ export const quickstartDevAccountsQuestion: QuestionTree = {
   prompt: "Include quorum-dev-quickstart test accounts: [y/N]",
 };
 
+export const prefundedAccountsQuestion: QuestionTree = {
+  name: "prefundedAccounts",
+  prompt:
+    "Include JSON format of the prefunded account {'address': { balance: '100000'}}: (default {})",
+};
+
 export const accountPasswordQuestion: QuestionTree = {
   name: "accountPassword",
   prompt: "Set your account password: (empty for none)",

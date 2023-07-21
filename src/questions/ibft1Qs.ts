@@ -5,6 +5,7 @@ import {
   stringValidator,
   passwordValidator,
   getYesNoValidator,
+  allocStringValidator,
 } from "./common";
 import * as commonQs from "./commonQs";
 
@@ -19,15 +20,28 @@ _outputPathQuestion.transformerValidator = stringValidator(
   "./output"
 );
 
+const _prefundedAccountsQuestion: QuestionTree = Object.assign(
+  {},
+  commonQs.prefundedAccountsQuestion
+);
+
+_prefundedAccountsQuestion.transformerValidator = allocStringValidator(
+  _prefundedAccountsQuestion,
+  _outputPathQuestion,
+  "{}"
+);
+
+
 const _quickstartDevAccountsQuestion: QuestionTree = Object.assign(
   {},
   commonQs.quickstartDevAccountsQuestion
 );
 _quickstartDevAccountsQuestion.transformerValidator = getYesNoValidator(
   _quickstartDevAccountsQuestion,
-  _outputPathQuestion,
+  _prefundedAccountsQuestion,
   "n"
 );
+
 
 const _accountPasswordQuestion: QuestionTree = Object.assign(
   {},

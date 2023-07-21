@@ -83,6 +83,17 @@ export function createBesuGenesis(
       balance: "1000000000000000000000000000",
     };
   });
+
+  if (quorumConfig.prefundedAccounts) {
+    const prefundedAccounts = JSON.parse(
+      quorumConfig.prefundedAccounts
+    ) as Alloc[];
+    Object.entries(prefundedAccounts).forEach(([key, value]) => {
+      besu.alloc[key] = {
+        balance: value.balance,
+      };
+    });
+  }
   switch (consensus) {
     case Consensus.clique: {
       besu.config.clique = {
@@ -145,6 +156,18 @@ export function createGoQuorumGenesis(
       balance: "1000000000000000000000000000",
     };
   });
+
+  if (quorumConfig.prefundedAccounts) {
+    const prefundedAccounts = JSON.parse(
+      quorumConfig.prefundedAccounts
+    ) as Alloc[];
+    Object.entries(prefundedAccounts).forEach(([key, value]) => {
+      goquorum.alloc[key] = {
+        balance: value.balance,
+      };
+    });
+  }
+
   const consensus = quorumConfig.consensus;
   switch (consensus) {
     case Consensus.clique: {
