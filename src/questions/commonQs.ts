@@ -13,7 +13,7 @@ export const quickstartDevAccountsQuestion: QuestionTree = {
 export const prefundedAccountsQuestion: QuestionTree = {
   name: "prefundedAccounts",
   prompt:
-    "Include JSON format of the prefunded account {'address': { balance: '100000'}}: (default {})",
+    "Include JSON format of the prefunded account {'address': { 'balance': '100000'}}: (default {})",
 };
 
 export const accountPasswordQuestion: QuestionTree = {
