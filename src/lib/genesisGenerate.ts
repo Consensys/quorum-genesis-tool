@@ -80,7 +80,7 @@ export function createBesuGenesis(
   }
   node.forEach((account) => {
     besu.alloc[account.ethAccount.address] = {
-      balance: "1000000000000000000000000000",
+      balance: quorumConfig.genesisNodeAllocation,
     };
   });
 
@@ -153,7 +153,7 @@ export function createGoQuorumGenesis(
   }
   node.forEach((account) => {
     goquorum.alloc[account.ethAccount.address] = {
-      balance: "1000000000000000000000000000",
+      balance: quorumConfig.genesisNodeAllocation,
     };
   });
 

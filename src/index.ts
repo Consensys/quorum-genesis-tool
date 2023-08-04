@@ -141,6 +141,12 @@ export async function main(): Promise<void> {
           default: false,
           describe: "Include quorum-dev-quickstart test accounts",
         },
+        genesisNodeAllocation: {
+          type: "string",
+          demandOption: true,
+          default: "1000000000000000000000000000",
+          describe: "Balance allocated to each nodes",
+        },
         alloc: {
           type: "string",
           demandOption: true,
@@ -181,6 +187,7 @@ export async function main(): Promise<void> {
       quickstartDevAccounts: args.quickstartDevAccounts,
       noOutputTimestamp: args.noOutputTimestamp,
       prefundedAccounts: args.alloc,
+      genesisNodeAllocation: args.genesisNodeAllocation,
     };
   } else {
     const qr = new QuestionRenderer(rootQuestion);

@@ -10,6 +10,12 @@ export const quickstartDevAccountsQuestion: QuestionTree = {
   prompt: "Include quorum-dev-quickstart test accounts: [y/N]",
 };
 
+export const genesisNodeAllocationQuestion: QuestionTree = {
+  name: "genesisNodeAllocation",
+  prompt:
+    "Balance allocated to each nodes: (default 1000000000000000000000000000)",
+};
+
 export const prefundedAccountsQuestion: QuestionTree = {
   name: "prefundedAccounts",
   prompt:

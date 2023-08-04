@@ -25,6 +25,7 @@ export const TEST_QUORUM_CONFIG: QuorumConfig = {
   quickstartDevAccounts: false,
   noOutputTimestamp: false,
   prefundedAccounts: "{}",
+  genesisNodeAllocation: "100",
 };
 
 export const TEST_NODE = {
