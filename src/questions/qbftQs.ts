@@ -31,6 +31,16 @@ _prefundedAccountsQuestion.transformerValidator = allocStringValidator(
   "{}"
 );
 
+const _genesisNodeAllocationQuestion: QuestionTree = Object.assign(
+  {},
+  commonQs.genesisNodeAllocationQuestion
+);
+_genesisNodeAllocationQuestion.transformerValidator = stringValidator(
+  _genesisNodeAllocationQuestion,
+  _prefundedAccountsQuestion,
+  "1000000000000000000000000000"
+);
+
 
 const _quickstartDevAccountsQuestion: QuestionTree = Object.assign(
   {},
@@ -38,7 +48,7 @@ const _quickstartDevAccountsQuestion: QuestionTree = Object.assign(
 );
 _quickstartDevAccountsQuestion.transformerValidator = getYesNoValidator(
   _quickstartDevAccountsQuestion,
-  _prefundedAccountsQuestion,
+  _genesisNodeAllocationQuestion,
   "n"
 );
 

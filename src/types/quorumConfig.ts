@@ -24,4 +24,5 @@ export type QuorumConfig = {
   quickstartDevAccounts: boolean;
   noOutputTimestamp: boolean;
   prefundedAccounts: string;
+  genesisNodeAllocation: string;
 };
