@@ -35,7 +35,7 @@ function createDefaultGenesis(): Genesis {
 
   const genesis: Genesis = {
     nonce: "0x0",
-    timestamp: "0x58ee40ba",
+    timestamp: "$TIMESTAMP",
     extraData: "0x0",
     gasLimit: "0xf7b760",
     gasUsed: "0x0",
