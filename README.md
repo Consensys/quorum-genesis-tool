@@ -143,7 +143,7 @@ npx quorum-genesis-tool --consensus QBFT
 To generate config for HLF Besu using QBFT
 
 ```
-npx quorum-genesis-tool --consensus qbft --chainID 400 --blockperiod 5 --requestTimeout 10 --epochLength 30000 --difficulty 1 --gasLimit '0xFFFFFF' --coinbase '0x0000000000000000000000000000000000000000' --validators 4 --members 1 --bootnodes 0
+npx quorum-genesis-tool --consensus qbft --chainID 400 --blockperiod 5 --requestTimeout 10 --epochLength 30000 --difficulty 1 --gasLimit '0xFFFFFF' --coinbase '0x0000000000000000000000000000000000000000' --validators 4 --members 0 --bootnodes 2
 ```
 
 To generate config for GoQuorum using IBFT

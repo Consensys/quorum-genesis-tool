@@ -1,12 +1,12 @@
 {
   "name": "quorum-genesis-tool",
-  "version": "0.2.17",
+  "version": "0.2.20",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
       "name": "quorum-genesis-tool",
-      "version": "0.2.17",
+      "version": "0.2.20",
       "license": "Apache-2.0",
       "dependencies": {
         "argon2": "^0.40",
