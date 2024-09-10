@@ -31,7 +31,7 @@ export type GenesisConfig = {
   londonBlock: number;
   zeroBaseFee?: boolean;
   isQuorum?: boolean;
-  contractSizeLimit?: string;
+  contractSizeLimit?: number;
   txnSizeLimit?: number;
   maxCodeSizeConfig?: [CodeSize];
   ibft2?: Algorithm;
