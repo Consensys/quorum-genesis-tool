@@ -92,6 +92,8 @@ export function createBesuGenesis(
     Object.entries(prefundedAccounts).forEach(([key, value]) => {
       besu.alloc[key] = {
         balance: value.balance,
+        code: value.code,
+        storage: value.storage,
       };
     });
   }
@@ -165,6 +167,8 @@ export function createGoQuorumGenesis(
     Object.entries(prefundedAccounts).forEach(([key, value]) => {
       goquorum.alloc[key] = {
         balance: value.balance,
+        code: value.code,
+        storage: value.storage,
       };
     });
   }

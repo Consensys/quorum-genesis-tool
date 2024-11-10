@@ -24,7 +24,7 @@ export const TEST_QUORUM_CONFIG: QuorumConfig = {
   tesseraPassword: "",
   quickstartDevAccounts: false,
   noOutputTimestamp: false,
-  prefundedAccounts: "{}",
+  prefundedAccounts: '{"0x000000000000000000000000000000000000000A": {"balance": 1000, "code": "060680880", "storage": "0x000001"}}',
   genesisNodeAllocation: "100",
 };
 

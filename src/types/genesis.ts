@@ -43,6 +43,10 @@ export type GenesisConfig = {
 
 export type Alloc = {
   balance: string;
+  code?: string;
+  storage?: {
+    [id: string]: string;
+  };
   comment?: string;
   privateKey?: string;
 };

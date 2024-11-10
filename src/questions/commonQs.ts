@@ -19,7 +19,7 @@ export const genesisNodeAllocationQuestion: QuestionTree = {
 export const prefundedAccountsQuestion: QuestionTree = {
   name: "prefundedAccounts",
   prompt:
-    "Include JSON format of the prefunded account {'address': { 'balance': '100000'}}: (default {})",
+    "Include JSON format of the prefunded account {'address': { 'balance': '100000', 'code': '60808060405...', 'storage': { '0x0000000000000000000000000000000000000000000000000000000000000001': '0x000040' }}}: (default {})",
 };
 
 export const accountPasswordQuestion: QuestionTree = {

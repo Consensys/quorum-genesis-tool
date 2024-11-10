@@ -151,7 +151,7 @@ export async function main(): Promise<void> {
           type: "string",
           demandOption: true,
           default: "{}",
-          describe: "JSON format of the prefunded accounts {'address': { balance: '100000'}}",
+          describe: "JSON format of the prefunded accounts {'address': { 'balance': '100000', 'code': '60808060405...', 'storage': { '0x0000000000000000000000000000000000000000000000000000000000000001': '0x000040' }}}",
         },
         noOutputTimestamp: {
           type: "boolean",
